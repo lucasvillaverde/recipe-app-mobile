@@ -36,4 +36,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun getRandomMeal() = mealRepository.meals.value?.random()
+
 }
