@@ -13,7 +13,9 @@ import kotlinx.android.synthetic.main.meal_list_item.view.*
 class MealAdapter(private val mealDataset: List<MealEntity>) :
     RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
 
-    class MealViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
+    var onItemClick: ((MealEntity) -> Unit)? = null
+
+    inner class MealViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.meal_list_item, parent, false)) {
 
         private var mealTitle: MaterialTextView? = null
@@ -24,6 +26,9 @@ class MealAdapter(private val mealDataset: List<MealEntity>) :
             mealTitle = itemView.mealTitle
             mealDescription = itemView.mealDescription
             mealImage = itemView.mealImg
+            itemView.setOnClickListener {
+                onItemClick?.invoke(mealDataset[adapterPosition])
+            }
         }
 
         fun bind(mealEntity: MealEntity) {
@@ -46,5 +51,4 @@ class MealAdapter(private val mealDataset: List<MealEntity>) :
     }
 
     override fun getItemCount(): Int = mealDataset.size
-
 }
