@@ -7,7 +7,6 @@ import dev.lucasvillaverde.recipeapp.data.local.MealDatabase
 import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.await
 
 class MealRepository(private val mealDatabase: MealDatabase) {
 

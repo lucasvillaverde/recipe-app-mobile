@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.data.local.getDatabase
 import dev.lucasvillaverde.recipeapp.data.repositories.MealRepository
 import kotlinx.coroutines.launch
