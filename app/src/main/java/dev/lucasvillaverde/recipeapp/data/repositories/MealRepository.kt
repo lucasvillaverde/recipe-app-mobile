@@ -22,4 +22,6 @@ class MealRepository(private val mealDatabase: MealDatabase) {
         }
     }
 
+    fun getMealById(id: Int): LiveData<MealEntity> = mealDatabase.mealDAO.getMealById(id)
+
 }

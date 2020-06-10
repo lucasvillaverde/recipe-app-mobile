@@ -10,6 +10,9 @@ interface MealDAO {
     @Query("SELECT * FROM meals")
     fun getMeals(): LiveData<List<MealEntity>>
 
+    @Query("SELECT * FROM meals WHERE id = :id")
+    fun getMealById(id: Int): LiveData<MealEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(meal: MealEntity)
 
