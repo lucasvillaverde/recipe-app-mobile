@@ -144,7 +144,7 @@ data class MealEntity(
         return ingredients
     }
 
-    private fun getMeasures(): MutableList<String?>? {
+    fun getMeasures(): MutableList<String?>? {
         val ingredients: MutableList<String?> = ArrayList()
         ingredients.add(measure1)
         ingredients.add(measure2)
@@ -162,5 +162,11 @@ data class MealEntity(
         ingredients.add(measure14)
         ingredients.add(measure15)
         return ingredients
+    }
+
+    fun getYoutubeVideoID(): String? {
+        return youtubeLink?.let {
+            it.substring(it.indexOf('=') + 1, it.length)
+        }
     }
 }
