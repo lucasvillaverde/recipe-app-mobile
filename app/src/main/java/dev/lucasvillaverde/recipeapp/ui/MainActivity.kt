@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         val mealAdapter = MealAdapter(mealList)
         mealAdapter.onItemClick = {
             val intent = Intent(this, MealDetailsActivity::class.java).apply {
-                Log.d("MAIN", "ID: " + it.id)
                 putExtra("MEAL_ID", it.id)
             }
 

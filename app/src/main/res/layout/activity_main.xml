@@ -4,13 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.MainActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mealRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+        app:fastScrollEnabled="true"
+        app:fastScrollHorizontalThumbDrawable="@drawable/thumb_scroll_drawable"
+        app:fastScrollHorizontalTrackDrawable="@drawable/line_scroll_drawable"
+        app:fastScrollVerticalThumbDrawable="@drawable/thumb_scroll_drawable"
+        app:fastScrollVerticalTrackDrawable="@drawable/line_scroll_drawable" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
