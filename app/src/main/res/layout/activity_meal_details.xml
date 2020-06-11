@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -21,57 +21,79 @@
             android:orientation="vertical">
 
             <!-- Media -->
+            <ProgressBar
+                android:id="@+id/mediaLoader"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:indeterminate="true"
+                android:padding="48dp" />
+
             <ImageView
                 android:id="@+id/imgMeal"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
+                android:contentDescription="Main meal image"
                 android:scaleType="centerCrop"
-                android:contentDescription="Main meal image" />
+                android:visibility="gone" />
 
-            <LinearLayout
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/youtubePlayerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <!-- Title, secondary and supporting text -->
-                <TextView
-                    android:id="@+id/txtMealTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Meal name"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    />
-                <TextView
-                    android:id="@+id/txtMealDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Meal Description"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    android:textColor="?android:attr/textColorSecondary"
-                    />
-
-            </LinearLayout>
+                android:layout_height="140dp"
+                android:visibility="gone"
+                app:autoPlay="false"
+                app:showFullScreenButton="true" />
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="4dp">
+                android:padding="8dp">
 
-                <!-- How to prepare -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/txtInstructions"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Title, secondary and supporting text -->
+                        <TextView
+                            android:id="@+id/txtMealTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Meal name"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                        <TextView
+                            android:id="@+id/txtMealDescription"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Meal Description"
+                            android:textAppearance="?attr/textAppearanceBody2"
+                            android:textColor="?android:attr/textColorSecondary" />
+
+                    </LinearLayout>
+
+                    <!-- How to prepare -->
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Instructions" />
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txtInstructions"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Instructions" />
+                    </LinearLayout>
+
                 </LinearLayout>
+
             </ScrollView>
 
         </LinearLayout>
