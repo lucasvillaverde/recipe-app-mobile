@@ -7,7 +7,7 @@ import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
 @Dao
 interface MealDAO {
 
-    @Query("SELECT * FROM meals")
+    @Query("SELECT * FROM meals ORDER BY name ASC")
     fun getMeals(): LiveData<List<MealEntity>>
 
     @Query("SELECT * FROM meals WHERE id = :id")
