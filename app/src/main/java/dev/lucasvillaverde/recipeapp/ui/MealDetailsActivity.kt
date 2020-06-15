@@ -45,7 +45,7 @@ class MealDetailsActivity : AppCompatActivity() {
         mediaLoader.visibility = View.VISIBLE
 
         val youtubeVideoID = meal.getYoutubeVideoID()
-        if (youtubeVideoID != null) {
+        if (youtubeVideoID != null && mealDetailsViewModel.hasInternet()) {
             imgMeal.visibility = View.GONE
             youtubePlayerView.visibility = View.VISIBLE
             youtubePlayerView.addYouTubePlayerListener(youtubeListener(youtubeVideoID))

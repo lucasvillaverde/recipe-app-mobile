@@ -1,6 +1,9 @@
 package dev.lucasvillaverde.recipeapp.viewmodels
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -32,6 +35,13 @@ class MealDetailsViewModel(application: Application) : AndroidViewModel(applicat
                 }
             }
         }
+    }
+
+    fun hasInternet(): Boolean {
+        val cm = getApplication<Application>()
+            .applicationContext
+            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return cm.isDefaultNetworkActive && cm.isActiveNetworkMetered
     }
 
     fun getMealById(id: Int) = mealRepository.getMealById(id)
