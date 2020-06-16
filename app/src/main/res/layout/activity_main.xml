@@ -7,15 +7,42 @@
     tools:context=".ui.MainActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mealRecyclerView"
+    <LinearLayout
+        android:id="@+id/layoutImgDecorative"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:fastScrollEnabled="true"
-        app:fastScrollHorizontalThumbDrawable="@drawable/thumb_scroll_drawable"
-        app:fastScrollHorizontalTrackDrawable="@drawable/line_scroll_drawable"
-        app:fastScrollVerticalThumbDrawable="@drawable/thumb_scroll_drawable"
-        app:fastScrollVerticalTrackDrawable="@drawable/line_scroll_drawable" />
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/ic_find_your_meal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="List Image" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
+            android:text="@string/checkout_some_meal" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:padding="4dp"
+            android:id="@+id/mealRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:fastScrollEnabled="true"
+            app:fastScrollHorizontalThumbDrawable="@drawable/thumb_scroll_drawable"
+            app:fastScrollHorizontalTrackDrawable="@drawable/line_scroll_drawable"
+            app:fastScrollVerticalThumbDrawable="@drawable/thumb_scroll_drawable"
+            app:fastScrollVerticalTrackDrawable="@drawable/line_scroll_drawable" />
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
