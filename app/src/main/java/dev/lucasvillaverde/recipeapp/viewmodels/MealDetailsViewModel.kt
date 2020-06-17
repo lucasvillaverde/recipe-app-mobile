@@ -44,6 +44,6 @@ class MealDetailsViewModel(application: Application) : AndroidViewModel(applicat
         return cm.isDefaultNetworkActive && cm.isActiveNetworkMetered
     }
 
-    fun getMealById(id: Int) = mealRepository.getMealById(id)
+    fun getMeal(id: Int) = mealRepository.getMealById(id)
 
 }
