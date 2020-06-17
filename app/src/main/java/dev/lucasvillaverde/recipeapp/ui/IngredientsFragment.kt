@@ -1,31 +1,83 @@
 package dev.lucasvillaverde.recipeapp.ui
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.BulletSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
+import dev.lucasvillaverde.recipeapp.viewmodels.MealDetailsViewModel
+import kotlinx.android.synthetic.main.fragment_ingredients.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val MEAL_ID = "MEAL_ID"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Ingredients.newInstance] factory method to
+ * Use the [IngredientsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Ingredients(meal: MealEntity) : Fragment() {
+class IngredientsFragment : Fragment() {
+    // TODO: Rename and change types of parameters
+    private var mealId = 0
+    private val mealDetailsViewModel: MealDetailsViewModel by lazy {
+        val application = requireNotNull(activity?.application) {
+            "Application must not be null!"
+        }
+        ViewModelProvider(this).get(MealDetailsViewModel::class.java)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            mealId = it.getInt(MEAL_ID)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        mealDetailsViewModel.getMeal(mealId).observe(viewLifecycleOwner, Observer { updateUI(it) })
         return inflater.inflate(R.layout.fragment_ingredients, container, false)
     }
 
+    private fun updateUI(meal: MealEntity) {
+        Log.d("UPDATE_UI", "UPDATING...")
+        val ingredientsListText = getIngredientsHtmlList(meal.getIngredients())
+        ingredientsListText.setSpan(BulletSpan(40, Color.RED), 10, 22, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        txtIngredients.text = ingredientsListText
+    }
+
+    private fun getIngredientsHtmlList(list: ArrayList<String?>): SpannableString {
+        return SpannableString(list.filter { !it.isNullOrBlank() }
+            .joinToString { "$it\n" })
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param mealId Parameter 1.
+         * @return A new instance of fragment IngredientsFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(mealId: Int) =
+            IngredientsFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(MEAL_ID, mealId)
+                }
+            }
+    }
 }
