@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.util.*
+import kotlin.collections.ArrayList
 
 @Entity(tableName = "meals")
 data class MealEntity(
@@ -124,8 +125,8 @@ data class MealEntity(
 
 ) {
 
-    fun getIngredients(): MutableList<String?>? {
-        val ingredients: MutableList<String?> = ArrayList()
+    fun getIngredients(): ArrayList<String?> {
+        val ingredients = ArrayList<String?>()
         ingredients.add(ingredient1)
         ingredients.add(ingredient2)
         ingredients.add(ingredient3)
