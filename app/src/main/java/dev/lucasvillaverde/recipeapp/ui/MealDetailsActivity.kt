@@ -1,15 +1,11 @@
 package dev.lucasvillaverde.recipeapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.squareup.picasso.Picasso
@@ -22,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_meal_details.*
 class MealDetailsActivity : FragmentActivity() {
 
     private val mealDetailsAdapter = MealDetailsPageAdapter(supportFragmentManager, lifecycle)
+    private var mealId = 0;
 
     private val mealDetailsViewModel: MealDetailsViewModel by lazy {
         val application = requireNotNull(application) {
@@ -35,13 +32,18 @@ class MealDetailsActivity : FragmentActivity() {
         setContentView(R.layout.activity_meal_details)
         viewPager.adapter = mealDetailsAdapter
         lifecycle.addObserver(youtubePlayerView)
-        val mealId = intent.getIntExtra("MEAL_ID", 0)
-        mealDetailsViewModel.getMealById(mealId).observe(this, Observer {
-            refreshViewPager(it)
+        mealId = intent.getIntExtra("MEAL_ID", 0)
+        mealDetailsViewModel.getMeal(mealId).observe(this, Observer {
+            refreshViewPager()
             setTabLayout()
-            Log.d("GetCurrentItem", "${viewPager.currentItem}")
             loadMediaUI(it)
+            updateUI(it)
         })
+    }
+
+    private fun updateUI(meal: MealEntity) {
+        txtMealTitle.text = meal.name
+        txtMealDescription.text = meal.region
     }
 
     private fun loadMediaUI(meal: MealEntity) {
@@ -65,19 +67,23 @@ class MealDetailsActivity : FragmentActivity() {
         TabLayoutMediator(tabLayout, viewPager,
             TabLayoutMediator.TabConfigurationStrategy { tab, position ->
                 when (position) {
-                    0 -> { tab.text = "Instructions"}
-                    1 -> { tab.text = "Ingredients"}
+                    0 -> {
+                        tab.text = "Instructions"
+                    }
+                    1 -> {
+                        tab.text = "Ingredients"
+                    }
                 }
             }).attach()
     }
 
-    private fun refreshViewPager(meal: MealEntity) {
+    private fun refreshViewPager() {
         mealDetailsAdapter.clearFragments()
-        mealDetailsAdapter.addFragment(Instructions(meal))
-        mealDetailsAdapter.addFragment(Ingredients(meal))
+        mealDetailsAdapter.addFragment(InstructionsFragment.newInstance(mealId))
+        mealDetailsAdapter.addFragment(IngredientsFragment.newInstance(mealId))
     }
 
-    private fun youtubeListener(youtubeVideoID: String) = object: AbstractYouTubePlayerListener() {
+    private fun youtubeListener(youtubeVideoID: String) = object : AbstractYouTubePlayerListener() {
         @Override
         override fun onReady(youTubePlayer: YouTubePlayer) {
             super.onReady(youTubePlayer)
