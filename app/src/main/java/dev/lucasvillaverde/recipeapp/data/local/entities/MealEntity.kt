@@ -145,24 +145,24 @@ data class MealEntity(
         return ingredients
     }
 
-    fun getMeasures(): MutableList<String?>? {
-        val ingredients: MutableList<String?> = ArrayList()
-        ingredients.add(measure1)
-        ingredients.add(measure2)
-        ingredients.add(measure3)
-        ingredients.add(measure4)
-        ingredients.add(measure5)
-        ingredients.add(measure6)
-        ingredients.add(measure7)
-        ingredients.add(measure8)
-        ingredients.add(measure9)
-        ingredients.add(measure10)
-        ingredients.add(measure11)
-        ingredients.add(measure12)
-        ingredients.add(measure13)
-        ingredients.add(measure14)
-        ingredients.add(measure15)
-        return ingredients
+    fun getMeasures(): ArrayList<String?> {
+        val measures = ArrayList<String?>()
+        measures.add(measure1)
+        measures.add(measure2)
+        measures.add(measure3)
+        measures.add(measure4)
+        measures.add(measure5)
+        measures.add(measure6)
+        measures.add(measure7)
+        measures.add(measure8)
+        measures.add(measure9)
+        measures.add(measure10)
+        measures.add(measure11)
+        measures.add(measure12)
+        measures.add(measure13)
+        measures.add(measure14)
+        measures.add(measure15)
+        return measures
     }
 
     fun getYoutubeVideoID(): String? {
