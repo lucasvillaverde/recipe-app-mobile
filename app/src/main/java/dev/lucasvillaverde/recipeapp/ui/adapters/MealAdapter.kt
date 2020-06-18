@@ -27,7 +27,7 @@ class MealAdapter(private val mealDataset: List<MealEntity>) :
             mealDescription = itemView.mealDescription
             mealImage = itemView.mealImg
             itemView.setOnClickListener {
-                onItemClick?.invoke(mealDataset[adapterPosition])
+                onItemClick?.invoke(mealDataset[bindingAdapterPosition])
             }
         }
 
