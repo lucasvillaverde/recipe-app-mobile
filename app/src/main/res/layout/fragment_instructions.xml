@@ -6,8 +6,10 @@
     tools:context=".ui.InstructionsFragment">
 
     <ScrollView
+        android:id="@+id/instructionsRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         android:padding="8dp">
 
         <TextView
