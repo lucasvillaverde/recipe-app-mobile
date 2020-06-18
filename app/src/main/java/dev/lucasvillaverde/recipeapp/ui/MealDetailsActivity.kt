@@ -1,7 +1,9 @@
 package dev.lucasvillaverde.recipeapp.ui
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +17,7 @@ import dev.lucasvillaverde.recipeapp.ui.adapters.MealDetailsPageAdapter
 import dev.lucasvillaverde.recipeapp.viewmodels.MealDetailsViewModel
 import kotlinx.android.synthetic.main.activity_meal_details.*
 
-class MealDetailsActivity : FragmentActivity() {
+class MealDetailsActivity : AppCompatActivity() {
 
     private val mealDetailsAdapter = MealDetailsPageAdapter(supportFragmentManager, lifecycle)
     private var mealId = 0;
@@ -29,21 +31,37 @@ class MealDetailsActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(R.layout.activity_meal_details)
         viewPager.adapter = mealDetailsAdapter
         lifecycle.addObserver(youtubePlayerView)
         mealId = intent.getIntExtra("MEAL_ID", 0)
         mealDetailsViewModel.getMeal(mealId).observe(this, Observer {
-            refreshViewPager()
-            setTabLayout()
-            loadMediaUI(it)
-            updateUI(it)
+            it?.let {
+                refreshViewPager()
+                setTabLayout()
+                loadMediaUI(it)
+                updateUI(it)
+            }
         })
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     private fun updateUI(meal: MealEntity) {
         txtMealTitle.text = meal.name
         txtMealDescription.text = meal.region
+        showCard(true)
+    }
+
+    private fun showCard(status: Boolean) {
+        if(status)
+            mealDetailsCard.visibility = View.VISIBLE
+        else
+            mealDetailsCard.visibility = View.GONE
     }
 
     private fun loadMediaUI(meal: MealEntity) {

@@ -42,12 +42,16 @@ class InstructionsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mealDetailsViewModel.getMeal(mealId).observe(viewLifecycleOwner, Observer { updateMealCard(it) })
-        return inflater.inflate(R.layout.fragment_instructions, container, false)
+        val view = inflater.inflate(R.layout.fragment_instructions, container, false)
+        mealDetailsViewModel.getMeal(mealId).observe(viewLifecycleOwner, Observer { it?.let {
+            updateMealCard(it)
+        } })
+        return view
     }
 
     private fun updateMealCard(meal: MealEntity) {
         txtInstructions.text = meal.instructions
+        instructionsRoot.visibility = View.VISIBLE
     }
 
     companion object {

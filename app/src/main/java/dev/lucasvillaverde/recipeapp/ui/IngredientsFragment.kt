@@ -3,6 +3,7 @@ package dev.lucasvillaverde.recipeapp.ui
 import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.BulletSpan
 import android.util.Log
@@ -17,7 +18,6 @@ import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.viewmodels.MealDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_ingredients.*
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val MEAL_ID = "MEAL_ID"
 
@@ -27,7 +27,6 @@ private const val MEAL_ID = "MEAL_ID"
  * create an instance of this fragment.
  */
 class IngredientsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var mealId = 0
     private val mealDetailsViewModel: MealDetailsViewModel by lazy {
         val application = requireNotNull(activity?.application) {
@@ -47,21 +46,24 @@ class IngredientsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val view = inflater.inflate(R.layout.fragment_ingredients, container, false)
         mealDetailsViewModel.getMeal(mealId).observe(viewLifecycleOwner, Observer { updateUI(it) })
-        return inflater.inflate(R.layout.fragment_ingredients, container, false)
+        return view
     }
 
-    private fun updateUI(meal: MealEntity) {
-        Log.d("UPDATE_UI", "UPDATING...")
-        val ingredientsListText = getIngredientsHtmlList(meal.getIngredients())
-        ingredientsListText.setSpan(BulletSpan(40, Color.RED), 10, 22, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        txtIngredients.text = ingredientsListText
+    private fun updateUI(meal: MealEntity?) {
+        meal?.let {
+            val ingredientsListText = getIngredientList(meal.getIngredients())
+            val ingredientsMeasureListText = getMeasuresList(meal.getMeasures())
+            txtIngredients.text = ingredientsListText
+            txtMeasures.text = ingredientsMeasureListText
+            ingredientsRoot.visibility = View.VISIBLE
+        }
+
     }
 
-    private fun getIngredientsHtmlList(list: ArrayList<String?>): SpannableString {
-        return SpannableString(list.filter { !it.isNullOrBlank() }
-            .joinToString { "$it\n" })
-    }
+    private fun getIngredientList(list: ArrayList<String?>) = list.filter { !it.isNullOrBlank() }.joinToString(prefix = "• ", separator = "\n\n• ")
+    private fun getMeasuresList(list: ArrayList<String?>) = list.filter { !it.isNullOrBlank() }.joinToString(separator = "\n\n")
 
     companion object {
         /**
@@ -71,7 +73,6 @@ class IngredientsFragment : Fragment() {
          * @param mealId Parameter 1.
          * @return A new instance of fragment IngredientsFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(mealId: Int) =
             IngredientsFragment().apply {
