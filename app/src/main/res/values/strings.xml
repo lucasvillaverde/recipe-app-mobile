@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">RecipeApp</string>
-    <string name="checkout_some_meal">Checkout some meal!</string>
+    <string name="checkout_some_meal">Checkout some meals!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_give_me_more_meals">Give me more meals!</string>
+    <string name="hit_btn_get_some_meals">Hit the button to get some meal!</string>
 </resources>
