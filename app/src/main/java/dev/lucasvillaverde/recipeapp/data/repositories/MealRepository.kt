@@ -10,8 +10,6 @@ import kotlinx.coroutines.withContext
 
 class MealRepository(private val mealDatabase: MealDatabase) {
 
-    private val meal = MutableLiveData<MealEntity>()
-
     val meals: LiveData<List<MealEntity>> = mealDatabase.mealDAO.getMeals()
 
     suspend fun refreshMeals() {
@@ -22,5 +20,11 @@ class MealRepository(private val mealDatabase: MealDatabase) {
     }
 
     fun getMealById(id: Int): LiveData<MealEntity?> = mealDatabase.mealDAO.getMealById(id)
+
+    suspend fun deleteMeals() {
+        withContext(Dispatchers.IO) {
+            mealDatabase.mealDAO.deleteAllMeals()
+        }
+    }
 
 }
