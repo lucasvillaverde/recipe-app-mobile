@@ -13,18 +13,10 @@
 
 ### Preview
 
-- **Home**
+
 
 <img src="https://i.imgur.com/WtdZdnj.jpg" alt="homeScreen"/>
 
+<img src="https://i.imgur.com/1b4GvCC.jpg" alt="recipe list" />
 
-
-- **Meal recipes list**
-
-  <img src="https://i.imgur.com/1b4GvCC.jpg" alt="recipe list" />
-
-
-
-- **Recipe Details**
-
-  <img src="https://i.imgur.com/vQPESpS.jpg" alt="details" />
+<img src="https://i.imgur.com/vQPESpS.jpg" alt="details" />
