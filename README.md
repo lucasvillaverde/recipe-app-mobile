@@ -15,16 +15,16 @@
 
 - **Home**
 
-<img src="https://i.imgur.com/wHEkhg6.png" alt="homeScreen"/>
+<img src="https://i.imgur.com/WtdZdnj.jpg" alt="homeScreen"/>
 
 
 
 - **Meal recipes list**
 
-  <img src="https://i.imgur.com/18M6EY6.png" alt="recipe list" />
+  <img src="https://i.imgur.com/1b4GvCC.jpg" alt="recipe list" />
 
 
 
 - **Recipe Details**
 
-  <img src="https://i.imgur.com/Wl8LOky.png" alt="details" />
+  <img src="https://i.imgur.com/vQPESpS.jpg" alt="details" />
