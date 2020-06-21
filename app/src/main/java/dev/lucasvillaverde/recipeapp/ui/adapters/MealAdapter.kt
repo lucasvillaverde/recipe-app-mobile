@@ -8,7 +8,9 @@ import com.google.android.material.textview.MaterialTextView
 import com.squareup.picasso.Picasso
 import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.meal_list_item.view.*
+
 
 class MealAdapter(private val mealDataset: List<MealEntity>) :
     RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
@@ -34,7 +36,7 @@ class MealAdapter(private val mealDataset: List<MealEntity>) :
         fun bind(mealEntity: MealEntity) {
             mealTitle?.text = mealEntity.name
             mealDescription?.text = mealEntity.category
-            Picasso.get().load(mealEntity.thumb).into(mealImage)
+            Picasso.get().load(mealEntity.thumb).transform(CropCircleTransformation()).into(mealImage)
         }
 
     }

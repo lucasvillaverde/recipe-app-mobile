@@ -23,7 +23,7 @@ class MealDetailsActivity : AppCompatActivity() {
     private var mealId = 0;
 
     private val mealDetailsViewModel: MealDetailsViewModel by lazy {
-        val application = requireNotNull(application) {
+        requireNotNull(application) {
             "Application must not be null!"
         }
         ViewModelProvider(this).get(MealDetailsViewModel::class.java)
