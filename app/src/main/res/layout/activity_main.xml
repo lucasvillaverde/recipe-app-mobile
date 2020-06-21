@@ -68,6 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -77,17 +78,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            style="@style/Widget.Design.FloatingActionButton"
+            android:backgroundTint="@color/colorAccent"
             android:src="@drawable/ic_baseline_add_24"
-            android:text="@string/btn_give_me_more_meals" />
+            android:text="@string/btn_give_me_more_meals"
+            app:borderWidth="0dp"
+            app:tint="@null" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnDeleteMeals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            style="@style/Widget.Design.FloatingActionButton"
-            android:src="@drawable/ic_baseline_delete_forever_24" />
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/ic_baseline_delete_forever_24"
+            app:borderWidth="0dp"
+            app:tint="@null" />
 
     </LinearLayout>
 

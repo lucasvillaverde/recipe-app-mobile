@@ -10,8 +10,8 @@
         android:id="@+id/mealDetailsCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
         android:layout_margin="8dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,6 +22,7 @@
             android:orientation="vertical">
 
             <!-- Media -->
+
             <ProgressBar
                 android:id="@+id/mediaLoader"
                 android:layout_width="match_parent"
@@ -48,8 +49,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
                 android:padding="4dp">
 
                 <TextView
@@ -64,17 +65,16 @@
                     android:id="@+id/txtMealDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:text="Meal Description"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary" />
 
             </LinearLayout>
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager"
