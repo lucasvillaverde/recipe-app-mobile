@@ -4,7 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="btn_give_me_more_meals">Give me more meals!</string>
-    <string name="hit_btn_get_some_meals">Hit the button to get some meal!</string>
+    <string name="hit_btn_get_some_meals">Hit the plus button to get some meal!</string>
     <string name="ingredients_fragment_measures">Measures</string>
     <string name="ingredients_fragment_ingredients">Ingredients</string>
     <string name="no_internet_error">Oops! Seems you are not connected. Please verify your internet connection and try again.</string>
