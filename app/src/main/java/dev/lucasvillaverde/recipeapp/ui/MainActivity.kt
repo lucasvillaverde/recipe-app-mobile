@@ -2,26 +2,24 @@ package dev.lucasvillaverde.recipeapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.ui.adapters.MealAdapter
 import dev.lucasvillaverde.recipeapp.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val mainViewModel: MainViewModel by lazy {
-        requireNotNull(application) {
-            "Application must not be null!"
-        }
-        ViewModelProvider(this).get(MainViewModel::class.java)
-    }
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +41,21 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.isLoading.observe(this, Observer {
             setPageLoading(it)
+        })
+
+        mainViewModel._networkError.observe(this, Observer {
+            if(it) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.network_error),
+                    Toast.LENGTH_LONG
+                ).show()
+                Handler().postDelayed({
+                    mainViewModel._networkError.value = false
+                    finish()
+                    startActivity(intent)
+                }, 3000)
+            }
         })
 
         mainViewModel.getMeals().observe(this, Observer {

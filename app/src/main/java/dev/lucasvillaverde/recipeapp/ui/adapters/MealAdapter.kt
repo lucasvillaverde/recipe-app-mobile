@@ -36,7 +36,8 @@ class MealAdapter(private val mealDataset: List<MealEntity>) :
         fun bind(mealEntity: MealEntity) {
             mealTitle?.text = mealEntity.name
             mealDescription?.text = mealEntity.category
-            Picasso.get().load(mealEntity.thumb).transform(CropCircleTransformation()).into(mealImage)
+            Picasso.get().load(mealEntity.thumb).transform(CropCircleTransformation())
+                .into(mealImage)
         }
 
     }

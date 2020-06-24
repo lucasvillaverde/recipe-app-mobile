@@ -8,4 +8,5 @@
     <string name="ingredients_fragment_measures">Measures</string>
     <string name="ingredients_fragment_ingredients">Ingredients</string>
     <string name="no_internet_error">Oops! Seems you are not connected. Please verify your internet connection and try again.</string>
+    <string name="network_error">Ops! Something got wrong, calm down! Everything will be ok.</string>
 </resources>

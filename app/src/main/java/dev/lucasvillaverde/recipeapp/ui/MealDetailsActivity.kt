@@ -3,6 +3,7 @@ package dev.lucasvillaverde.recipeapp.ui
 import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -11,23 +12,20 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.ui.adapters.MealDetailsPageAdapter
 import dev.lucasvillaverde.recipeapp.viewmodels.MealDetailsViewModel
 import kotlinx.android.synthetic.main.activity_meal_details.*
 
+@AndroidEntryPoint
 class MealDetailsActivity : AppCompatActivity() {
 
     private val mealDetailsAdapter = MealDetailsPageAdapter(supportFragmentManager, lifecycle)
     private var mealId = 0;
 
-    private val mealDetailsViewModel: MealDetailsViewModel by lazy {
-        requireNotNull(application) {
-            "Application must not be null!"
-        }
-        ViewModelProvider(this).get(MealDetailsViewModel::class.java)
-    }
+    private val mealDetailsViewModel: MealDetailsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
