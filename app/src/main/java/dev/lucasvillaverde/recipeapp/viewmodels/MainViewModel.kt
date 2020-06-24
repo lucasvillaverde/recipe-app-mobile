@@ -4,18 +4,21 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import dev.lucasvillaverde.recipeapp.data.local.getDatabase
 import dev.lucasvillaverde.recipeapp.data.repositories.MealRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class MainViewModel @ViewModelInject constructor(
+    application: Application,
+    private val mealRepository: MealRepository
+) : AndroidViewModel(application) {
 
-    val mealRepository = MealRepository(getDatabase(application))
     val isLoading = MutableLiveData(false)
+    val _networkError = MutableLiveData(false)
     private val meals = mealRepository.meals
 
     fun getMeals() = meals
@@ -26,7 +29,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 isLoading.value = true
                 mealRepository.refreshMeals()
                 isLoading.value = false
-            } catch (ex: IOException){
+            } catch (ex: IOException) {
+                _networkError.value = true
                 Log.d("GETNEWMEAL", "ERROR!")
             }
         }

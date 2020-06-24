@@ -1,18 +1,13 @@
 package dev.lucasvillaverde.recipeapp.ui
 
-import android.graphics.Color
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.BulletSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.viewmodels.MealDetailsViewModel
@@ -26,14 +21,10 @@ private const val MEAL_ID = "MEAL_ID"
  * Use the [IngredientsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class IngredientsFragment : Fragment() {
     private var mealId = 0
-    private val mealDetailsViewModel: MealDetailsViewModel by lazy {
-        val application = requireNotNull(activity?.application) {
-            "Application must not be null!"
-        }
-        ViewModelProvider(this).get(MealDetailsViewModel::class.java)
-    }
+    private val mealDetailsViewModel: MealDetailsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,8 +53,11 @@ class IngredientsFragment : Fragment() {
 
     }
 
-    private fun getIngredientList(list: ArrayList<String?>) = list.filter { !it.isNullOrBlank() }.joinToString(prefix = "• ", separator = "\n\n• ")
-    private fun getMeasuresList(list: ArrayList<String?>) = list.filter { !it.isNullOrBlank() }.joinToString(separator = "\n\n")
+    private fun getIngredientList(list: ArrayList<String?>) =
+        list.filter { !it.isNullOrBlank() }.joinToString(prefix = "• ", separator = "\n\n• ")
+
+    private fun getMeasuresList(list: ArrayList<String?>) =
+        list.filter { !it.isNullOrBlank() }.joinToString(separator = "\n\n")
 
     companion object {
         /**

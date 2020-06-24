@@ -3,24 +3,19 @@ package dev.lucasvillaverde.recipeapp.viewmodels
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
-import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import dev.lucasvillaverde.recipeapp.data.local.getDatabase
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.lucasvillaverde.recipeapp.data.repositories.MealRepository
-import kotlinx.coroutines.launch
-import java.io.IOException
 
-class MealDetailsViewModel(application: Application) : AndroidViewModel(application) {
-
-    val mealRepository = MealRepository(getDatabase(application))
+class MealDetailsViewModel @ViewModelInject constructor(
+    @ApplicationContext private val appContext: Context,
+    private val mealRepository: MealRepository
+) : ViewModel() {
 
     fun hasInternet(): Boolean {
-        val cm = getApplication<Application>()
-            .applicationContext
+        val cm = appContext
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return cm.isDefaultNetworkActive && cm.isActiveNetworkMetered
     }

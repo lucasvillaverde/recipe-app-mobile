@@ -1,12 +1,13 @@
 package dev.lucasvillaverde.recipeapp.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.viewmodels.MealDetailsViewModel
@@ -21,15 +22,11 @@ private const val MEAL_ID = "MEAL_ID"
  * Use the [InstructionsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class InstructionsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var mealId = 0
-    private val mealDetailsViewModel: MealDetailsViewModel by lazy {
-        val application = requireNotNull(activity?.application) {
-            "Application must not be null!"
-        }
-        ViewModelProvider(this).get(MealDetailsViewModel::class.java)
-    }
+    private val mealDetailsViewModel: MealDetailsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +40,11 @@ class InstructionsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_instructions, container, false)
-        mealDetailsViewModel.getMeal(mealId).observe(viewLifecycleOwner, Observer { it?.let {
-            updateMealCard(it)
-        } })
+        mealDetailsViewModel.getMeal(mealId).observe(viewLifecycleOwner, Observer {
+            it?.let {
+                updateMealCard(it)
+            }
+        })
         return view
     }
 
