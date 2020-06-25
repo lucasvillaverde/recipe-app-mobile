@@ -16,4 +16,12 @@
 
 ### Preview
 
-<img src="https://im4.ezgif.com/tmp/ezgif-4-6e8b07a0311a.gif" alt="app flow" />
+- App flow:
+
+<img src="https://i.imgur.com/9aKSDFs.gif" alt="app flow" />
+
+- No internet:
+
+  
+
+<img src="https://i.imgur.com/Vcf9JV9.gif" alt="app flow" />
