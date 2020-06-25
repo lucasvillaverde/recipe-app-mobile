@@ -14,6 +14,10 @@
 - [x] RecyclerView;
 - [ ] Endless RecyclerView.
 
+
+
+Data provided by <a href="https://www.themealdb.com/api.php">**TheMealDB**</a>
+
 ### Preview
 
 - App flow:
