@@ -11,33 +11,34 @@
         android:id="@+id/loader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:indeterminate="true"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:indeterminate="true" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <SearchView
         android:id="@+id/svRecipes"
+        style="@style/Widget.AppCompat.SearchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.SearchView"
-        android:queryHint="Search your favorite meal!"
         android:background="@color/colorPrimary"
+        android:queryHint="Search your favorite meal!"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:id="@+id/rootScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/svRecipes">
 
         <LinearLayout
             android:id="@+id/layoutImgDecorative"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:descendantFocusability="blocksDescendants"
             android:orientation="vertical">
 
@@ -53,7 +54,7 @@
                 style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/checkout_some_meal"
+                android:text="@string/check_some_meal"
                 android:textAlignment="center" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -72,38 +73,36 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnGetMeal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:padding="4dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/colorAccent"
+        android:src="@drawable/ic_baseline_add_24"
+        android:text="@string/btn_give_me_more_meals"
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@null" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnDeleteMeals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_baseline_delete_forever_24"
+        app:borderWidth="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnGetMeal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:backgroundTint="@color/colorAccent"
-            android:src="@drawable/ic_baseline_add_24"
-            android:text="@string/btn_give_me_more_meals"
-            app:borderWidth="0dp"
-            app:tint="@null" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnDeleteMeals"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:src="@drawable/ic_baseline_delete_forever_24"
-            app:borderWidth="0dp"
-            app:tint="@null" />
-
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@null" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
