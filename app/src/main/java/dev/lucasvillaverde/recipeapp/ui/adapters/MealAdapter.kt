@@ -12,10 +12,11 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.meal_list_item.view.*
 
 
-class MealAdapter(private val mealDataset: List<MealEntity>) :
+class MealAdapter(private var mealDataset: List<MealEntity>) :
     RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
 
     var onItemClick: ((MealEntity) -> Unit)? = null
+    var mealOriginalDataset = mealDataset
 
     inner class MealViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.meal_list_item, parent, false)) {
@@ -42,7 +43,6 @@ class MealAdapter(private val mealDataset: List<MealEntity>) :
 
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return MealViewHolder(inflater, parent)
@@ -54,4 +54,21 @@ class MealAdapter(private val mealDataset: List<MealEntity>) :
     }
 
     override fun getItemCount(): Int = mealDataset.size
+
+    fun update (meals: List<MealEntity>) {
+        mealOriginalDataset = meals
+        mealDataset = meals
+        notifyDataSetChanged()
+    }
+
+    fun filter(queryText: String?) {
+        if (queryText.isNullOrEmpty()) {
+            mealDataset = mealOriginalDataset
+            notifyDataSetChanged()
+            return
+        }
+
+        mealDataset = mealDataset.filter { it.name!!.contains(queryText, true) }
+        notifyDataSetChanged()
+    }
 }

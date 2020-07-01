@@ -3,11 +3,14 @@ package dev.lucasvillaverde.recipeapp.ui
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
@@ -20,10 +23,18 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModels()
+    private var mealAdapter = MealAdapter(listOf())
+    private var mealList = listOf<MealEntity>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        mealRecyclerView.apply {
+            layoutManager = GridLayoutManager(context, 2)
+            adapter = mealAdapter
+        }
+
         btnGetMeal.setOnClickListener {
             if (mainViewModel.hasInternet())
                 mainViewModel.getNewMeal()
@@ -43,15 +54,15 @@ class MainActivity : AppCompatActivity() {
             setPageLoading(it)
         })
 
-        mainViewModel._networkError.observe(this, Observer {
-            if(it) {
+        mainViewModel.networkError.observe(this, Observer {
+            if (it) {
                 Toast.makeText(
                     this,
                     getString(R.string.network_error),
                     Toast.LENGTH_LONG
                 ).show()
                 Handler().postDelayed({
-                    mainViewModel._networkError.value = false
+                    mainViewModel.networkError.value = false
                     finish()
                     startActivity(intent)
                 }, 3000)
@@ -59,13 +70,32 @@ class MainActivity : AppCompatActivity() {
         })
 
         mainViewModel.getMeals().observe(this, Observer {
-            updateUI(it)
-            populateRecyclerView(it)
+            mealList = it
+            updateUI()
+            populateRecyclerView()
+        })
+
+        svRecipes.setOnClickListener {
+            svRecipes.isIconified = false
+        }
+
+        svRecipes.setOnQueryTextFocusChangeListener { _, isFocused ->
+            svRecipes.isIconified = !isFocused
+        }
+
+        svRecipes.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean = true
+
+            override fun onQueryTextChange(text: String?): Boolean {
+                Log.d("TEXT", "CHANGED: $text")
+                mealAdapter.filter(text)
+                return true
+            }
         })
     }
 
-    private fun populateRecyclerView(mealList: List<MealEntity>) {
-        val mealAdapter = MealAdapter(mealList)
+    private fun populateRecyclerView() {
+        mealAdapter.update(mealList)
         mealAdapter.onItemClick = {
             val intent = Intent(this, MealDetailsActivity::class.java).apply {
                 putExtra("MEAL_ID", it.id)
@@ -73,16 +103,11 @@ class MainActivity : AppCompatActivity() {
 
             startActivity(intent)
         }
-
-        mealRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = mealAdapter
-        }
     }
 
-    private fun updateUI(it: List<MealEntity>) {
+    private fun updateUI() {
         tvTitleDraw.text =
-            if (it.isNotEmpty()) getString(R.string.checkout_some_meal) else getString(
+            if (mealList.isNotEmpty()) getString(R.string.checkout_some_meal) else getString(
                 R.string.hit_btn_get_some_meals
             )
     }
@@ -95,7 +120,5 @@ class MainActivity : AppCompatActivity() {
             loader.visibility = View.GONE
             rootScrollView.alpha = 1F
         }
-
-
     }
 }
