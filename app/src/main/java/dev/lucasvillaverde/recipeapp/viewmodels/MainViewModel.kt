@@ -18,7 +18,7 @@ class MainViewModel @ViewModelInject constructor(
 ) : AndroidViewModel(application) {
 
     val isLoading = MutableLiveData(false)
-    val _networkError = MutableLiveData(false)
+    val networkError = MutableLiveData(false)
     private val meals = mealRepository.meals
 
     fun getMeals() = meals
@@ -30,7 +30,7 @@ class MainViewModel @ViewModelInject constructor(
                 mealRepository.refreshMeals()
                 isLoading.value = false
             } catch (ex: IOException) {
-                _networkError.value = true
+                networkError.value = true
                 Log.d("GETNEWMEAL", "ERROR!")
             }
         }
