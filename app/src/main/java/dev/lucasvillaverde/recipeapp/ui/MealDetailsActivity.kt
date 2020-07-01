@@ -29,7 +29,6 @@ class MealDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(R.layout.activity_meal_details)
         viewPager.adapter = mealDetailsAdapter
         lifecycle.addObserver(youtubePlayerView)
@@ -51,8 +50,12 @@ class MealDetailsActivity : AppCompatActivity() {
 
     private fun updateUI(meal: MealEntity) {
         txtMealTitle.text = meal.name
-        txtMealDescription.text = meal.region
+        txtMealDescription.text = meal.category
         showCard(true)
+
+        // Actionbar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = meal.name
     }
 
     private fun showCard(status: Boolean) {

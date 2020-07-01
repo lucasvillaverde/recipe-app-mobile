@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        supportActionBar?.hide()
         mealRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
             adapter = mealAdapter
@@ -107,7 +109,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateUI() {
         tvTitleDraw.text =
-            if (mealList.isNotEmpty()) getString(R.string.checkout_some_meal) else getString(
+            if (mealList.isNotEmpty()) getString(R.string.check_some_meal) else getString(
                 R.string.hit_btn_get_some_meals
             )
     }
@@ -115,10 +117,25 @@ class MainActivity : AppCompatActivity() {
     private fun setPageLoading(status: Boolean) {
         if (status) {
             rootScrollView.alpha = 0.2F
+            btnGetMeal.alpha = 0.2F
+            btnDeleteMeals.alpha = 0.2F
+            rootScrollView.setAllEnabled(false)
+            btnGetMeal.isClickable = false
+            btnDeleteMeals.isClickable = false
             loader.visibility = View.VISIBLE
         } else {
             loader.visibility = View.GONE
             rootScrollView.alpha = 1F
+            btnGetMeal.alpha = 1F
+            btnDeleteMeals.alpha = 1F
+            rootScrollView.setAllEnabled(true)
+            btnGetMeal.isClickable = true
+            btnDeleteMeals.isClickable = true
         }
+    }
+
+    fun View.setAllEnabled(enabled: Boolean) {
+        isEnabled = enabled
+        if (this is ViewGroup) children.forEach { child -> child.setAllEnabled(enabled) }
     }
 }
