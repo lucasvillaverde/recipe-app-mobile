@@ -1,7 +1,6 @@
 package dev.lucasvillaverde.recipeapp.data.repositories
 
 import androidx.lifecycle.LiveData
-import dev.lucasvillaverde.recipeapp.data.local.MealDatabase
 import dev.lucasvillaverde.recipeapp.data.local.dao.MealDAO
 import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.data.remote.services.MealService

@@ -1,27 +1,24 @@
 package dev.lucasvillaverde.recipeapp.ui
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
+import dev.lucasvillaverde.recipeapp.databinding.ActivityMealDetailsBinding
 import dev.lucasvillaverde.recipeapp.ui.adapters.MealDetailsPageAdapter
+import dev.lucasvillaverde.recipeapp.utils.DeviceUtils.hasInternet
 import dev.lucasvillaverde.recipeapp.viewmodels.MealDetailsViewModel
-import kotlinx.android.synthetic.main.activity_meal_details.*
 
 @AndroidEntryPoint
 class MealDetailsActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMealDetailsBinding
     private val mealDetailsAdapter = MealDetailsPageAdapter(supportFragmentManager, lifecycle)
     private var mealId = 0;
 
@@ -29,11 +26,14 @@ class MealDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_meal_details)
-        viewPager.adapter = mealDetailsAdapter
-        lifecycle.addObserver(youtubePlayerView)
+        binding = ActivityMealDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.viewPager.adapter = mealDetailsAdapter
+        lifecycle.addObserver(binding.youtubePlayerView)
+
         mealId = intent.getIntExtra("MEAL_ID", 0)
-        mealDetailsViewModel.getMeal(mealId).observe(this, Observer {
+        mealDetailsViewModel.getMeal(mealId).observe(this, {
             it?.let {
                 refreshViewPager()
                 setTabLayout()
@@ -49,8 +49,8 @@ class MealDetailsActivity : AppCompatActivity() {
     }
 
     private fun updateUI(meal: MealEntity) {
-        txtMealTitle.text = meal.name
-        txtMealDescription.text = meal.category
+        binding.txtMealTitle.text = meal.name
+        binding.txtMealDescription.text = meal.category
         showCard(true)
 
         // Actionbar
@@ -59,41 +59,42 @@ class MealDetailsActivity : AppCompatActivity() {
     }
 
     private fun showCard(status: Boolean) {
-        if(status)
-            mealDetailsCard.visibility = View.VISIBLE
+        if (status)
+            binding.mealDetailsCard.visibility = View.VISIBLE
         else
-            mealDetailsCard.visibility = View.GONE
+            binding.mealDetailsCard.visibility = View.GONE
     }
 
     private fun loadMediaUI(meal: MealEntity) {
-        mediaLoader.visibility = View.VISIBLE
+        binding.mediaLoader.visibility = View.VISIBLE
 
         val youtubeVideoID = meal.getYoutubeVideoID()
-        if (youtubeVideoID != null && mealDetailsViewModel.hasInternet()) {
-            imgMeal.visibility = View.GONE
-            youtubePlayerView.visibility = View.VISIBLE
-            youtubePlayerView.addYouTubePlayerListener(youtubeListener(youtubeVideoID))
+        if (youtubeVideoID != null && hasInternet(applicationContext)) {
+            binding.imgMeal.visibility = View.GONE
+            binding.youtubePlayerView.visibility = View.VISIBLE
+            binding.youtubePlayerView.addYouTubePlayerListener(youtubeListener(youtubeVideoID))
         } else {
-            Picasso.get().load(meal.thumb).into(imgMeal);
-            youtubePlayerView.visibility = View.GONE
-            imgMeal.visibility = View.VISIBLE
+            Picasso.get().load(meal.thumb).into(binding.imgMeal);
+            binding.youtubePlayerView.visibility = View.GONE
+            binding.imgMeal.visibility = View.VISIBLE
         }
 
-        mediaLoader.visibility = View.GONE
+        binding.mediaLoader.visibility = View.GONE
     }
 
     private fun setTabLayout() {
-        TabLayoutMediator(tabLayout, viewPager,
-            TabLayoutMediator.TabConfigurationStrategy { tab, position ->
-                when (position) {
-                    0 -> {
-                        tab.text = "Instructions"
-                    }
-                    1 -> {
-                        tab.text = "Ingredients"
-                    }
+        TabLayoutMediator(
+            binding.tabLayout, binding.viewPager
+        ) { tab, position ->
+            when (position) {
+                0 -> {
+                    tab.text = "Instructions"
                 }
-            }).attach()
+                1 -> {
+                    tab.text = "Ingredients"
+                }
+            }
+        }.attach()
     }
 
     private fun refreshViewPager() {
