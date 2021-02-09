@@ -5,16 +5,15 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import dev.lucasvillaverde.recipeapp.data.local.MealDatabase
 import dev.lucasvillaverde.recipeapp.data.local.dao.MealDAO
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object StorageModule {
-
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext appContext: Context): MealDatabase {
@@ -32,5 +31,4 @@ object StorageModule {
     fun provideMealDAO(mealDatabase: MealDatabase): MealDAO {
         return mealDatabase.mealDAO
     }
-
 }

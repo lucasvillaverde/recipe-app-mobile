@@ -3,8 +3,6 @@ package dev.lucasvillaverde.recipeapp.data.local.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import java.util.*
-import kotlin.collections.ArrayList
 
 @Entity(tableName = "meals")
 data class MealEntity(

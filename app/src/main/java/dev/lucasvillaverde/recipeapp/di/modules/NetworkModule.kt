@@ -3,17 +3,17 @@ package dev.lucasvillaverde.recipeapp.di.modules
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import dev.lucasvillaverde.recipeapp.data.remote.services.MealService
 import dev.lucasvillaverde.recipeapp.utils.AppConstants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-@Module
-@InstallIn(ApplicationComponent::class)
-object NetworkModule {
 
+@Module
+@InstallIn(SingletonComponent::class)
+object NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
