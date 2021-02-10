@@ -7,6 +7,8 @@ object DeviceUtils {
     fun hasInternet(context: Context): Boolean {
         val cm = context
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return cm.isDefaultNetworkActive || cm.isActiveNetworkMetered
+        val activeNetwork = cm.activeNetworkInfo
+
+        return activeNetwork?.isConnectedOrConnecting!!
     }
 }
