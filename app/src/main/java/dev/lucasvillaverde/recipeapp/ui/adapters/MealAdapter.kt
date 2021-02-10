@@ -11,8 +11,10 @@ import dev.lucasvillaverde.recipeapp.databinding.MealListItemBinding
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 
-class MealAdapter(private var mealDataset: List<MealEntity>) :
+class MealAdapter :
     RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
+    private var originalDataset: List<MealEntity> = listOf()
+    var onItemClick: ((MealEntity) -> Unit)? = null
 
     private val diffCallback = object : DiffUtil.ItemCallback<MealEntity>() {
         override fun areItemsTheSame(oldItem: MealEntity, newItem: MealEntity): Boolean =
@@ -25,8 +27,6 @@ class MealAdapter(private var mealDataset: List<MealEntity>) :
     private val differ = AsyncListDiffer(this, diffCallback)
 
     fun submitList(list: List<MealEntity>) = differ.submitList(list)
-
-    var onItemClick: ((MealEntity) -> Unit)? = null
 
     inner class MealViewHolder(private val binding: MealListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -56,12 +56,4 @@ class MealAdapter(private var mealDataset: List<MealEntity>) :
     }
 
     override fun getItemCount(): Int = differ.currentList.size
-
-    fun filter(queryText: String?) {
-        if (queryText.isNullOrEmpty())
-            return
-
-        val filteredDataset = mealDataset.filter { it.name!!.contains(queryText, true) }
-        submitList(filteredDataset)
-    }
 }

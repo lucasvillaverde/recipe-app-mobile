@@ -3,15 +3,11 @@ package dev.lucasvillaverde.recipeapp.ui
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.children
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
@@ -44,39 +40,42 @@ class MainActivity : AppCompatActivity() {
         mealAdapter.submitList(mealList)
     }
 
-    private fun updateUI() {
-        binding.tvTitleDraw.text =
-            if (mealAdapter.itemCount > 0) getString(R.string.check_some_meal) else getString(
-                R.string.hit_btn_get_some_meals
-            )
+    private fun updateUI(listMeal: List<MealEntity>) {
+        if (listMeal.isNotEmpty()) {
+            binding.imgNoMeal.visibility = View.GONE
+            binding.tvTitleDraw.text = getString(R.string.check_some_meal)
+            binding.mealRecyclerView.visibility = View.VISIBLE
+
+            return
+        }
+
+        binding.mealRecyclerView.visibility = View.GONE
+        binding.imgNoMeal.visibility = View.VISIBLE
+        binding.tvTitleDraw.text = getString(R.string.hit_btn_get_some_meals)
     }
 
-    private fun setPageLoading(status: Boolean) {
-        if (status) {
-            binding.rootScrollView.alpha = 0.2F
+    private fun setPageLoading(isLoading: Boolean) {
+        if (isLoading) {
             binding.btnGetMeal.alpha = 0.2F
             binding.btnDeleteMeals.alpha = 0.2F
-            binding.rootScrollView.setAllEnabled(false)
             binding.btnGetMeal.isClickable = false
             binding.btnDeleteMeals.isClickable = false
             binding.loader.visibility = View.VISIBLE
         } else {
             binding.loader.visibility = View.GONE
-            binding.rootScrollView.alpha = 1F
             binding.btnGetMeal.alpha = 1F
             binding.btnDeleteMeals.alpha = 1F
-            binding.rootScrollView.setAllEnabled(true)
             binding.btnGetMeal.isClickable = true
             binding.btnDeleteMeals.isClickable = true
         }
     }
 
     private fun setupObservers() {
-        mainViewModel.isLoading.observe(this, Observer {
+        mainViewModel.isLoading.observe(this, {
             setPageLoading(it)
         })
 
-        mainViewModel.networkError.observe(this, Observer {
+        mainViewModel.networkError.observe(this, {
             if (it) {
                 Toast.makeText(
                     this,
@@ -92,8 +91,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        mainViewModel.getMeals().observe(this, Observer {
-            updateUI()
+        mainViewModel.getMeals().observe(this, {
+            updateUI(it)
             populateRecyclerView(it)
         })
     }
@@ -128,19 +127,23 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(p0: String?): Boolean = true
 
             override fun onQueryTextChange(text: String?): Boolean {
-                Log.d("TEXT", "CHANGED: $text")
-                mealAdapter.filter(text)
+                mainViewModel.getMeals().value?.let { list ->
+                    if (text.isNullOrEmpty()) mealAdapter.submitList(list)
+                    else mealAdapter.submitList(list.filter { it.name!!.contains(text, true) })
+                }
+
                 return true
             }
         })
     }
 
     private fun setupMealRecyclerView() {
-        mealAdapter = MealAdapter(listOf())
+        mealAdapter = MealAdapter()
 
         binding.mealRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
             adapter = mealAdapter
+            visibility = View.GONE
         }
 
         mealAdapter.onItemClick = {
@@ -149,10 +152,5 @@ class MainActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
-    }
-
-    fun View.setAllEnabled(enabled: Boolean) {
-        isEnabled = enabled
-        if (this is ViewGroup) children.forEach { child -> child.setAllEnabled(enabled) }
     }
 }
