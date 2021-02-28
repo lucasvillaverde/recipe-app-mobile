@@ -17,7 +17,7 @@ class MainViewModel @Inject constructor(
 
     val isLoading = MutableLiveData(false)
     val networkError = MutableLiveData(false)
-    private val meals = mealRepository.meals
+    private val meals = mealRepository.getMeals()
 
     fun getMeals() = meals
 
