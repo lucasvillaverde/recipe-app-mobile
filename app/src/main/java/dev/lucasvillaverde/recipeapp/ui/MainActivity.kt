@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.work.ExistingWorkPolicy
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
@@ -29,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
+
+        ExistingWorkPolicy.APPEND
 
         setupMealRecyclerView()
         setupOnClickListeners()

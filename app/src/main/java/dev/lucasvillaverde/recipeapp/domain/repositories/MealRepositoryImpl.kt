@@ -19,7 +19,7 @@ class MealRepositoryImpl @Inject constructor(
 
     override suspend fun refreshMeals() {
         withContext(Dispatchers.IO) {
-            val meals = mealService.getRandomMealData()
+            val meals = mealService.getMeals()
             mealDAO.insertAll(meals.mealList)
         }
     }

@@ -12,26 +12,10 @@ import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentIngredientsBinding
 import dev.lucasvillaverde.recipeapp.viewmodels.MealDetailsViewModel
 
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val MEAL_ID = "MEAL_ID"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [IngredientsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 @AndroidEntryPoint
 class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
     private lateinit var binding: FragmentIngredientsBinding
-    private var mealId = 0
     private val mealDetailsViewModel: MealDetailsViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            mealId = it.getInt(MEAL_ID)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +28,10 @@ class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mealDetailsViewModel.getMeal(mealId).observe(viewLifecycleOwner, { updateUI(it) })
+        activity?.intent?.let { intent ->
+            val mealId = intent.getIntExtra("MEAL_ID", 0)
+            mealDetailsViewModel.getMeal(mealId).observe(viewLifecycleOwner, { updateUI(it) })
+        }
     }
 
     private fun updateUI(meal: MealEntity?) {
@@ -63,21 +50,4 @@ class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
 
     private fun getMeasuresList(list: ArrayList<String?>) =
         list.filter { !it.isNullOrBlank() }.joinToString(separator = "\n\n")
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param mealId Parameter 1.
-         * @return A new instance of fragment IngredientsFragment.
-         */
-        @JvmStatic
-        fun newInstance(mealId: Int) =
-            IngredientsFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(MEAL_ID, mealId)
-                }
-            }
-    }
 }

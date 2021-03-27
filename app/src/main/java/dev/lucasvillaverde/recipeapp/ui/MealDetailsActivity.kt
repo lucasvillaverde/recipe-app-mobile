@@ -5,8 +5,9 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
@@ -19,8 +20,7 @@ import dev.lucasvillaverde.recipeapp.viewmodels.MealDetailsViewModel
 class MealDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMealDetailsBinding
-    private val mealDetailsAdapter = MealDetailsPageAdapter(supportFragmentManager, lifecycle)
-    private var mealId = 0;
+    private val mealDetailsAdapter = MealDetailsPageAdapter(this)
 
     private val mealDetailsViewModel: MealDetailsViewModel by viewModels()
 
@@ -32,10 +32,10 @@ class MealDetailsActivity : AppCompatActivity() {
         binding.viewPager.adapter = mealDetailsAdapter
         lifecycle.addObserver(binding.youtubePlayerView)
 
-        mealId = intent.getIntExtra("MEAL_ID", 0)
+        val mealId = intent.getIntExtra("MEAL_ID", 0)
         mealDetailsViewModel.getMeal(mealId).observe(this, {
             it?.let {
-                refreshViewPager()
+                setupYoutubePlayerListener()
                 setTabLayout()
                 loadMediaUI(it)
                 updateUI(it)
@@ -71,11 +71,8 @@ class MealDetailsActivity : AppCompatActivity() {
         val youtubeVideoID = meal.getYoutubeVideoID()
         if (youtubeVideoID != null && hasInternet(applicationContext)) {
             binding.imgMeal.visibility = View.GONE
-            binding.youtubePlayerView.visibility = View.VISIBLE
-            binding.youtubePlayerView.addYouTubePlayerListener(youtubeListener(youtubeVideoID))
         } else {
             Picasso.get().load(meal.thumb).into(binding.imgMeal);
-            binding.youtubePlayerView.visibility = View.GONE
             binding.imgMeal.visibility = View.VISIBLE
         }
 
@@ -97,17 +94,66 @@ class MealDetailsActivity : AppCompatActivity() {
         }.attach()
     }
 
-    private fun refreshViewPager() {
-        mealDetailsAdapter.clearFragments()
-        mealDetailsAdapter.addFragment(InstructionsFragment.newInstance(mealId))
-        mealDetailsAdapter.addFragment(IngredientsFragment.newInstance(mealId))
+    fun setupYoutubePlayerListener() {
+        binding.youtubePlayerView.addYouTubePlayerListener(youTubePlayerListener)
     }
 
-    private fun youtubeListener(youtubeVideoID: String) = object : AbstractYouTubePlayerListener() {
-        @Override
+    private val youTubePlayerListener = object : YouTubePlayerListener {
+        override fun onApiChange(youTubePlayer: YouTubePlayer) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onPlaybackQualityChange(
+            youTubePlayer: YouTubePlayer,
+            playbackQuality: PlayerConstants.PlaybackQuality
+        ) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onPlaybackRateChange(
+            youTubePlayer: YouTubePlayer,
+            playbackRate: PlayerConstants.PlaybackRate
+        ) {
+            TODO("Not yet implemented")
+        }
+
         override fun onReady(youTubePlayer: YouTubePlayer) {
-            super.onReady(youTubePlayer)
-            youTubePlayer.cueVideo(youtubeVideoID, 0F)
+        }
+
+        override fun onStateChange(
+            youTubePlayer: YouTubePlayer,
+            state: PlayerConstants.PlayerState
+        ) {
+            if (state != PlayerConstants.PlayerState.BUFFERING)
+                binding.youtubePlayerView.let {
+                    if (it.visibility != View.GONE)
+                        return
+
+                    it.visibility = View.VISIBLE
+                }
+        }
+
+        override fun onVideoDuration(youTubePlayer: YouTubePlayer, duration: Float) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onVideoId(youTubePlayer: YouTubePlayer, videoId: String) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onVideoLoadedFraction(
+            youTubePlayer: YouTubePlayer,
+            loadedFraction: Float
+        ) {
+            TODO("Not yet implemented")
         }
     }
 

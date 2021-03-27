@@ -13,7 +13,6 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 class MealAdapter :
     RecyclerView.Adapter<MealAdapter.MealViewHolder>() {
-    private var originalDataset: List<MealEntity> = listOf()
     var onItemClick: ((MealEntity) -> Unit)? = null
 
     private val diffCallback = object : DiffUtil.ItemCallback<MealEntity>() {
