@@ -1,4 +1,6 @@
-# RecipeApp
+# [OUTDATED] Under construction... :construction:
+
+## RecipeApp
 - A simple Android application to get some random recipes for your daily cooking.
 
 
