@@ -1,0 +1,59 @@
+name: Run Android Environment for testing
+
+# Run this workflow every time a new commit pushed to your repository
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  # Set the job key. The key is displayed as the job name
+  # when a job name is not provided
+  android-instrumentation-test:
+    # Name the Job
+    name: Android Instrumental Testing
+    # Set the type of machine to run on
+    runs-on: macos-latest
+
+    steps:
+      # Checks out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Change gradlew permissions
+        run: chmod +x ./gradlew
+
+      # Runs the Android Instrumentation test
+      - name: Run Android Instrumentation tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 27
+          script: ./gradlew connectedCheck
+
+  # Set the job key. The key is displayed as the job name
+  # when a job name is not provided
+  android-unit-test:
+    # Name the Job
+    name: Android Unit testing
+    # Set the type of machine to run on
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Change gradlew permissions
+        run: chmod +x ./gradlew
+
+      # Runs the Android Unit test
+      - name: Run Unit Test
+        run: ./gradlew testDebugUnitTest
