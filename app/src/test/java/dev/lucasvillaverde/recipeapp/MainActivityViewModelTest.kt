@@ -12,8 +12,7 @@ import org.mockito.MockitoAnnotations
 class MainActivityViewModelTest {
     private val fakeMealRepository = MealRepositoryTestImpl()
 
-    @Rule
-    @JvmField
+    @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
     @Before
