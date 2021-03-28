@@ -5,9 +5,13 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - '**.md'
   pull_request:
     branches:
       - master
+    paths-ignore:
+      - '**.md'
 
 jobs:
   # Set the job key. The key is displayed as the job name
