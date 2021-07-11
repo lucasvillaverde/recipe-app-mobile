@@ -12,8 +12,8 @@
         <action
             android:id="@+id/action_recipeListFragment_to_recipeDetailsFragment"
             app:destination="@id/recipeDetailsFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/recipeDetailsFragment"

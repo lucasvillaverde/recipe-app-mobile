@@ -6,11 +6,11 @@ import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.RecipeEn
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
 
 class RecipeRepositoryTestImpl : RecipeRepository {
-    override suspend fun refreshMeals() {
+    override suspend fun getNewRecipe() {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteMeals() {
+    override suspend fun deleteRecipes() {
         TODO("Not yet implemented")
     }
 

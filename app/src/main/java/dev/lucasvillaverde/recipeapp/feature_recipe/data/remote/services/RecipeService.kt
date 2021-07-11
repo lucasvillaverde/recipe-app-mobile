@@ -6,5 +6,5 @@ import retrofit2.http.GET
 interface RecipeService {
 
     @GET("random.php")
-    suspend fun getMeals(): RecipeResponse
+    suspend fun getNewRecipe(): RecipeResponse
 }

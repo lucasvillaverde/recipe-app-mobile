@@ -6,15 +6,16 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.RecipeEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RecipeDao {
 
     @Query("SELECT * FROM meals ORDER BY name ASC")
-    fun getMeals(): LiveData<List<RecipeEntity>>
+    fun getRecipes(): Flow<List<RecipeEntity>>
 
     @Query("SELECT * FROM meals WHERE id = :id")
-    fun getMealById(id: Int): LiveData<RecipeEntity?>
+    fun getRecipeById(id: Int): Flow<RecipeEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(recipe: RecipeEntity)
@@ -23,5 +24,5 @@ interface RecipeDao {
     fun insertAll(recipes: List<RecipeEntity>)
 
     @Query("DELETE FROM meals")
-    fun deleteAllMeals()
+    fun deleteAllRecipes()
 }

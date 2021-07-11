@@ -31,7 +31,7 @@ class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let { arguments ->
             recipeId = arguments.getInt(INGREDIENTS_FRAGMENT_RECIPE_ID)
-            recipeDetailsViewModel.getMeal(recipeId!!).observe(viewLifecycleOwner, { updateUI(it) })
+            recipeDetailsViewModel.getRecipe(recipeId!!).observe(viewLifecycleOwner, { updateUI(it) })
         }
     }
 

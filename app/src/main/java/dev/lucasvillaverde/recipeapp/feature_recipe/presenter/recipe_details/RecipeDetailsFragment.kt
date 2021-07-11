@@ -1,7 +1,6 @@
 package dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +42,7 @@ class RecipeDetailsFragment : Fragment() {
         recipeDetailsAdapter = RecipeDetailsPageAdapter(this, recipeId)
         binding.viewPager.adapter = recipeDetailsAdapter
 
-        recipeDetailsViewModel.getMeal(recipeId).observe(viewLifecycleOwner, {
+        recipeDetailsViewModel.getRecipe(recipeId).observe(viewLifecycleOwner, {
             it?.let {
                 setTabLayout()
                 loadMediaUI(it)
