@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.ui
+package dev.lucasvillaverde.recipeapp.feature_recipe.presenter
 
 import android.os.Bundle
 import android.view.View
@@ -10,11 +10,10 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.databinding.ActivityMealDetailsBinding
-import dev.lucasvillaverde.recipeapp.ui.adapters.MealDetailsPageAdapter
+import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.adapters.MealDetailsPageAdapter
 import dev.lucasvillaverde.recipeapp.utils.DeviceUtils.hasInternet
-import dev.lucasvillaverde.recipeapp.viewmodels.MealDetailsViewModel
 
 @AndroidEntryPoint
 class MealDetailsActivity : AppCompatActivity() {

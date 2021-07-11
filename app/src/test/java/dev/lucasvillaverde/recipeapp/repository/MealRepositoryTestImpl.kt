@@ -2,8 +2,8 @@ package dev.lucasvillaverde.recipeapp.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
-import dev.lucasvillaverde.recipeapp.data.repositories.MealRepository
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.MealEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.MealRepository
 
 class MealRepositoryTestImpl : MealRepository {
     override suspend fun refreshMeals() {

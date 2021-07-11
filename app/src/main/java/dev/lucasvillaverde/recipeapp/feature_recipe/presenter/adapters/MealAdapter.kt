@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.ui.adapters
+package dev.lucasvillaverde.recipeapp.feature_recipe.presenter.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.databinding.MealListItemBinding
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 

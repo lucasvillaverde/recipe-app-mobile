@@ -1,11 +1,11 @@
-package dev.lucasvillaverde.recipeapp.viewmodels
+package dev.lucasvillaverde.recipeapp.base.presenter
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.lucasvillaverde.recipeapp.data.repositories.MealRepository
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.MealRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject

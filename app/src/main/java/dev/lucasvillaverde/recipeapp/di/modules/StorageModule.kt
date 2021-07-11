@@ -7,8 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.lucasvillaverde.recipeapp.data.local.MealDatabase
-import dev.lucasvillaverde.recipeapp.data.local.dao.MealDAO
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.MealDatabase
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.dao.MealDAO
 import javax.inject.Singleton
 
 @Module

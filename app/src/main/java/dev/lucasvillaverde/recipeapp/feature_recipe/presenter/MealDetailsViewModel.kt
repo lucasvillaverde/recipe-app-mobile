@@ -1,8 +1,8 @@
-package dev.lucasvillaverde.recipeapp.viewmodels
+package dev.lucasvillaverde.recipeapp.feature_recipe.presenter
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.lucasvillaverde.recipeapp.data.repositories.MealRepository
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.MealRepository
 import javax.inject.Inject
 
 @HiltViewModel

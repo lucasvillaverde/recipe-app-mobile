@@ -6,7 +6,7 @@ import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertListIte
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import dev.lucasvillaverde.recipeapp.R
-import dev.lucasvillaverde.recipeapp.ui.MainActivity
+import dev.lucasvillaverde.recipeapp.base.presenter.MainActivity
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When

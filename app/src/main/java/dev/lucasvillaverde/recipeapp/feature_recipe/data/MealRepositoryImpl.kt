@@ -1,10 +1,10 @@
-package dev.lucasvillaverde.recipeapp.domain.repositories
+package dev.lucasvillaverde.recipeapp.feature_recipe.data
 
 import androidx.lifecycle.LiveData
-import dev.lucasvillaverde.recipeapp.data.local.dao.MealDAO
-import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
-import dev.lucasvillaverde.recipeapp.data.remote.services.MealService
-import dev.lucasvillaverde.recipeapp.data.repositories.MealRepository
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.dao.MealDAO
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.MealEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.MealService
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.MealRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

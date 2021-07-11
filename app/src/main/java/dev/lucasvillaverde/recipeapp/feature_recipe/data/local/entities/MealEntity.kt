@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.data.local.entities
+package dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

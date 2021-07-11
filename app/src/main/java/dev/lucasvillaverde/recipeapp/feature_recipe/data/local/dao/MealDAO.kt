@@ -1,11 +1,11 @@
-package dev.lucasvillaverde.recipeapp.data.local.dao
+package dev.lucasvillaverde.recipeapp.feature_recipe.data.local.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.MealEntity
 
 @Dao
 interface MealDAO {

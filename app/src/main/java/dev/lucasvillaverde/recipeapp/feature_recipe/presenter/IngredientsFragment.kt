@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.ui
+package dev.lucasvillaverde.recipeapp.feature_recipe.presenter
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
-import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentIngredientsBinding
-import dev.lucasvillaverde.recipeapp.viewmodels.MealDetailsViewModel
 
 @AndroidEntryPoint
 class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {

@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.ui
+package dev.lucasvillaverde.recipeapp.base.presenter
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.work.ExistingWorkPolicy
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
-import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.databinding.ActivityMainBinding
-import dev.lucasvillaverde.recipeapp.ui.adapters.MealAdapter
+import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.adapters.MealAdapter
 import dev.lucasvillaverde.recipeapp.utils.DeviceUtils.hasInternet
-import dev.lucasvillaverde.recipeapp.viewmodels.MainViewModel
+import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.MealDetailsActivity
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

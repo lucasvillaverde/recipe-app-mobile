@@ -1,13 +1,13 @@
-package dev.lucasvillaverde.recipeapp.di.modules
+package dev.lucasvillaverde.recipeapp.feature_recipe
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.lucasvillaverde.recipeapp.data.local.dao.MealDAO
-import dev.lucasvillaverde.recipeapp.data.remote.services.MealService
-import dev.lucasvillaverde.recipeapp.data.repositories.MealRepository
-import dev.lucasvillaverde.recipeapp.domain.repositories.MealRepositoryImpl
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.dao.MealDAO
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.MealService
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.MealRepository
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.MealRepositoryImpl
 import javax.inject.Singleton
 
 @Module

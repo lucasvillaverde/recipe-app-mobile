@@ -1,8 +1,7 @@
-package dev.lucasvillaverde.recipeapp.data.repositories
+package dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories
 
 import androidx.lifecycle.LiveData
-import dev.lucasvillaverde.recipeapp.data.local.entities.MealEntity
-import kotlinx.coroutines.Job
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.MealEntity
 
 interface MealRepository {
     suspend fun refreshMeals()
