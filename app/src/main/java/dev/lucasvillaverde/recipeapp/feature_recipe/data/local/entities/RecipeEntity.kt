@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "meals")
-data class MealEntity(
+data class RecipeEntity(
     @PrimaryKey
     @SerializedName("idMeal")
     val id: Int,

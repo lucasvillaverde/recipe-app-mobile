@@ -4,17 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentIngredientsBinding
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.RecipeEntity
 
-@AndroidEntryPoint
 class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
     private lateinit var binding: FragmentIngredientsBinding
-    private val mealDetailsViewModel: MealDetailsViewModel by viewModels()
+    private var recipeId: Int? = null
+    private val recipeDetailsViewModel: RecipeDetailsViewModel by viewModels(
+        ownerProducer = { requireParentFragment() }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,16 +29,16 @@ class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.intent?.let { intent ->
-            val mealId = intent.getIntExtra("MEAL_ID", 0)
-            mealDetailsViewModel.getMeal(mealId).observe(viewLifecycleOwner, { updateUI(it) })
+        arguments?.let { arguments ->
+            recipeId = arguments.getInt(INGREDIENTS_FRAGMENT_RECIPE_ID)
+            recipeDetailsViewModel.getMeal(recipeId!!).observe(viewLifecycleOwner, { updateUI(it) })
         }
     }
 
-    private fun updateUI(meal: MealEntity?) {
-        meal?.let {
-            val ingredientsListText = getIngredientList(meal.getIngredients())
-            val ingredientsMeasureListText = getMeasuresList(meal.getMeasures())
+    private fun updateUI(recipe: RecipeEntity?) {
+        recipe?.let {
+            val ingredientsListText = getIngredientList(recipe.getIngredients())
+            val ingredientsMeasureListText = getMeasuresList(recipe.getMeasures())
             binding.txtIngredients.text = ingredientsListText
             binding.txtMeasures.text = ingredientsMeasureListText
             binding.ingredientsRoot.visibility = View.VISIBLE
@@ -49,4 +51,12 @@ class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
 
     private fun getMeasuresList(list: ArrayList<String?>) =
         list.filter { !it.isNullOrBlank() }.joinToString(separator = "\n\n")
+
+    companion object {
+        private const val INGREDIENTS_FRAGMENT_RECIPE_ID = "ingredients_fragment_recipe_id"
+
+        fun newInstance(recipeId: Int) = IngredientsFragment().apply {
+            arguments = bundleOf(INGREDIENTS_FRAGMENT_RECIPE_ID to recipeId)
+        }
+    }
 }

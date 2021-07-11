@@ -8,7 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.MealDatabase
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.dao.MealDAO
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.dao.RecipeDao
 import javax.inject.Singleton
 
 @Module
@@ -28,7 +28,7 @@ object StorageModule {
 
     @Provides
     @Singleton
-    fun provideMealDAO(mealDatabase: MealDatabase): MealDAO {
-        return mealDatabase.mealDAO
+    fun provideMealDAO(mealDatabase: MealDatabase): RecipeDao {
+        return mealDatabase.recipeDao
     }
 }

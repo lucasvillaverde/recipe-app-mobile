@@ -31,7 +31,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:animateLayoutChanges="true"
         android:descendantFocusability="blocksDescendants"
         android:gravity="center"
         android:orientation="vertical"
@@ -39,14 +38,14 @@
         app:layout_constraintTop_toBottomOf="@id/svRecipes">
 
         <ImageView
-            android:id="@+id/imgNoMeal"
+            android:id="@+id/imgEmptyState"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:contentDescription="List Image"
             android:src="@drawable/ic_find_your_meal" />
 
         <TextView
-            android:id="@+id/tvTitleDraw"
+            android:id="@+id/tvEmptyState"
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

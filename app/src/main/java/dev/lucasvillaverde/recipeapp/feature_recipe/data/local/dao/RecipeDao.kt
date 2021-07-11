@@ -5,22 +5,22 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.MealEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.RecipeEntity
 
 @Dao
-interface MealDAO {
+interface RecipeDao {
 
     @Query("SELECT * FROM meals ORDER BY name ASC")
-    fun getMeals(): LiveData<List<MealEntity>>
+    fun getMeals(): LiveData<List<RecipeEntity>>
 
     @Query("SELECT * FROM meals WHERE id = :id")
-    fun getMealById(id: Int): LiveData<MealEntity?>
+    fun getMealById(id: Int): LiveData<RecipeEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(meal: MealEntity)
+    fun insert(recipe: RecipeEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(meals: List<MealEntity>)
+    fun insertAll(recipes: List<RecipeEntity>)
 
     @Query("DELETE FROM meals")
     fun deleteAllMeals()

@@ -1,14 +1,14 @@
 package dev.lucasvillaverde.recipeapp
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import dev.lucasvillaverde.recipeapp.repository.MealRepositoryTestImpl
+import dev.lucasvillaverde.recipeapp.repository.RecipeRepositoryTestImpl
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.MockitoAnnotations
 
 class MainActivityViewModelTest {
-    private val fakeMealRepository = MealRepositoryTestImpl()
+    private val fakeMealRepository = RecipeRepositoryTestImpl()
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()

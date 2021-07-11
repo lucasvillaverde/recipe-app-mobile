@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.MealService
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.RecipeService
 import dev.lucasvillaverde.recipeapp.utils.AppConstants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,7 +26,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMealService(retrofit: Retrofit): MealService {
-        return retrofit.create(MealService::class.java)
+    fun provideMealService(retrofit: Retrofit): RecipeService {
+        return retrofit.create(RecipeService::class.java)
     }
 }

@@ -5,18 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.MealRepository
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class RecipeListViewModel @Inject constructor(
-    private val mealRepository: MealRepository
+    private val recipeRepository: RecipeRepository
 ) : ViewModel() {
     val isLoading = MutableLiveData(false)
     val networkError = MutableLiveData(false)
-    private val meals = mealRepository.getMeals()
+    private val meals = recipeRepository.getMeals()
 
     fun getMeals() = meals
 
@@ -24,7 +24,7 @@ class RecipeListViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 isLoading.value = true
-                mealRepository.refreshMeals()
+                recipeRepository.refreshMeals()
                 isLoading.value = false
             } catch (ex: IOException) {
                 networkError.value = true
@@ -36,7 +36,7 @@ class RecipeListViewModel @Inject constructor(
     fun deleteMeals() {
         viewModelScope.launch {
             isLoading.value = true
-            mealRepository.deleteMeals()
+            recipeRepository.deleteMeals()
             isLoading.value = false
         }
     }

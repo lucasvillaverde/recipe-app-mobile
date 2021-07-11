@@ -2,10 +2,10 @@ package dev.lucasvillaverde.recipeapp.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.MealEntity
-import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.MealRepository
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
 
-class MealRepositoryTestImpl : MealRepository {
+class RecipeRepositoryTestImpl : RecipeRepository {
     override suspend fun refreshMeals() {
         TODO("Not yet implemented")
     }
@@ -14,13 +14,13 @@ class MealRepositoryTestImpl : MealRepository {
         TODO("Not yet implemented")
     }
 
-    override fun getMealById(id: Int): LiveData<MealEntity?> {
+    override fun getMealById(id: Int): LiveData<RecipeEntity?> {
         TODO("Not yet implemented")
     }
 
-    override fun getMeals(): LiveData<List<MealEntity>> = MutableLiveData(
+    override fun getMeals(): LiveData<List<RecipeEntity>> = MutableLiveData(
         mutableListOf(
-            MealEntity(
+            RecipeEntity(
                 1,
                 "Teste",
                 "Test Category",

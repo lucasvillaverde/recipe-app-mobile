@@ -4,16 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import dagger.hilt.android.AndroidEntryPoint
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentInstructionsBinding
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.RecipeEntity
 
-@AndroidEntryPoint
 class InstructionsFragment : Fragment() {
     private lateinit var binding: FragmentInstructionsBinding
-    private val mealDetailsViewModel: MealDetailsViewModel by viewModels()
+    private var recipeId: Int? = null
+    private val recipeDetailsViewModel: RecipeDetailsViewModel by viewModels(
+        ownerProducer = { requireParentFragment() }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,18 +28,24 @@ class InstructionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.intent?.let { intent ->
-            val mealId = intent.getIntExtra("MEAL_ID", 0)
-            mealDetailsViewModel.getMeal(mealId).observe(viewLifecycleOwner, {
-                it?.let {
-                    updateMealCard(it)
-                }
+        arguments?.let { arguments ->
+            recipeId = arguments.getInt(INSTRUCTIONS_FRAGMENT_RECIPE_ID)
+            recipeDetailsViewModel.getMeal(recipeId!!).observe(viewLifecycleOwner, { entity ->
+                updateMealCard(entity!!)
             })
         }
     }
 
-    private fun updateMealCard(meal: MealEntity) {
-        binding.txtInstructions.text = meal.instructions
+    private fun updateMealCard(recipe: RecipeEntity) {
+        binding.txtInstructions.text = recipe.instructions
         binding.instructionsRoot.visibility = View.VISIBLE
+    }
+
+    companion object {
+        private const val INSTRUCTIONS_FRAGMENT_RECIPE_ID = "instructions_fragment_recipe_id"
+
+        fun newInstance(recipeId: Int) = InstructionsFragment().apply {
+            arguments = bundleOf(INSTRUCTIONS_FRAGMENT_RECIPE_ID to recipeId)
+        }
     }
 }
