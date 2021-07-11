@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.feature_recipe.presenter
+package dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

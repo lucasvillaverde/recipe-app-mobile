@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.base.presenter
+package dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_list
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -11,10 +11,9 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class RecipeListViewModel @Inject constructor(
     private val mealRepository: MealRepository
 ) : ViewModel() {
-
     val isLoading = MutableLiveData(false)
     val networkError = MutableLiveData(false)
     private val meals = mealRepository.getMeals()

@@ -2,8 +2,6 @@ package dev.lucasvillaverde.recipeapp
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import dev.lucasvillaverde.recipeapp.repository.MealRepositoryTestImpl
-import dev.lucasvillaverde.recipeapp.util.observeForTesting
-import dev.lucasvillaverde.recipeapp.base.presenter.MainViewModel
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

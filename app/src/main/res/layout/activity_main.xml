@@ -1,102 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layoutMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
-    tools:context=".base.presenter.MainActivity">
-
-    <ProgressBar
-        android:id="@+id/loader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <SearchView
-        android:id="@+id/svRecipes"
+    android:orientation="vertical">
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/navHostFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:iconifiedByDefault="false"
-        android:queryHint="Search your favorite meal!"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:animateLayoutChanges="true"
-        android:descendantFocusability="blocksDescendants"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/svRecipes">
-
-        <ImageView
-            android:id="@+id/imgNoMeal"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:contentDescription="List Image"
-            android:src="@drawable/ic_find_your_meal" />
-
-        <TextView
-            android:id="@+id/tvTitleDraw"
-            style="@style/TextAppearance.AppCompat.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/check_some_meal"
-            android:textAlignment="center" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mealRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:padding="4dp"
-            android:scrollbars="none"
-            app:fastScrollEnabled="true"
-            app:fastScrollHorizontalThumbDrawable="@drawable/thumb_scroll_drawable"
-            app:fastScrollHorizontalTrackDrawable="@drawable/line_scroll_drawable"
-            app:fastScrollVerticalThumbDrawable="@drawable/thumb_scroll_drawable"
-            app:fastScrollVerticalTrackDrawable="@drawable/line_scroll_drawable"
-            tools:listitem="@layout/meal_list_item"
-            tools:visibility="gone" />
-
-
-    </LinearLayout>
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnGetMeal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/colorAccent"
-        android:src="@drawable/ic_baseline_add_24"
-        android:text="@string/btn_give_me_more_meals"
-        app:borderWidth="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnDeleteMeals"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:src="@drawable/ic_baseline_delete_forever_24"
-        app:borderWidth="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
+</LinearLayout>
