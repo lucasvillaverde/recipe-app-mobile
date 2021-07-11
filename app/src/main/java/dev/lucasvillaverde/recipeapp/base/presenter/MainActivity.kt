@@ -9,14 +9,13 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.work.ExistingWorkPolicy
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.MealEntity
 import dev.lucasvillaverde.recipeapp.databinding.ActivityMainBinding
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.MealEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.MealDetailsActivity
 import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.adapters.MealAdapter
 import dev.lucasvillaverde.recipeapp.utils.DeviceUtils.hasInternet
-import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.MealDetailsActivity
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -30,8 +29,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
-
-        ExistingWorkPolicy.APPEND
 
         setupMealRecyclerView()
         setupOnClickListeners()

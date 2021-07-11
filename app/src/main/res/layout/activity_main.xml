@@ -21,7 +21,6 @@
 
     <SearchView
         android:id="@+id/svRecipes"
-        style="@style/Widget.AppCompat.SearchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -48,7 +47,7 @@
 
         <TextView
             android:id="@+id/tvTitleDraw"
-            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
+            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/check_some_meal"
@@ -85,8 +84,7 @@
         app:borderWidth="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tint="@null" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnDeleteMeals"
@@ -99,7 +97,6 @@
         app:borderWidth="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tint="@null" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
