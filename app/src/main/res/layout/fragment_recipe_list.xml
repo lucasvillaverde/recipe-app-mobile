@@ -5,8 +5,8 @@
     android:id="@+id/layoutMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature_recipe.presenter.recipe_list.RecipeListFragment"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    tools:context=".feature_recipe.presenter.recipe_list.RecipeListFragment">
 
     <ProgressBar
         android:id="@+id/loader"

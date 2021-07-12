@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface RecipeDao {
 
     @Query("SELECT * FROM meals ORDER BY name ASC")
-    fun getRecipes(): Flow<List<RecipeEntity>>
+    suspend fun getRecipes(): List<RecipeEntity>
 
     @Query("SELECT * FROM meals WHERE id = :id")
     fun getRecipeById(id: Int): Flow<RecipeEntity>

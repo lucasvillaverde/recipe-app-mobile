@@ -7,5 +7,5 @@ interface RecipeRepository {
     suspend fun getNewRecipe()
     suspend fun deleteRecipes()
     fun getRecipeById(id: Int): Flow<RecipeEntity>
-    fun getRecipes(): Flow<List<RecipeEntity>>
+    suspend fun getRecipes(): List<RecipeEntity>
 }

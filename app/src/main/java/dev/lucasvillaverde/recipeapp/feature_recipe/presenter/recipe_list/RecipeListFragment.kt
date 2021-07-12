@@ -24,7 +24,7 @@ import dev.lucasvillaverde.recipeapp.utils.DeviceUtils
 class RecipeListFragment : Fragment() {
     lateinit var binding: FragmentRecipeListBinding
 
-    private val mainViewModel: RecipeListViewModel by viewModels()
+    private val recipeListViewModel: RecipeListViewModel by viewModels()
     private lateinit var recipeAdapter: RecipeAdapter
 
     override fun onCreateView(
@@ -42,7 +42,7 @@ class RecipeListFragment : Fragment() {
 
         setupMealRecyclerView()
         setupOnClickListeners()
-        setupObservers()
+        setupObserver()
         setupSearchView()
     }
 
@@ -76,7 +76,7 @@ class RecipeListFragment : Fragment() {
             override fun onQueryTextSubmit(p0: String?): Boolean = true
 
             override fun onQueryTextChange(text: String?): Boolean {
-                mainViewModel.getMeals().value?.let { list ->
+                recipeListViewModel.pageState.value?.data?.let { list ->
                     if (text.isNullOrEmpty()) recipeAdapter.submitList(list)
                     else recipeAdapter.submitList(list.filter { it.name!!.contains(text, true) })
                 }
@@ -89,7 +89,7 @@ class RecipeListFragment : Fragment() {
     private fun setupOnClickListeners() {
         binding.btnGetMeal.setOnClickListener {
             if (DeviceUtils.hasInternet(requireContext().applicationContext))
-                mainViewModel.getNewMeal()
+                recipeListViewModel.getNewMeal()
             else
                 Toast.makeText(
                     requireActivity(),
@@ -99,29 +99,27 @@ class RecipeListFragment : Fragment() {
         }
 
         binding.btnDeleteMeals.setOnClickListener {
-            mainViewModel.deleteMeals()
+            recipeListViewModel.deleteMeals()
         }
     }
 
-    private fun setupObservers() {
-        mainViewModel.isLoading.observe(viewLifecycleOwner, {
-            setPageLoading(it)
-        })
+    private fun setupObserver() {
+        recipeListViewModel.pageState.observe(viewLifecycleOwner) {
+            setPageLoading(it.isLoading)
 
-        mainViewModel.networkError.observe(viewLifecycleOwner, {
-            if (it) {
+            it.data?.let { data ->
+                populateRecyclerView(data)
+                updateUI(data)
+            }
+
+            if (it.isError) {
                 Toast.makeText(
                     requireActivity(),
                     getString(R.string.network_error),
                     Toast.LENGTH_LONG
                 ).show()
             }
-        })
-
-        mainViewModel.getMeals().observe(viewLifecycleOwner, {
-            updateUI(it)
-            populateRecyclerView(it)
-        })
+        }
     }
 
     private fun populateRecyclerView(recipeList: List<RecipeEntity>) {
@@ -151,7 +149,6 @@ class RecipeListFragment : Fragment() {
             binding.btnDeleteMeals.isClickable = false
             binding.imgEmptyState.visibility = View.GONE
             binding.tvEmptyState.visibility = View.GONE
-
             binding.loader.visibility = View.VISIBLE
         } else {
             binding.loader.visibility = View.GONE
