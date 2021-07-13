@@ -2,7 +2,7 @@ package dev.lucasvillaverde.recipeapp.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
 
 class RecipeRepositoryTestImpl : RecipeRepository {

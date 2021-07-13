@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
 import javax.inject.Inject
 

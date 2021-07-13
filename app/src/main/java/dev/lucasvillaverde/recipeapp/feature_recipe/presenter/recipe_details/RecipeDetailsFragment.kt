@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.base.presenter.MainActivity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentRecipeDetailsBinding
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
 import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details.adapter.RecipeDetailsPageAdapter
 
 @AndroidEntryPoint

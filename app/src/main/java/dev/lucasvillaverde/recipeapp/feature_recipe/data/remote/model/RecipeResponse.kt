@@ -1,15 +1,9 @@
-package dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities
+package dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
 
-@Entity(tableName = "meals")
-data class RecipeEntity(
-    @PrimaryKey
-    @SerializedName("idMeal")
-    val id: Int,
-
+data class RecipeResponse(
     @SerializedName("strMeal")
     val name: String?,
 
@@ -120,52 +114,31 @@ data class RecipeEntity(
 
     @SerializedName("strMeasure15")
     val measure15: String?
+)
 
-) {
-
-    fun getIngredients(): ArrayList<String?> {
-        val ingredients = ArrayList<String?>()
-        ingredients.add(ingredient1)
-        ingredients.add(ingredient2)
-        ingredients.add(ingredient3)
-        ingredients.add(ingredient4)
-        ingredients.add(ingredient5)
-        ingredients.add(ingredient6)
-        ingredients.add(ingredient7)
-        ingredients.add(ingredient8)
-        ingredients.add(ingredient9)
-        ingredients.add(ingredient10)
-        ingredients.add(ingredient11)
-        ingredients.add(ingredient12)
-        ingredients.add(ingredient13)
-        ingredients.add(ingredient14)
-        ingredients.add(ingredient15)
-        return ingredients
-    }
-
-    fun getMeasures(): ArrayList<String?> {
-        val measures = ArrayList<String?>()
-        measures.add(measure1)
-        measures.add(measure2)
-        measures.add(measure3)
-        measures.add(measure4)
-        measures.add(measure5)
-        measures.add(measure6)
-        measures.add(measure7)
-        measures.add(measure8)
-        measures.add(measure9)
-        measures.add(measure10)
-        measures.add(measure11)
-        measures.add(measure12)
-        measures.add(measure13)
-        measures.add(measure14)
-        measures.add(measure15)
-        return measures
-    }
-
-    fun getYoutubeVideoID(): String? {
-        return youtubeLink?.let {
-            it.substring(it.indexOf('=') + 1, it.length)
-        }
-    }
-}
+fun RecipeResponse.toEntity() = RecipeEntity(
+    name = this.name,
+    category = this.category,
+    region = this.region,
+    instructions = this.instructions,
+    thumb = this.thumb,
+    tags = this.tags,
+    youtubeLink = this.youtubeLink,
+    ingredientsMeasures = mapOf(
+        Pair(ingredient1, measure1),
+        Pair(ingredient2, measure2),
+        Pair(ingredient3, measure3),
+        Pair(ingredient4, measure4),
+        Pair(ingredient5, measure5),
+        Pair(ingredient6, measure6),
+        Pair(ingredient7, measure7),
+        Pair(ingredient8, measure8),
+        Pair(ingredient9, measure9),
+        Pair(ingredient10, measure10),
+        Pair(ingredient11, measure11),
+        Pair(ingredient12, measure12),
+        Pair(ingredient13, measure13),
+        Pair(ingredient14, measure14),
+        Pair(ingredient15, measure15),
+    )
+)

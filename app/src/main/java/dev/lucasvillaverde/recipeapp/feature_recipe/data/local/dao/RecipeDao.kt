@@ -1,11 +1,10 @@
 package dev.lucasvillaverde.recipeapp.feature_recipe.data.local.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

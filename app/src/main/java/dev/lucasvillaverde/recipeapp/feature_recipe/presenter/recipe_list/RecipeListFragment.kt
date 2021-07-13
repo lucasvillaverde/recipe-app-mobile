@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.base.presenter.MainActivity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentRecipeListBinding
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
 import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details.RecipeDetailsFragment.Companion.MEAL_ID
 import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_list.adapter.RecipeAdapter
 import dev.lucasvillaverde.recipeapp.utils.DeviceUtils

@@ -1,10 +1,9 @@
 package dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services
 
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.responses.RecipeResponse
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.model.RecipeListResponse
 import retrofit2.http.GET
 
 interface RecipeService {
-
     @GET("random.php")
-    suspend fun getNewRecipe(): RecipeResponse
+    suspend fun getNewRecipe(): RecipeListResponse
 }

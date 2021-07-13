@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.databinding.FragmentIngredientsBinding
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
 
 class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
     private lateinit var binding: FragmentIngredientsBinding

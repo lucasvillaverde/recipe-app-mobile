@@ -8,7 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dev.lucasvillaverde.recipeapp.databinding.FragmentInstructionsBinding
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
 
 class InstructionsFragment : Fragment() {
     private lateinit var binding: FragmentInstructionsBinding

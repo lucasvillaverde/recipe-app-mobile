@@ -1,7 +1,8 @@
 package dev.lucasvillaverde.recipeapp.feature_recipe.data
 
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.dao.RecipeDao
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.entities.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.model.toEntity
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.RecipeService
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
 import kotlinx.coroutines.Dispatchers
@@ -21,9 +22,8 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override suspend fun getNewRecipe() = withContext(Dispatchers.IO) {
         val meals = recipeService.getNewRecipe()
-        recipeDao.insertAll(meals.recipeList)
+        recipeDao.insertAll(meals.recipeList.map { it.toEntity() })
     }
-
 
     override suspend fun deleteRecipes() = withContext(Dispatchers.IO) {
         recipeDao.deleteAllRecipes()
