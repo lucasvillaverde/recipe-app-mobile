@@ -7,25 +7,25 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import dev.lucasvillaverde.recipeapp.databinding.MealListItemBinding
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 
 class RecipeAdapter :
     RecyclerView.Adapter<RecipeAdapter.MealViewHolder>() {
-    var onItemClick: ((RecipeEntity) -> Unit)? = null
+    var onItemClick: ((RecipeModel) -> Unit)? = null
 
-    private val diffCallback = object : DiffUtil.ItemCallback<RecipeEntity>() {
-        override fun areItemsTheSame(oldItem: RecipeEntity, newItem: RecipeEntity): Boolean =
-            oldItem.id == newItem.id
+    private val diffCallback = object : DiffUtil.ItemCallback<RecipeModel>() {
+        override fun areItemsTheSame(oldModel: RecipeModel, newModel: RecipeModel): Boolean =
+            oldModel.id == newModel.id
 
-        override fun areContentsTheSame(oldItem: RecipeEntity, newItem: RecipeEntity): Boolean =
-            oldItem.hashCode() == newItem.hashCode()
+        override fun areContentsTheSame(oldModel: RecipeModel, newModel: RecipeModel): Boolean =
+            oldModel.hashCode() == newModel.hashCode()
     }
 
     private val differ = AsyncListDiffer(this, diffCallback)
 
-    fun submitList(list: List<RecipeEntity>) = differ.submitList(list)
+    fun submitList(list: List<RecipeModel>) = differ.submitList(list)
 
     inner class MealViewHolder(private val binding: MealListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -35,7 +35,7 @@ class RecipeAdapter :
             }
         }
 
-        fun bind(recipeEntity: RecipeEntity) {
+        fun bind(recipeEntity: RecipeModel) {
             binding.mealTitle.text = recipeEntity.name
             binding.mealDescription.text = recipeEntity.category
             Picasso.get().load(recipeEntity.thumb).transform(CropCircleTransformation())
@@ -50,7 +50,7 @@ class RecipeAdapter :
         )
 
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
-        val recipe: RecipeEntity = differ.currentList[position]
+        val recipe: RecipeModel = differ.currentList[position]
         holder.bind(recipe)
     }
 

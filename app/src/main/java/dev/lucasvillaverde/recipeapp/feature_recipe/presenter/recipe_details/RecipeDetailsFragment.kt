@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.base.presenter.MainActivity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentRecipeDetailsBinding
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details.adapter.RecipeDetailsPageAdapter
 
 @AndroidEntryPoint
@@ -36,13 +36,14 @@ class RecipeDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recipeId = requireArguments().getInt(MEAL_ID)
+        recipeDetailsViewModel.fetchRecipe(recipeId)
 
         lifecycle.addObserver(binding.youtubePlayerView)
 
         recipeDetailsAdapter = RecipeDetailsPageAdapter(this, recipeId)
         binding.viewPager.adapter = recipeDetailsAdapter
 
-        recipeDetailsViewModel.getRecipe(recipeId).observe(viewLifecycleOwner, {
+        recipeDetailsViewModel.recipe.observe(viewLifecycleOwner, {
             it?.let {
                 setTabLayout()
                 loadMediaUI(it)
@@ -51,7 +52,7 @@ class RecipeDetailsFragment : Fragment() {
         })
     }
 
-    private fun updateUI(recipe: RecipeEntity) {
+    private fun updateUI(recipe: RecipeModel) {
         binding.mealDetailsCard.visibility = View.VISIBLE
 
         // Actionbar
@@ -59,7 +60,7 @@ class RecipeDetailsFragment : Fragment() {
         (activity as MainActivity).supportActionBar?.subtitle = recipe.category
     }
 
-    private fun loadMediaUI(recipe: RecipeEntity) {
+    private fun loadMediaUI(recipe: RecipeModel) {
         // TODO: 11/07/2021 - improve performance
 
         /* val youtubeVideoID = recipe.getYoutubeVideoID()

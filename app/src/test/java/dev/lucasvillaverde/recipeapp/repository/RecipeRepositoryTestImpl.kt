@@ -6,7 +6,7 @@ import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntit
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
 
 class RecipeRepositoryTestImpl : RecipeRepository {
-    override suspend fun getNewRecipe() {
+    override suspend fun fetchNewRecipe() {
         TODO("Not yet implemented")
     }
 

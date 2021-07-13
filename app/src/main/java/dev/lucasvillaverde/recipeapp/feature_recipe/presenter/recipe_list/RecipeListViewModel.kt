@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.lucasvillaverde.recipeapp.base.presenter.model.BasePageState
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.toModel
+
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,11 +18,11 @@ import javax.inject.Inject
 class RecipeListViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository
 ) : ViewModel() {
-    private var recipes = listOf<RecipeEntity>()
-    private val _pageState: MutableLiveData<BasePageState<List<RecipeEntity>>> = MutableLiveData(
+    private var recipes = listOf<RecipeModel>()
+    private val _pageState: MutableLiveData<BasePageState<List<RecipeModel>>> = MutableLiveData(
         BasePageState()
     )
-    val pageState: LiveData<BasePageState<List<RecipeEntity>>> = _pageState
+    val pageState: LiveData<BasePageState<List<RecipeModel>>> = _pageState
 
     init {
         viewModelScope.launch {
@@ -36,12 +38,12 @@ class RecipeListViewModel @Inject constructor(
     }
 
     fun getNewMeal() {
-        val state = BasePageState<List<RecipeEntity>>()
+        val state = BasePageState<List<RecipeModel>>()
         _pageState.value = state
         viewModelScope.launch {
             runCatching {
-                recipeRepository.getNewRecipe()
-                recipes = recipeRepository.getRecipes()
+                recipeRepository.fetchNewRecipe()
+                recipes = recipeRepository.getRecipes().map { it.toModel() }
             }.onSuccess {
                 _pageState.postValue(
                     state.copy(
@@ -64,7 +66,7 @@ class RecipeListViewModel @Inject constructor(
     }
 
     fun deleteMeals() {
-        val state = BasePageState<List<RecipeEntity>>(
+        val state = BasePageState<List<RecipeModel>>(
             isLoading = true
         )
         _pageState.value = state
@@ -80,5 +82,6 @@ class RecipeListViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getRecipesFromRepository() = recipeRepository.getRecipes()
+    private suspend fun getRecipesFromRepository() =
+        recipeRepository.getRecipes().map { it.toModel() }
 }

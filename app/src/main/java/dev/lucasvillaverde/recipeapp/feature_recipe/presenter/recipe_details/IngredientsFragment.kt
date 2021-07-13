@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.databinding.FragmentIngredientsBinding
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 
 class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
     private lateinit var binding: FragmentIngredientsBinding
@@ -31,25 +31,25 @@ class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let { arguments ->
             recipeId = arguments.getInt(INGREDIENTS_FRAGMENT_RECIPE_ID)
-            recipeDetailsViewModel.getRecipe(recipeId!!).observe(viewLifecycleOwner, { updateUI(it) })
+            recipeDetailsViewModel.recipe
+                .observe(viewLifecycleOwner, { updateUI(it) })
         }
     }
 
-    private fun updateUI(recipe: RecipeEntity?) {
-        recipe?.let {
-            val ingredientsListText = getIngredientList(recipe.getIngredients())
-            val ingredientsMeasureListText = getMeasuresList(recipe.getMeasures())
-            binding.txtIngredients.text = ingredientsListText
-            binding.txtMeasures.text = ingredientsMeasureListText
-            binding.ingredientsRoot.visibility = View.VISIBLE
-        }
-
+    private fun updateUI(recipe: RecipeModel) {
+        val ingredientsListText =
+            getIngredientList(recipe.ingredientsMeasures.keys.toTypedArray().asList())
+        val ingredientsMeasureListText =
+            getMeasuresList(recipe.ingredientsMeasures.values.toTypedArray().asList())
+        binding.txtIngredients.text = ingredientsListText
+        binding.txtMeasures.text = ingredientsMeasureListText
+        binding.ingredientsRoot.visibility = View.VISIBLE
     }
 
-    private fun getIngredientList(list: ArrayList<String?>) =
+    private fun getIngredientList(list: List<String?>) =
         list.filter { !it.isNullOrBlank() }.joinToString(prefix = "• ", separator = "\n\n• ")
 
-    private fun getMeasuresList(list: ArrayList<String?>) =
+    private fun getMeasuresList(list: List<String?>) =
         list.filter { !it.isNullOrBlank() }.joinToString(separator = "\n\n")
 
     companion object {

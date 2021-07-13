@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.MealDatabase
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.RecipeDatabase
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.dao.RecipeDao
 import javax.inject.Singleton
 
@@ -16,11 +16,11 @@ import javax.inject.Singleton
 object StorageModule {
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext appContext: Context): MealDatabase {
+    fun provideDatabase(@ApplicationContext appContext: Context): RecipeDatabase {
         return Room
             .databaseBuilder(
                 appContext.applicationContext,
-                MealDatabase::class.java,
+                RecipeDatabase::class.java,
                 "meals"
             )
             .build()
@@ -28,7 +28,7 @@ object StorageModule {
 
     @Provides
     @Singleton
-    fun provideMealDAO(mealDatabase: MealDatabase): RecipeDao {
-        return mealDatabase.recipeDao
+    fun provideMealDAO(recipeDatabase: RecipeDatabase): RecipeDao {
+        return recipeDatabase.recipeDao
     }
 }

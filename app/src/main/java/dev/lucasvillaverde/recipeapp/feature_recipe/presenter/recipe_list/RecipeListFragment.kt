@@ -15,9 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.base.presenter.MainActivity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentRecipeListBinding
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
 import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details.RecipeDetailsFragment.Companion.MEAL_ID
 import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_list.adapter.RecipeAdapter
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 import dev.lucasvillaverde.recipeapp.utils.DeviceUtils
 
 @AndroidEntryPoint
@@ -122,11 +122,11 @@ class RecipeListFragment : Fragment() {
         }
     }
 
-    private fun populateRecyclerView(recipeList: List<RecipeEntity>) {
+    private fun populateRecyclerView(recipeList: List<RecipeModel>) {
         recipeAdapter.submitList(recipeList)
     }
 
-    private fun updateUI(listRecipe: List<RecipeEntity>) {
+    private fun updateUI(listRecipe: List<RecipeModel>) {
         when {
             listRecipe.isNotEmpty() -> {
                 binding.imgEmptyState.visibility = View.GONE

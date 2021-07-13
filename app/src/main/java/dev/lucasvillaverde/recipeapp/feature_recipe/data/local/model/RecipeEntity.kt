@@ -2,6 +2,7 @@ package dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 
 @Entity(tableName = "meals")
 data class RecipeEntity(
@@ -15,4 +16,16 @@ data class RecipeEntity(
     val tags: String?,
     val youtubeLink: String?,
     val ingredientsMeasures: Map<String?, String?>
+)
+
+fun RecipeEntity.toModel() = RecipeModel(
+    id = this.id,
+    name = this.name ?: "Unknown",
+    category = this.category ?: "Unknown",
+    thumb = this.thumb,
+    region = this.region ?: "Unknown",
+    instructions = this.instructions,
+    tags = this.tags,
+    youtubeLink = this.youtubeLink,
+    ingredientsMeasures = this.ingredientsMeasures
 )

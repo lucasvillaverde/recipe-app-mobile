@@ -6,7 +6,6 @@ import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.model.toEntity
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.RecipeService
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -14,13 +13,15 @@ class RecipeRepositoryImpl @Inject constructor(
     private val recipeDao: RecipeDao,
     private val recipeService: RecipeService
 ) : RecipeRepository {
-    override fun getRecipeById(id: Int): Flow<RecipeEntity> = recipeDao.getRecipeById(id)
+    override suspend fun getRecipeById(id: Int): RecipeEntity = withContext(Dispatchers.IO) {
+        recipeDao.getRecipeById(id)
+    }
 
     override suspend fun getRecipes(): List<RecipeEntity> = withContext(Dispatchers.IO) {
         recipeDao.getRecipes()
     }
 
-    override suspend fun getNewRecipe() = withContext(Dispatchers.IO) {
+    override suspend fun fetchNewRecipe() = withContext(Dispatchers.IO) {
         val meals = recipeService.getNewRecipe()
         recipeDao.insertAll(meals.recipeList.map { it.toEntity() })
     }

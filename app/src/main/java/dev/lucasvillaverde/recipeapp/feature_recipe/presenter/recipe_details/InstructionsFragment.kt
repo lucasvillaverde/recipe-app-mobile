@@ -8,7 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dev.lucasvillaverde.recipeapp.databinding.FragmentInstructionsBinding
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 
 class InstructionsFragment : Fragment() {
     private lateinit var binding: FragmentInstructionsBinding
@@ -30,13 +30,13 @@ class InstructionsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let { arguments ->
             recipeId = arguments.getInt(INSTRUCTIONS_FRAGMENT_RECIPE_ID)
-            recipeDetailsViewModel.getRecipe(recipeId!!).observe(viewLifecycleOwner, { entity ->
-                updateMealCard(entity!!)
+            recipeDetailsViewModel.recipe.observe(viewLifecycleOwner, { model ->
+                updateMealCard(model)
             })
         }
     }
 
-    private fun updateMealCard(recipe: RecipeEntity) {
+    private fun updateMealCard(recipe: RecipeModel) {
         binding.txtInstructions.text = recipe.instructions
         binding.instructionsRoot.visibility = View.VISIBLE
     }
