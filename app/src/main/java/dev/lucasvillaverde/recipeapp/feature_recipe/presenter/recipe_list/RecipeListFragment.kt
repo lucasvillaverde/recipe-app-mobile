@@ -15,9 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.base.presenter.MainActivity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentRecipeListBinding
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details.RecipeDetailsFragment.Companion.MEAL_ID
 import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_list.adapter.RecipeAdapter
-import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 import dev.lucasvillaverde.recipeapp.utils.DeviceUtils
 
 @AndroidEntryPoint
@@ -89,7 +89,7 @@ class RecipeListFragment : Fragment() {
     private fun setupOnClickListeners() {
         binding.btnGetMeal.setOnClickListener {
             if (DeviceUtils.hasInternet(requireContext().applicationContext))
-                recipeListViewModel.getNewMeal()
+                recipeListViewModel.getNewRecipe()
             else
                 Toast.makeText(
                     requireActivity(),
@@ -107,10 +107,8 @@ class RecipeListFragment : Fragment() {
         recipeListViewModel.pageState.observe(viewLifecycleOwner) {
             setPageLoading(it.isLoading)
 
-            it.data?.let { data ->
-                populateRecyclerView(data)
-                updateUI(data)
-            }
+            populateRecyclerView(it.data)
+            updateUI(it.data)
 
             if (it.isError) {
                 Toast.makeText(
@@ -148,7 +146,6 @@ class RecipeListFragment : Fragment() {
             binding.btnGetMeal.isClickable = false
             binding.btnDeleteMeals.isClickable = false
             binding.imgEmptyState.visibility = View.GONE
-            binding.tvEmptyState.visibility = View.GONE
             binding.loader.visibility = View.VISIBLE
         } else {
             binding.loader.visibility = View.GONE
@@ -156,7 +153,6 @@ class RecipeListFragment : Fragment() {
             binding.btnDeleteMeals.alpha = 1F
             binding.btnGetMeal.isClickable = true
             binding.btnDeleteMeals.isClickable = true
-            binding.imgEmptyState.visibility = View.VISIBLE
             binding.tvEmptyState.visibility = View.VISIBLE
         }
     }

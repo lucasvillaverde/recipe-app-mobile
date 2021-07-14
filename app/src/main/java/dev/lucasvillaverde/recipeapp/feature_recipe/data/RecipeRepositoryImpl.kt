@@ -7,9 +7,8 @@ import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.RecipeS
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class RecipeRepositoryImpl @Inject constructor(
+class RecipeRepositoryImpl(
     private val recipeDao: RecipeDao,
     private val recipeService: RecipeService
 ) : RecipeRepository {
