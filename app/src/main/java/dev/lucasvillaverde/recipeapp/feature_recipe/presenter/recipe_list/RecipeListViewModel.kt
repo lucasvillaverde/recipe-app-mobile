@@ -29,7 +29,7 @@ class RecipeListViewModel @Inject constructor(
                 is Action.LoadingData -> BasePageState(
                     isLoading = true,
                     isError = false,
-                    data = listOf()
+                    data = null
                 )
                 is Action.LoadRecipeListSuccess -> BasePageState(
                     isLoading = false,
@@ -40,12 +40,12 @@ class RecipeListViewModel @Inject constructor(
                     isLoading = false,
                     isError = true,
                     errorMessage = action.errorMessage,
-                    data = listOf()
+                    data = null
                 )
                 is Action.GetNewRecipeSuccess -> BasePageState(
                     isLoading = false,
                     isError = false,
-                    data = listOf()
+                    data = null
                 )
                 is Action.DeleteAllRecipeSuccess -> BasePageState(
                     isLoading = false,
@@ -60,14 +60,14 @@ class RecipeListViewModel @Inject constructor(
         viewModelScope.launch {
             onReduceState(Action.LoadingData)
             when (val newRecipeResource = recipeListUseCase.fetchNewRecipe()) {
-                is BaseResource.Success -> onReduceState(
-                    Action.GetNewRecipeSuccess
-                )
+                is BaseResource.Success -> {
+                    onReduceState(Action.GetNewRecipeSuccess)
+                    fetchRecipeList()
+                }
                 is BaseResource.Error -> onReduceState(
                     Action.LoadRecipeListFailure(newRecipeResource.errorMessage)
                 )
             }
-            fetchRecipeList()
         }
     }
 

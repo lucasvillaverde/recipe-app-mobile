@@ -107,8 +107,10 @@ class RecipeListFragment : Fragment() {
         recipeListViewModel.pageState.observe(viewLifecycleOwner) {
             setPageLoading(it.isLoading)
 
-            populateRecyclerView(it.data)
-            updateUI(it.data)
+            it.data?.let { data ->
+                populateRecyclerView(data)
+                updateUI(it.data)
+            }
 
             if (it.isError) {
                 Toast.makeText(
@@ -127,9 +129,9 @@ class RecipeListFragment : Fragment() {
     private fun updateUI(listRecipe: List<RecipeModel>) {
         when {
             listRecipe.isNotEmpty() -> {
+                binding.mealRecyclerView.visibility = View.VISIBLE
                 binding.imgEmptyState.visibility = View.GONE
                 binding.tvEmptyState.text = getString(R.string.check_some_meal)
-                binding.mealRecyclerView.visibility = View.VISIBLE
             }
             else -> {
                 binding.mealRecyclerView.visibility = View.GONE
@@ -146,14 +148,19 @@ class RecipeListFragment : Fragment() {
             binding.btnGetMeal.isClickable = false
             binding.btnDeleteMeals.isClickable = false
             binding.imgEmptyState.visibility = View.GONE
+            binding.tvEmptyState.visibility = View.GONE
             binding.loader.visibility = View.VISIBLE
-        } else {
-            binding.loader.visibility = View.GONE
-            binding.btnGetMeal.alpha = 1F
-            binding.btnDeleteMeals.alpha = 1F
-            binding.btnGetMeal.isClickable = true
-            binding.btnDeleteMeals.isClickable = true
-            binding.tvEmptyState.visibility = View.VISIBLE
+            binding.llMainList.alpha = 0.5F
+
+            return
         }
+
+        binding.loader.visibility = View.GONE
+        binding.btnGetMeal.alpha = 1F
+        binding.btnDeleteMeals.alpha = 1F
+        binding.btnGetMeal.isClickable = true
+        binding.btnDeleteMeals.isClickable = true
+        binding.tvEmptyState.visibility = View.VISIBLE
+        binding.llMainList.alpha = 1F
     }
 }

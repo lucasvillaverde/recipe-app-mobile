@@ -29,6 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/llMainList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:descendantFocusability="blocksDescendants"
