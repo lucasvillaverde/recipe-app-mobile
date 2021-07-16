@@ -8,13 +8,17 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
 import dev.lucasvillaverde.recipeapp.base.presenter.model.BasePageState
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
-import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.RecipeListUseCase
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.DeleteRecipesUseCase
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.FetchNewRecipeUseCase
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.GetRecipeListUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RecipeListViewModel @Inject constructor(
-    private val recipeListUseCase: RecipeListUseCase
+    private val fetchNewRecipeUseCase: FetchNewRecipeUseCase,
+    private val deleteRecipesUseCase: DeleteRecipesUseCase,
+    private val getRecipeListUseCase: GetRecipeListUseCase
 ) : ViewModel() {
     private val _pageState: MutableLiveData<BasePageState<List<RecipeModel>>> = MutableLiveData()
     val pageState: LiveData<BasePageState<List<RecipeModel>>> = _pageState
@@ -47,10 +51,16 @@ class RecipeListViewModel @Inject constructor(
                     isError = false,
                     data = null
                 )
-                is Action.DeleteAllRecipeSuccess -> BasePageState(
+                is Action.DeleteAllRecipesSuccess -> BasePageState(
                     isLoading = false,
                     isError = false,
                     data = listOf()
+                )
+                is Action.DeleteAllRecipesFailure -> BasePageState(
+                    isLoading = false,
+                    isError = false,
+                    errorMessage = action.errorMessage,
+                    data = null
                 )
             }
         )
@@ -59,7 +69,7 @@ class RecipeListViewModel @Inject constructor(
     fun getNewRecipe() {
         viewModelScope.launch {
             onReduceState(Action.LoadingData)
-            when (val newRecipeResource = recipeListUseCase.fetchNewRecipe()) {
+            when (val newRecipeResource = fetchNewRecipeUseCase.execute()) {
                 is BaseResource.Success -> {
                     onReduceState(Action.GetNewRecipeSuccess)
                     fetchRecipeList()
@@ -73,16 +83,23 @@ class RecipeListViewModel @Inject constructor(
 
     fun deleteMeals() {
         viewModelScope.launch {
-            recipeListUseCase.deleteMeals()
-            onReduceState(Action.DeleteAllRecipeSuccess)
-            fetchRecipeList()
+            onReduceState(Action.LoadingData)
+            when (val newRecipeResource = deleteRecipesUseCase.execute()) {
+                is BaseResource.Success -> {
+                    onReduceState(Action.GetNewRecipeSuccess)
+                    fetchRecipeList()
+                }
+                is BaseResource.Error -> onReduceState(
+                    Action.DeleteAllRecipesFailure(newRecipeResource.errorMessage)
+                )
+            }
         }
     }
 
     private fun fetchRecipeList() {
         viewModelScope.launch {
             onReduceState(Action.LoadingData)
-            when (val recipeListResource = recipeListUseCase.getRecipeList()) {
+            when (val recipeListResource = getRecipeListUseCase.execute()) {
                 is BaseResource.Success -> onReduceState(
                     Action.LoadRecipeListSuccess(recipeListResource.data!!)
                 )
@@ -97,7 +114,8 @@ class RecipeListViewModel @Inject constructor(
         class LoadRecipeListSuccess(val recipeList: List<RecipeModel>) : Action()
         class LoadRecipeListFailure(val errorMessage: String) : Action()
         object GetNewRecipeSuccess : Action()
-        object DeleteAllRecipeSuccess : Action()
+        object DeleteAllRecipesSuccess : Action()
+        class DeleteAllRecipesFailure(val errorMessage: String) : Action()
         object LoadingData : Action()
     }
 }

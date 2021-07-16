@@ -9,8 +9,9 @@ import dev.lucasvillaverde.recipeapp.feature_recipe.data.RecipeRepositoryImpl
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.dao.RecipeDao
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.RecipeService
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
-import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.RecipeListUseCase
-import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.RecipeListUseCaseImpl
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.DeleteRecipesUseCase
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.FetchNewRecipeUseCase
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.GetRecipeListUseCase
 import javax.inject.Singleton
 
 @Module
@@ -28,6 +29,14 @@ object RecipeRepositoryModule {
 @InstallIn(ViewModelComponent::class)
 object RecipeUseCaseModule {
     @Provides
-    fun provideRecipeListUseCase(recipeRepository: RecipeRepository): RecipeListUseCase =
-        RecipeListUseCaseImpl(recipeRepository)
+    fun provideDeleteRecipesUseCase(recipeRepository: RecipeRepository): DeleteRecipesUseCase =
+        DeleteRecipesUseCase(recipeRepository)
+
+    @Provides
+    fun provideFetchNewRecipeUseCase(recipeRepository: RecipeRepository): FetchNewRecipeUseCase =
+        FetchNewRecipeUseCase(recipeRepository)
+
+    @Provides
+    fun provideGetRecipeListUseCase(recipeRepository: RecipeRepository): GetRecipeListUseCase =
+        GetRecipeListUseCase(recipeRepository)
 }
