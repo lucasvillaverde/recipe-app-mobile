@@ -1,26 +1,64 @@
 package dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.toModel
-import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
+import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
+import dev.lucasvillaverde.recipeapp.base.presenter.model.BasePageState
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.GetRecipeUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RecipeDetailsViewModel @Inject constructor(
-    private val recipeRepository: RecipeRepository
+    private val getRecipeUseCase: GetRecipeUseCase
 ) : ViewModel() {
-    private val _recipe: MutableLiveData<RecipeModel> = MutableLiveData()
-    val recipe = _recipe
+    private val _pageState = MutableLiveData<BasePageState<RecipeModel>>()
+    val pageState: LiveData<BasePageState<RecipeModel>> = _pageState
+
+    private fun onReduceState(action: Action) {
+        _pageState.postValue(
+            when (action) {
+                is Action.LoadingData -> BasePageState(
+                    isLoading = true,
+                    isError = false,
+                    data = null
+                )
+                is Action.LoadRecipeSuccess -> BasePageState(
+                    isLoading = false,
+                    isError = false,
+                    data = action.recipe
+                )
+                is Action.LoadRecipeFailure -> BasePageState(
+                    isLoading = false,
+                    isError = true,
+                    errorMessage = action.errorMessage,
+                    data = null
+                )
+            }
+        )
+    }
 
     fun fetchRecipe(id: Int) {
         viewModelScope.launch {
-            val recipe = recipeRepository.getRecipeById(id)
-            _recipe.postValue(recipe.toModel())
+            onReduceState(Action.LoadingData)
+            when (val newRecipeResource = getRecipeUseCase.execute(GetRecipeUseCase.Params(id))) {
+                is BaseResource.Success -> {
+                    onReduceState(Action.LoadRecipeSuccess(newRecipeResource.data!!))
+                }
+                is BaseResource.Error -> onReduceState(
+                    Action.LoadRecipeFailure(newRecipeResource.errorMessage)
+                )
+            }
         }
+    }
+
+    internal sealed class Action {
+        class LoadRecipeSuccess(val recipe: RecipeModel) : Action()
+        class LoadRecipeFailure(val errorMessage: String) : Action()
+        object LoadingData : Action()
     }
 }

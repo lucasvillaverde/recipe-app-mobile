@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
+import dev.lucasvillaverde.recipeapp.base.domain.None
 import dev.lucasvillaverde.recipeapp.base.presenter.model.BasePageState
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.DeleteRecipesUseCase
@@ -69,7 +70,7 @@ class RecipeListViewModel @Inject constructor(
     fun getNewRecipe() {
         viewModelScope.launch {
             onReduceState(Action.LoadingData)
-            when (val newRecipeResource = fetchNewRecipeUseCase.execute()) {
+            when (val newRecipeResource = fetchNewRecipeUseCase.execute(None)) {
                 is BaseResource.Success -> {
                     onReduceState(Action.GetNewRecipeSuccess)
                     fetchRecipeList()
@@ -84,7 +85,7 @@ class RecipeListViewModel @Inject constructor(
     fun deleteMeals() {
         viewModelScope.launch {
             onReduceState(Action.LoadingData)
-            when (val newRecipeResource = deleteRecipesUseCase.execute()) {
+            when (val newRecipeResource = deleteRecipesUseCase.execute(None)) {
                 is BaseResource.Success -> {
                     onReduceState(Action.GetNewRecipeSuccess)
                     fetchRecipeList()
@@ -99,7 +100,7 @@ class RecipeListViewModel @Inject constructor(
     private fun fetchRecipeList() {
         viewModelScope.launch {
             onReduceState(Action.LoadingData)
-            when (val recipeListResource = getRecipeListUseCase.execute()) {
+            when (val recipeListResource = getRecipeListUseCase.execute(None)) {
                 is BaseResource.Success -> onReduceState(
                     Action.LoadRecipeListSuccess(recipeListResource.data!!)
                 )

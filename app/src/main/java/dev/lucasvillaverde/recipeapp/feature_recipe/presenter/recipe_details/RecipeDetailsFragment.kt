@@ -43,11 +43,11 @@ class RecipeDetailsFragment : Fragment() {
         recipeDetailsAdapter = RecipeDetailsPageAdapter(this, recipeId)
         binding.viewPager.adapter = recipeDetailsAdapter
 
-        recipeDetailsViewModel.recipe.observe(viewLifecycleOwner, {
-            it?.let {
+        recipeDetailsViewModel.pageState.observe(viewLifecycleOwner, {
+            it.data?.let { data ->
                 setTabLayout()
-                loadMediaUI(it)
-                updateUI(it)
+                loadMediaUI(data)
+                updateUI(data)
             }
         })
     }

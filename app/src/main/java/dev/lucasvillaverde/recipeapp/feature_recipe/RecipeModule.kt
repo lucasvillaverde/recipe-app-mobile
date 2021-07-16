@@ -12,6 +12,7 @@ import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRe
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.DeleteRecipesUseCase
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.FetchNewRecipeUseCase
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.GetRecipeListUseCase
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.GetRecipeUseCase
 import javax.inject.Singleton
 
 @Module
@@ -39,4 +40,8 @@ object RecipeUseCaseModule {
     @Provides
     fun provideGetRecipeListUseCase(recipeRepository: RecipeRepository): GetRecipeListUseCase =
         GetRecipeListUseCase(recipeRepository)
+
+    @Provides
+    fun provideGetRecipeUseCase(recipeRepository: RecipeRepository): GetRecipeUseCase =
+        GetRecipeUseCase(recipeRepository)
 }

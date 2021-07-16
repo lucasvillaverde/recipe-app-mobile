@@ -30,8 +30,10 @@ class InstructionsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let { arguments ->
             recipeId = arguments.getInt(INSTRUCTIONS_FRAGMENT_RECIPE_ID)
-            recipeDetailsViewModel.recipe.observe(viewLifecycleOwner, { model ->
-                updateMealCard(model)
+            recipeDetailsViewModel.pageState.observe(viewLifecycleOwner, {
+                it.data?.let { model ->
+                    updateMealCard(model)
+                }
             })
         }
     }
