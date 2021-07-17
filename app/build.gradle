@@ -134,8 +134,8 @@ dependencies {
     // Roboletric
     testImplementation 'androidx.test:core:1.4.0'
 
-    // Mockito
-    testImplementation 'org.mockito:mockito-core:2.19.0'
+    // Mockk
+    testImplementation "io.mockk:mockk:1.12.0"
 
     def work_version = "2.6.0-beta01"
 
