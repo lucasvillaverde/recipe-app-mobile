@@ -23,10 +23,4 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-
-    @Provides
-    @Singleton
-    fun provideMealService(retrofit: Retrofit): RecipeService {
-        return retrofit.create(RecipeService::class.java)
-    }
 }

@@ -25,10 +25,4 @@ object StorageModule {
             )
             .build()
     }
-
-    @Provides
-    @Singleton
-    fun provideMealDAO(recipeDatabase: RecipeDatabase): RecipeDao {
-        return recipeDatabase.recipeDao
-    }
 }
