@@ -1,9 +1,9 @@
 package dev.lucasvillaverde.recipeapp.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class RecipeRepositoryTestImpl : RecipeRepository {
     override suspend fun fetchNewRecipe() {
@@ -14,11 +14,24 @@ class RecipeRepositoryTestImpl : RecipeRepository {
         TODO("Not yet implemented")
     }
 
-    override fun getMealById(id: Int): LiveData<RecipeEntity?> {
-        TODO("Not yet implemented")
+    override suspend fun getRecipeById(id: Int): RecipeEntity = withContext(Dispatchers.IO) {
+        RecipeEntity(
+            1,
+            "Teste Recipe Entity",
+            "Test Category",
+            "Region Test",
+            "Test Instructions",
+            null,
+            null,
+            null,
+            mapOf(
+                Pair("Sweet potato", "2 pieces"),
+                Pair("Water", "2 cups")
+            )
+        )
     }
 
-    override fun getMeals(): LiveData<List<RecipeEntity>> = MutableLiveData(
+    override suspend fun getRecipes(): List<RecipeEntity> = withContext(Dispatchers.IO) {
         mutableListOf(
             RecipeEntity(
                 1,
@@ -29,37 +42,11 @@ class RecipeRepositoryTestImpl : RecipeRepository {
                 null,
                 null,
                 null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+                mapOf(
+                    Pair("Sweet potato", "2 pieces"),
+                    Pair("Water", "2 cups")
+                )
             )
         )
-    )
+    }
 }
