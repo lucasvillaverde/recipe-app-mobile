@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.feature_recipe.data.local
+package dev.lucasvillaverde.recipeapp.core.data.local
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

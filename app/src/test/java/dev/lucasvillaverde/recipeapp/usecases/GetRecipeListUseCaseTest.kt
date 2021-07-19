@@ -3,7 +3,7 @@ package dev.lucasvillaverde.recipeapp.usecases
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
 import dev.lucasvillaverde.recipeapp.base.domain.None
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
+import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.GetRecipeListUseCase
 import io.mockk.coEvery

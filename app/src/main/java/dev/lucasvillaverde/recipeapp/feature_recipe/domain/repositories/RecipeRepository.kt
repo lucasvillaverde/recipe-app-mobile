@@ -1,6 +1,6 @@
 package dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories
 
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
+import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
 
 interface RecipeRepository {
     suspend fun fetchNewRecipe()

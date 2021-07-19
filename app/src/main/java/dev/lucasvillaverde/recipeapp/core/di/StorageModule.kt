@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.di.modules
+package dev.lucasvillaverde.recipeapp.core.di
 
 import android.content.Context
 import androidx.room.Room
@@ -7,8 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.RecipeDatabase
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.dao.RecipeDao
+import dev.lucasvillaverde.recipeapp.core.data.local.RecipeDatabase
 import javax.inject.Singleton
 
 @Module

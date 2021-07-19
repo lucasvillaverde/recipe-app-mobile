@@ -9,5 +9,6 @@ data class RecipeModel(
     val instructions: String?,
     val tags: String?,
     val youtubeLink: String?,
-    val ingredientsMeasures: Map<String?, String?>
+    val ingredientsMeasures: Map<String?, String?>,
+    val isFavorite: Boolean
 )

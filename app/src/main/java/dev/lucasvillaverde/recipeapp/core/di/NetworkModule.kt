@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.di.modules
+package dev.lucasvillaverde.recipeapp.core.di
 
 import dagger.Module
 import dagger.Provides

@@ -1,7 +1,7 @@
 package dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.model
 
 import com.google.gson.annotations.SerializedName
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
+import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
 
 data class RecipeResponse(
     @SerializedName("strMeal")
@@ -140,5 +140,6 @@ fun RecipeResponse.toEntity() = RecipeEntity(
         Pair(ingredient13, measure13),
         Pair(ingredient14, measure14),
         Pair(ingredient15, measure15),
-    )
+    ),
+    isFavorite = false
 )

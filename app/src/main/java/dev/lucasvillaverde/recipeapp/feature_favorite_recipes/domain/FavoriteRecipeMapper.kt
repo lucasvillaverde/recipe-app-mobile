@@ -1,0 +1,17 @@
+package dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain
+
+import dev.lucasvillaverde.recipeapp.base.domain.BaseEntityMapper
+import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.model.FavoriteRecipe
+
+object FavoriteRecipeMapper : BaseEntityMapper<RecipeEntity, FavoriteRecipe> {
+    override fun mapFromEntity(entity: RecipeEntity): FavoriteRecipe = FavoriteRecipe(
+        name = entity.name ?: "Unknown",
+        category = entity.category ?: "Unknown",
+        photoUrl = entity.thumb ?: "Unknown"
+    )
+
+    override fun mapToEntity(domainModel: FavoriteRecipe): RecipeEntity {
+        TODO("Not yet implemented")
+    }
+}

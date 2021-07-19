@@ -1,19 +1,17 @@
-package dev.lucasvillaverde.recipeapp.feature_recipe.data.local.dao
+package dev.lucasvillaverde.recipeapp.feature_recipe.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.model.RecipeEntity
-import kotlinx.coroutines.flow.Flow
+import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
 
 @Dao
 interface RecipeDao {
-
-    @Query("SELECT * FROM meals ORDER BY name ASC")
+    @Query("SELECT * FROM recipes ORDER BY name ASC")
     suspend fun getRecipes(): List<RecipeEntity>
 
-    @Query("SELECT * FROM meals WHERE id = :id")
+    @Query("SELECT * FROM recipes WHERE id = :id")
     fun getRecipeById(id: Int): RecipeEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -22,6 +20,6 @@ interface RecipeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(recipes: List<RecipeEntity>)
 
-    @Query("DELETE FROM meals")
+    @Query("DELETE FROM recipes")
     fun deleteAllRecipes()
 }

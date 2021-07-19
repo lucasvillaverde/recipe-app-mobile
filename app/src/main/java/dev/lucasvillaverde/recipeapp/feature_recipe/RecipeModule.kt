@@ -6,8 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.RecipeRepositoryImpl
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.RecipeDatabase
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.dao.RecipeDao
+import dev.lucasvillaverde.recipeapp.core.data.local.RecipeDatabase
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.RecipeDao
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.RecipeService
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.DeleteRecipesUseCase
@@ -19,20 +19,20 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RecipeRepositoryModule {
+object RecipeAppModule {
     @Provides
-    fun provideMealDAO(recipeDatabase: RecipeDatabase): RecipeDao {
+    fun provideRecipeDao(recipeDatabase: RecipeDatabase): RecipeDao {
         return recipeDatabase.recipeDao
     }
 
     @Provides
-    fun provideMealService(retrofit: Retrofit): RecipeService {
+    fun provideRecipeService(retrofit: Retrofit): RecipeService {
         return retrofit.create(RecipeService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideMealRepository(
+    fun provideRecipeRepository(
         recipeDao: RecipeDao,
         recipeService: RecipeService
     ): RecipeRepository = RecipeRepositoryImpl(recipeDao, recipeService)
