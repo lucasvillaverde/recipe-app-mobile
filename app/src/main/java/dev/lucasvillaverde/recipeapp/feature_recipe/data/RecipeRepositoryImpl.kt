@@ -1,7 +1,7 @@
 package dev.lucasvillaverde.recipeapp.feature_recipe.data
 
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.RecipeDao
 import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.RecipeDao
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.model.toEntity
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.RecipeService
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
@@ -18,6 +18,10 @@ class RecipeRepositoryImpl(
 
     override suspend fun getRecipes(): List<RecipeEntity> = withContext(Dispatchers.IO) {
         recipeDao.getRecipes()
+    }
+
+    override suspend fun markRecipeAsFavorite(id: Int) = withContext(Dispatchers.IO) {
+        recipeDao.markRecipeAsFavorite(id)
     }
 
     override suspend fun fetchNewRecipe() = withContext(Dispatchers.IO) {

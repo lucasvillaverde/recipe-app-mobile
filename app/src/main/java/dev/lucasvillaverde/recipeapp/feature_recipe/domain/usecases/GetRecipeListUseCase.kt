@@ -6,6 +6,7 @@ import dev.lucasvillaverde.recipeapp.base.domain.None
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.RecipeMapper
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
+import dev.lucasvillaverde.recipeapp.utils.AppConstants.MESSAGES.COMMON_ERROR_MESSAGE
 
 class GetRecipeListUseCase(private val recipeRepository: RecipeRepository) :
     BaseUseCase<List<RecipeModel>, None>() {
@@ -14,6 +15,6 @@ class GetRecipeListUseCase(private val recipeRepository: RecipeRepository) :
             val recipes = recipeRepository.getRecipes().map { RecipeMapper.mapFromEntity(it) }
             BaseResource.Success(recipes)
         } catch (ex: Exception) {
-            BaseResource.Error(ex.message ?: "Oops, something wrong happened.")
+            BaseResource.Error(ex.message ?: COMMON_ERROR_MESSAGE)
         }
 }

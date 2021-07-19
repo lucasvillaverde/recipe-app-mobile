@@ -4,7 +4,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.RecipeService
 import dev.lucasvillaverde.recipeapp.utils.AppConstants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

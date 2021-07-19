@@ -1,9 +1,11 @@
 package dev.lucasvillaverde.recipeapp.utils
 
-sealed class AppConstants {
-
+object AppConstants {
     object API {
-        val API_BASE_URL = "https://www.themealdb.com/api/json/v1/1/"
+        const val API_BASE_URL = "https://www.themealdb.com/api/json/v1/1/"
     }
 
+    object MESSAGES {
+        const val COMMON_ERROR_MESSAGE = "Oops, something wrong happened."
+    }
 }

@@ -4,6 +4,7 @@ import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
 import dev.lucasvillaverde.recipeapp.base.domain.BaseUseCase
 import dev.lucasvillaverde.recipeapp.base.domain.None
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
+import dev.lucasvillaverde.recipeapp.utils.AppConstants.MESSAGES.COMMON_ERROR_MESSAGE
 
 class DeleteRecipesUseCase(private val recipeRepository: RecipeRepository) :
     BaseUseCase<Nothing, None>() {
@@ -12,6 +13,6 @@ class DeleteRecipesUseCase(private val recipeRepository: RecipeRepository) :
             recipeRepository.deleteRecipes()
             BaseResource.Success()
         } catch (ex: Exception) {
-            BaseResource.Error(ex.message ?: "Oops, something wrong happened.")
+            BaseResource.Error(ex.message ?: COMMON_ERROR_MESSAGE)
         }
 }

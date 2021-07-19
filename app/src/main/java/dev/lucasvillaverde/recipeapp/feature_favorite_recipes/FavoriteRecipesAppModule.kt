@@ -11,8 +11,6 @@ import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.data.local.Favorit
 import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.repositories.FavoriteRecipesRepository
 import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.usecases.GetFavoriteRecipesUseCase
 import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.usecases.RemoveRecipeFromFavoriteUseCase
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.RecipeDao
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.RecipeService
 import javax.inject.Singleton
 
 @Module

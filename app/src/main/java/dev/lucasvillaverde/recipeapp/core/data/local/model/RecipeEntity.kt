@@ -2,7 +2,6 @@ package dev.lucasvillaverde.recipeapp.core.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 
 @Entity(tableName = "recipes")
 data class RecipeEntity(

@@ -6,6 +6,7 @@ import dev.lucasvillaverde.recipeapp.base.domain.None
 import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.FavoriteRecipeMapper
 import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.model.FavoriteRecipe
 import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.repositories.FavoriteRecipesRepository
+import dev.lucasvillaverde.recipeapp.utils.AppConstants.MESSAGES.COMMON_ERROR_MESSAGE
 
 class GetFavoriteRecipesUseCase(private val favoriteRecipesRepository: FavoriteRecipesRepository) :
     BaseUseCase<List<FavoriteRecipe>, None>() {
@@ -15,6 +16,6 @@ class GetFavoriteRecipesUseCase(private val favoriteRecipesRepository: FavoriteR
 
         BaseResource.Success(favoriteRecipesModel)
     } catch (ex: Exception) {
-        BaseResource.Error(ex.message ?: "Oops, something wrong happened.")
+        BaseResource.Error(ex.message ?: COMMON_ERROR_MESSAGE)
     }
 }

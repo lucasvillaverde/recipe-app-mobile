@@ -9,7 +9,7 @@ import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
 @Dao
 interface RecipeDao {
     @Query("SELECT * FROM recipes ORDER BY name ASC")
-    suspend fun getRecipes(): List<RecipeEntity>
+    fun getRecipes(): List<RecipeEntity>
 
     @Query("SELECT * FROM recipes WHERE id = :id")
     fun getRecipeById(id: Int): RecipeEntity
@@ -19,6 +19,9 @@ interface RecipeDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(recipes: List<RecipeEntity>)
+
+    @Query("UPDATE recipes SET isFavorite = 1 WHERE id = :id")
+    fun markRecipeAsFavorite(id: Int)
 
     @Query("DELETE FROM recipes")
     fun deleteAllRecipes()

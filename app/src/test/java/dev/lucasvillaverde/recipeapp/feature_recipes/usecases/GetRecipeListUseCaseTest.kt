@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.usecases
+package dev.lucasvillaverde.recipeapp.feature_recipes.usecases
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
@@ -35,7 +35,8 @@ class GetRecipeListUseCaseTest {
                 mapOf(
                     Pair("Sweet potato", "2 pieces"),
                     Pair("Water", "2 cups")
-                )
+                ),
+                false
             )
         )
 

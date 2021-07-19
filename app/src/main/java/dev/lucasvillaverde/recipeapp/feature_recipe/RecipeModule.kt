@@ -5,8 +5,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.RecipeRepositoryImpl
 import dev.lucasvillaverde.recipeapp.core.data.local.RecipeDatabase
+import dev.lucasvillaverde.recipeapp.feature_recipe.data.RecipeRepositoryImpl
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.RecipeDao
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.RecipeService
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
