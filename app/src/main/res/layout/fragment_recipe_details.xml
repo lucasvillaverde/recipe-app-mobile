@@ -31,14 +31,6 @@
             android:visibility="visible"
             tools:src="@drawable/ic_find_your_meal" />
 
-        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-            android:id="@+id/youtubePlayerView"
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:visibility="gone"
-            app:autoPlay="false"
-            app:showFullScreenButton="true" />
-
         <ImageView
             android:id="@+id/ivFavoriteButton"
             android:layout_width="wrap_content"

@@ -7,9 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
@@ -39,8 +36,6 @@ class RecipeDetailsFragment : Fragment() {
         val recipeId = requireArguments().getInt(MEAL_ID)
         recipeDetailsViewModel.getRecipe(recipeId)
 
-        lifecycle.addObserver(binding.youtubePlayerView)
-
         recipeDetailsAdapter = RecipeDetailsPageAdapter(this, recipeId)
         binding.viewPager.adapter = recipeDetailsAdapter
 
@@ -51,7 +46,6 @@ class RecipeDetailsFragment : Fragment() {
         recipeDetailsViewModel.pageState.observe(viewLifecycleOwner, {
             it.data?.let { data ->
                 setTabLayout()
-                loadMediaUI(data)
                 updateUI(data)
             }
         })
@@ -66,28 +60,14 @@ class RecipeDetailsFragment : Fragment() {
             }
         )
 
-        // Actionbar
-        (activity as MainActivity).supportActionBar?.title = recipe.name
-        (activity as MainActivity).supportActionBar?.subtitle = recipe.category
-    }
-
-    private fun loadMediaUI(recipe: RecipeModel) {
-        // TODO: 11/07/2021 - improve performance
-
-        /* val youtubeVideoID = recipe.getYoutubeVideoID()
-
-        if (youtubeVideoID != null && DeviceUtils.hasInternet(requireActivity().applicationContext)) {
-            setupYoutubePlayerListener(youtubeVideoID)
-            binding.imgMeal.visibility = View.GONE
-
-            return
-        }
-        */
-
         Picasso.get()
             .load(recipe.thumb)
             .into(binding.imgMeal)
         binding.imgMeal.visibility = View.VISIBLE
+
+        // Actionbar
+        (activity as MainActivity).supportActionBar?.title = recipe.name
+        (activity as MainActivity).supportActionBar?.subtitle = recipe.category
     }
 
     private fun setTabLayout() {
@@ -99,63 +79,6 @@ class RecipeDetailsFragment : Fragment() {
                 1 -> tab.text = "Ingredients"
             }
         }.attach()
-    }
-
-    private fun setupYoutubePlayerListener(videoId: String) {
-        binding.mediaLoader.visibility = View.VISIBLE
-        binding.youtubePlayerView.addYouTubePlayerListener(object : YouTubePlayerListener {
-            override fun onApiChange(youTubePlayer: YouTubePlayer) {
-            }
-
-            override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
-            }
-
-            override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {
-            }
-
-            override fun onPlaybackQualityChange(
-                youTubePlayer: YouTubePlayer,
-                playbackQuality: PlayerConstants.PlaybackQuality
-            ) {
-            }
-
-            override fun onPlaybackRateChange(
-                youTubePlayer: YouTubePlayer,
-                playbackRate: PlayerConstants.PlaybackRate
-            ) {
-            }
-
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                youTubePlayer.loadVideo(videoId, 0F)
-                binding.mediaLoader.visibility = View.GONE
-            }
-
-            override fun onStateChange(
-                youTubePlayer: YouTubePlayer,
-                state: PlayerConstants.PlayerState
-            ) {
-                if (state != PlayerConstants.PlayerState.BUFFERING)
-                    binding.youtubePlayerView.let {
-                        if (it.visibility != View.GONE)
-                            return
-
-                        it.visibility = View.VISIBLE
-                    }
-            }
-
-            override fun onVideoDuration(youTubePlayer: YouTubePlayer, duration: Float) {
-            }
-
-            override fun onVideoId(youTubePlayer: YouTubePlayer, videoId: String) {
-                youTubePlayer.pause()
-            }
-
-            override fun onVideoLoadedFraction(
-                youTubePlayer: YouTubePlayer,
-                loadedFraction: Float
-            ) {
-            }
-        })
     }
 
     companion object {
