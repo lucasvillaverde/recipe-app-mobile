@@ -6,6 +6,7 @@ import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.model.Favor
 
 object FavoriteRecipeMapper : BaseEntityMapper<RecipeEntity, FavoriteRecipe> {
     override fun mapFromEntity(entity: RecipeEntity): FavoriteRecipe = FavoriteRecipe(
+        id = entity.id,
         name = entity.name ?: "Unknown",
         category = entity.category ?: "Unknown",
         photoUrl = entity.thumb ?: "Unknown"
