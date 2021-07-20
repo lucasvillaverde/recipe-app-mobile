@@ -10,4 +10,5 @@
     <string name="no_internet_error">Oops! Seems you are not connected. Please verify your internet connection and try again.</string>
     <string name="network_error">Ops! Something went wrong… Calm down! Everything will be ok.</string>
     <string name="recipe_food_image_content_description">Recipe Food Image</string>
+    <string name="favorite_button_description">favorite button</string>
 </resources>

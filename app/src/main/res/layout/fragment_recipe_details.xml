@@ -28,7 +28,8 @@
             android:layout_height="140dp"
             android:contentDescription="Main meal image"
             android:scaleType="centerCrop"
-            android:visibility="gone" />
+            android:visibility="visible"
+            tools:src="@drawable/ic_find_your_meal" />
 
         <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
             android:id="@+id/youtubePlayerView"
@@ -37,6 +38,15 @@
             android:visibility="gone"
             app:autoPlay="false"
             app:showFullScreenButton="true" />
+
+        <ImageView
+            android:id="@+id/ivFavoriteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="@string/favorite_button_description"
+            android:padding="8dp"
+            android:src="@drawable/ic_baseline_favorite_24" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"

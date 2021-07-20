@@ -9,12 +9,14 @@ import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
 import dev.lucasvillaverde.recipeapp.base.presenter.model.BasePageState
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.GetRecipeUseCase
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.ToggleRecipeIsFavorite
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RecipeDetailsViewModel @Inject constructor(
-    private val getRecipeUseCase: GetRecipeUseCase
+    private val getRecipeUseCase: GetRecipeUseCase,
+    private val toggleFavoriteRecipeUseCase: ToggleRecipeIsFavorite
 ) : ViewModel() {
     private val _pageState = MutableLiveData<BasePageState<RecipeModel>>()
     val pageState: LiveData<BasePageState<RecipeModel>> = _pageState
@@ -42,7 +44,7 @@ class RecipeDetailsViewModel @Inject constructor(
         )
     }
 
-    fun fetchRecipe(id: Int) {
+    fun getRecipe(id: Int) {
         viewModelScope.launch {
             onReduceState(Action.LoadingData)
             when (val newRecipeResource = getRecipeUseCase.execute(GetRecipeUseCase.Params(id))) {
@@ -52,6 +54,18 @@ class RecipeDetailsViewModel @Inject constructor(
                 is BaseResource.Error -> onReduceState(
                     Action.LoadRecipeFailure(newRecipeResource.errorMessage)
                 )
+            }
+        }
+    }
+
+    fun toggleRecipeIsFavorite(id: Int) {
+        viewModelScope.launch {
+            onReduceState(Action.LoadingData)
+            when (toggleFavoriteRecipeUseCase.execute(
+                ToggleRecipeIsFavorite.Params(id)
+            )) {
+                is BaseResource.Success -> getRecipe(id)
+                is BaseResource.Error -> TODO()
             }
         }
     }

@@ -20,8 +20,8 @@ interface RecipeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(recipes: List<RecipeEntity>)
 
-    @Query("UPDATE recipes SET isFavorite = 1 WHERE id = :id")
-    fun markRecipeAsFavorite(id: Int)
+    @Query("UPDATE recipes SET isFavorite = NOT isFavorite WHERE id = :id")
+    fun toggleRecipeIsFavorite(id: Int)
 
     @Query("DELETE FROM recipes")
     fun deleteAllRecipes()

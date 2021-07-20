@@ -65,7 +65,7 @@
             app:fastScrollHorizontalTrackDrawable="@drawable/line_scroll_drawable"
             app:fastScrollVerticalThumbDrawable="@drawable/thumb_scroll_drawable"
             app:fastScrollVerticalTrackDrawable="@drawable/line_scroll_drawable"
-            tools:listitem="@layout/meal_list_item"
+            tools:listitem="@layout/item_list_recipe"
             tools:visibility="gone" />
 
 

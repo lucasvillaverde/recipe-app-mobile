@@ -7,5 +7,5 @@ interface RecipeRepository {
     suspend fun deleteRecipes()
     suspend fun getRecipeById(id: Int): RecipeEntity
     suspend fun getRecipes(): List<RecipeEntity>
-    suspend fun markRecipeAsFavorite(id: Int)
+    suspend fun toggleRecipeIsFavorite(id: Int)
 }

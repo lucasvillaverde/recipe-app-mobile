@@ -12,6 +12,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.base.presenter.MainActivity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentRecipeDetailsBinding
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
@@ -36,12 +37,16 @@ class RecipeDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recipeId = requireArguments().getInt(MEAL_ID)
-        recipeDetailsViewModel.fetchRecipe(recipeId)
+        recipeDetailsViewModel.getRecipe(recipeId)
 
         lifecycle.addObserver(binding.youtubePlayerView)
 
         recipeDetailsAdapter = RecipeDetailsPageAdapter(this, recipeId)
         binding.viewPager.adapter = recipeDetailsAdapter
+
+        binding.ivFavoriteButton.setOnClickListener {
+            recipeDetailsViewModel.toggleRecipeIsFavorite(recipeId)
+        }
 
         recipeDetailsViewModel.pageState.observe(viewLifecycleOwner, {
             it.data?.let { data ->
@@ -54,6 +59,12 @@ class RecipeDetailsFragment : Fragment() {
 
     private fun updateUI(recipe: RecipeModel) {
         binding.mealDetailsCard.visibility = View.VISIBLE
+        binding.ivFavoriteButton.setImageResource(
+            when (recipe.isFavorite) {
+                true -> R.drawable.ic_baseline_favorite_24
+                false -> R.drawable.ic_baseline_favorite_border_24
+            }
+        )
 
         // Actionbar
         (activity as MainActivity).supportActionBar?.title = recipe.name

@@ -20,8 +20,8 @@ class RecipeRepositoryImpl(
         recipeDao.getRecipes()
     }
 
-    override suspend fun markRecipeAsFavorite(id: Int) = withContext(Dispatchers.IO) {
-        recipeDao.markRecipeAsFavorite(id)
+    override suspend fun toggleRecipeIsFavorite(id: Int) = withContext(Dispatchers.IO) {
+        recipeDao.toggleRecipeIsFavorite(id)
     }
 
     override suspend fun fetchNewRecipe() = withContext(Dispatchers.IO) {

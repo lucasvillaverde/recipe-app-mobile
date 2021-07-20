@@ -78,7 +78,7 @@ class RecipeListFragment : Fragment() {
             override fun onQueryTextChange(text: String?): Boolean {
                 recipeListViewModel.pageState.value?.data?.let { list ->
                     if (text.isNullOrEmpty()) recipeAdapter.submitList(list)
-                    else recipeAdapter.submitList(list.filter { it.name!!.contains(text, true) })
+                    else recipeAdapter.submitList(list.filter { it.name.contains(text, true) })
                 }
 
                 return true

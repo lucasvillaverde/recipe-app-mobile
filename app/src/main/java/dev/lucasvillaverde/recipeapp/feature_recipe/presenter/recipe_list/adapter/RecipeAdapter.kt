@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import dev.lucasvillaverde.recipeapp.databinding.MealListItemBinding
+import dev.lucasvillaverde.recipeapp.databinding.ItemListRecipeBinding
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
@@ -27,7 +27,7 @@ class RecipeAdapter :
 
     fun submitList(list: List<RecipeModel>) = differ.submitList(list)
 
-    inner class MealViewHolder(private val binding: MealListItemBinding) :
+    inner class MealViewHolder(private val binding: ItemListRecipeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
@@ -36,16 +36,16 @@ class RecipeAdapter :
         }
 
         fun bind(recipeEntity: RecipeModel) {
-            binding.mealTitle.text = recipeEntity.name
-            binding.mealDescription.text = recipeEntity.category
+            binding.tvRecipeName.text = recipeEntity.name
+            binding.tvRecipeCategory.text = recipeEntity.category
             Picasso.get().load(recipeEntity.thumb).transform(CropCircleTransformation())
-                .into(binding.mealImg)
+                .into(binding.ivRecipeLogo)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealViewHolder =
         MealViewHolder(
-            MealListItemBinding
+            ItemListRecipeBinding
                 .inflate(LayoutInflater.from(parent.context), parent, false)
         )
 

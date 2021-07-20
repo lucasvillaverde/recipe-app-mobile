@@ -10,10 +10,7 @@ import dev.lucasvillaverde.recipeapp.feature_recipe.data.RecipeRepositoryImpl
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.RecipeDao
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.RecipeService
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
-import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.DeleteRecipesUseCase
-import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.FetchNewRecipeUseCase
-import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.GetRecipeListUseCase
-import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.GetRecipeUseCase
+import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.*
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -56,4 +53,8 @@ object RecipeUseCaseModule {
     @Provides
     fun provideGetRecipeUseCase(recipeRepository: RecipeRepository): GetRecipeUseCase =
         GetRecipeUseCase(recipeRepository)
+
+    @Provides
+    fun provideMarkRecipeAsFavoriteUseCase(recipeRepository: RecipeRepository): ToggleRecipeIsFavorite =
+        ToggleRecipeIsFavorite(recipeRepository)
 }
