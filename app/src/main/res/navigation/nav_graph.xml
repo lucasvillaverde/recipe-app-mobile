@@ -14,10 +14,22 @@
             app:destination="@id/recipeDetailsFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_recipeListFragment_to_favoriteRecipesFragment"
+            app:destination="@id/favoriteRecipesFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeDetailsFragment"
         android:name="dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details.RecipeDetailsFragment"
         android:label="fragment_recipe_details"
         tools:layout="@layout/fragment_recipe_details" />
+    <fragment
+        android:id="@+id/favoriteRecipesFragment"
+        android:name="dev.lucasvillaverde.recipeapp.feature_favorite_recipes.presenter.FavoriteRecipesFragment"
+        android:label="fragment_favorite_recipes"
+        tools:layout="@layout/fragment_favorite_recipes" >
+        <action
+            android:id="@+id/action_favoriteRecipesFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
+    </fragment>
 </navigation>

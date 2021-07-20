@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import dev.lucasvillaverde.recipeapp.base.presenter.MainActivity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentFavoriteRecipesBinding
 import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.presenter.adapter.FavoriteRecipesAdapter
 
@@ -21,6 +22,7 @@ class FavoriteRecipesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        (activity as MainActivity).supportActionBar?.show()
         binding = FragmentFavoriteRecipesBinding.inflate(inflater)
 
         adapter = FavoriteRecipesAdapter()

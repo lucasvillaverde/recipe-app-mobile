@@ -71,32 +71,53 @@
 
     </LinearLayout>
 
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnGetMeal"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/colorAccent"
-        android:src="@drawable/ic_baseline_add_24"
-        android:text="@string/btn_give_me_more_meals"
-        app:borderWidth="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:gravity="center"
+        android:paddingHorizontal="12dp"
+        android:paddingBottom="24dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnDeleteMeals"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:src="@drawable/ic_baseline_delete_forever_24"
-        app:borderWidth="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnGetMeal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorAccent"
+            android:src="@drawable/ic_baseline_add_24"
+            android:text="@string/btn_give_me_more_meals"
+            app:borderWidth="0dp" />
 
+        <Space
+            android:layout_width="24dp"
+            android:layout_height="0dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnDeleteMeals"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/ic_baseline_delete_forever_24"
+            app:borderWidth="0dp" />
+
+        <Space
+            android:layout_width="24dp"
+            android:layout_height="0dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabFavoriteRecipes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/ic_baseline_favorite_24"
+            app:borderWidth="0dp" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

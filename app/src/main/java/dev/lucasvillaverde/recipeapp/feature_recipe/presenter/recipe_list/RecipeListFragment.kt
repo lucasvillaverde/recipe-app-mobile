@@ -101,6 +101,10 @@ class RecipeListFragment : Fragment() {
         binding.btnDeleteMeals.setOnClickListener {
             recipeListViewModel.deleteMeals()
         }
+
+        binding.fabFavoriteRecipes.setOnClickListener {
+            findNavController().navigate(R.id.action_recipeListFragment_to_favoriteRecipesFragment)
+        }
     }
 
     private fun setupObserver() {
