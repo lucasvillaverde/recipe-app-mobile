@@ -25,7 +25,7 @@ class ToggleRecipeIsFavoriteTest {
 
     @Test
     fun itShouldMarkRecipeAsFavoriteSuccessfully() {
-        coEvery { fakeRecipeRepository.setRecipeIsFavorite(DEFAULT_RECIPE_ID) } returns Unit
+        coEvery { fakeRecipeRepository.toggleRecipeIsFavorite(DEFAULT_RECIPE_ID) } returns Unit
 
         runBlocking {
             val markRecipeAsFavoriteResource = markRecipeAsFavoriteUseCase.execute(
@@ -38,7 +38,7 @@ class ToggleRecipeIsFavoriteTest {
     @Test
     fun itShouldMarkRecipeAsFavoriteFailure() {
         coEvery {
-            fakeRecipeRepository.setRecipeIsFavorite(DEFAULT_RECIPE_ID)
+            fakeRecipeRepository.toggleRecipeIsFavorite(DEFAULT_RECIPE_ID)
         } throws Exception("Could not mark recipe as favorite")
 
         runBlocking {

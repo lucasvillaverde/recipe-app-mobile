@@ -7,6 +7,8 @@ import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.FavoriteRec
 import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.model.FavoriteRecipe
 import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.repositories.FavoriteRecipesRepository
 import dev.lucasvillaverde.recipeapp.utils.AppConstants.MESSAGES.COMMON_ERROR_MESSAGE
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class GetFavoriteRecipesUseCase(private val favoriteRecipesRepository: FavoriteRecipesRepository) :
     BaseUseCase<List<FavoriteRecipe>, None>() {
@@ -17,5 +19,13 @@ class GetFavoriteRecipesUseCase(private val favoriteRecipesRepository: FavoriteR
         BaseResource.Success(favoriteRecipesModel)
     } catch (ex: Exception) {
         BaseResource.Error(ex.message ?: COMMON_ERROR_MESSAGE)
+    }
+
+    fun executeFlow(): Flow<List<FavoriteRecipe>> {
+        return favoriteRecipesRepository
+            .getFavoriteRecipesFlow()
+            .map { recipeEntityList ->
+                recipeEntityList.map { FavoriteRecipeMapper.mapFromEntity(it) }
+            }
     }
 }
