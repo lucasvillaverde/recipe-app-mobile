@@ -28,12 +28,7 @@ class FavoriteRecipesFragment : Fragment() {
     ): View {
         (activity as MainActivity).supportActionBar?.show()
         binding = FragmentFavoriteRecipesBinding.inflate(inflater)
-
-        adapter = FavoriteRecipesAdapter(
-            onItemClick = { openRecipeDetails(it) }
-        )
-        binding.rvFavoriteRecipes.adapter = adapter
-        binding.rvFavoriteRecipes.layoutManager = LinearLayoutManager(requireContext())
+        setupUI()
 
         return binding.root
     }
@@ -44,6 +39,16 @@ class FavoriteRecipesFragment : Fragment() {
         favoriteRecipesViewModel.favoriteRecipes.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
+    }
+
+    private fun setupUI() {
+        (activity as MainActivity).supportActionBar?.title = "Favorite Recipes"
+
+        adapter = FavoriteRecipesAdapter(
+            onItemClick = { openRecipeDetails(it) }
+        )
+        binding.rvFavoriteRecipes.adapter = adapter
+        binding.rvFavoriteRecipes.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun openRecipeDetails(id: Int) {

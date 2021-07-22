@@ -147,8 +147,6 @@ class RecipeListFragment : Fragment() {
 
     private fun setPageLoading(isLoading: Boolean) {
         if (isLoading) {
-            binding.btnGetMeal.alpha = 0.2F
-            binding.btnDeleteMeals.alpha = 0.2F
             binding.btnGetMeal.isClickable = false
             binding.btnDeleteMeals.isClickable = false
             binding.imgEmptyState.visibility = View.GONE
@@ -160,8 +158,6 @@ class RecipeListFragment : Fragment() {
         }
 
         binding.loader.visibility = View.GONE
-        binding.btnGetMeal.alpha = 1F
-        binding.btnDeleteMeals.alpha = 1F
         binding.btnGetMeal.isClickable = true
         binding.btnDeleteMeals.isClickable = true
         binding.tvEmptyState.visibility = View.VISIBLE
