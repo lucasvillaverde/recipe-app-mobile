@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
@@ -48,7 +49,7 @@ class FavoriteRecipesFragment : Fragment() {
             onItemClick = { openRecipeDetails(it) }
         )
         binding.rvFavoriteRecipes.adapter = adapter
-        binding.rvFavoriteRecipes.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvFavoriteRecipes.layoutManager = GridLayoutManager(requireContext() , 2)
     }
 
     private fun openRecipeDetails(id: Int) {
