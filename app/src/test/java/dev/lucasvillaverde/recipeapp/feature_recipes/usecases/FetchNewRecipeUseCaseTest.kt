@@ -21,7 +21,7 @@ class FetchNewRecipeUseCaseTest {
     val instantExecutorRule = InstantTaskExecutorRule()
 
     @Test
-    fun itShouldFetchNewRecipeSuccess() {
+    fun itShouldFetchNewRecipeSuccessfully() {
         coEvery { fakeRecipeRepository.fetchNewRecipe() } returns Unit
 
         runBlocking {

@@ -13,15 +13,15 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteRecipesViewModel @Inject constructor(
     private val removeRecipeFromFavoriteUseCase: RemoveRecipeFromFavoriteUseCase,
-    private val getFavoriteRecipesUseCase: GetFavoriteRecipesUseCase
+    getFavoriteRecipesUseCase: GetFavoriteRecipesUseCase
 ) : ViewModel() {
     val favoriteRecipes = getFavoriteRecipesUseCase.executeFlow().asLiveData()
 
     fun removeFromFavorite(id: Int) {
         viewModelScope.launch {
             when (removeRecipeFromFavoriteUseCase.execute(RemoveRecipeFromFavoriteUseCase.Params(id))) {
-                is BaseResource.Success -> TODO()
-                is BaseResource.Error -> TODO()
+                is BaseResource.Success -> true
+                is BaseResource.Error -> false
             }
         }
     }

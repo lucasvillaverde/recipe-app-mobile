@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.base.presenter.MainActivity
@@ -19,7 +18,7 @@ import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details.Rec
 
 @AndroidEntryPoint
 class FavoriteRecipesFragment : Fragment() {
-    lateinit var binding: FragmentFavoriteRecipesBinding
+    private lateinit var binding: FragmentFavoriteRecipesBinding
     lateinit var adapter: FavoriteRecipesAdapter
     private val favoriteRecipesViewModel: FavoriteRecipesViewModel by viewModels()
 
@@ -46,10 +45,15 @@ class FavoriteRecipesFragment : Fragment() {
         (activity as MainActivity).supportActionBar?.title = "Favorite Recipes"
 
         adapter = FavoriteRecipesAdapter(
-            onItemClick = { openRecipeDetails(it) }
+            onRecipeItemClick = { openRecipeDetails(it) },
+            onRemoveFromFavoriteClick = { removeRecipeFromFavorite(it) }
         )
         binding.rvFavoriteRecipes.adapter = adapter
-        binding.rvFavoriteRecipes.layoutManager = GridLayoutManager(requireContext() , 2)
+        binding.rvFavoriteRecipes.layoutManager = GridLayoutManager(requireContext(), 2)
+    }
+
+    private fun removeRecipeFromFavorite(id: Int) {
+        favoriteRecipesViewModel.removeFromFavorite(id)
     }
 
     private fun openRecipeDetails(id: Int) {

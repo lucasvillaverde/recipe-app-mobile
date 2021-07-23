@@ -9,7 +9,10 @@ import com.squareup.picasso.Picasso
 import dev.lucasvillaverde.recipeapp.databinding.ItemListFavoriteRecipeBinding
 import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.model.FavoriteRecipe
 
-class FavoriteRecipesAdapter(private inline val onItemClick: (recipeId: Int) -> Unit) :
+class FavoriteRecipesAdapter(
+    private inline val onRecipeItemClick: (recipeId: Int) -> Unit,
+    private inline val onRemoveFromFavoriteClick: (recipeId: Int) -> Unit
+) :
     RecyclerView.Adapter<FavoriteRecipesAdapter.FavoriteRecipeViewHolder>() {
 
     private val diffCallback = object : DiffUtil.ItemCallback<FavoriteRecipe>() {
@@ -37,7 +40,10 @@ class FavoriteRecipesAdapter(private inline val onItemClick: (recipeId: Int) -> 
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: FavoriteRecipe) {
             binding.root.setOnClickListener {
-                onItemClick(differ.currentList[bindingAdapterPosition].id)
+                onRecipeItemClick(differ.currentList[bindingAdapterPosition].id)
+            }
+            binding.ivRemoveFromFavorite.setOnClickListener {
+                onRemoveFromFavoriteClick(differ.currentList[bindingAdapterPosition].id)
             }
             binding.tvRecipeName.text = item.name
             binding.tvRecipeCategory.text = item.category
