@@ -4,7 +4,6 @@ import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
 import kotlinx.coroutines.flow.Flow
 
 interface FavoriteRecipesRepository {
-    fun getFavoriteRecipes(): List<RecipeEntity>
-    fun getFavoriteRecipesFlow(): Flow<List<RecipeEntity>>
+    fun getFavoriteRecipes(): Flow<List<RecipeEntity>>
     suspend fun removeRecipeFromFavorite(id: Int)
 }

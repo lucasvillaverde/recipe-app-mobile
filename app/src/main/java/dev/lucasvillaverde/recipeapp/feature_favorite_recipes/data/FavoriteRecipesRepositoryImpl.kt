@@ -10,11 +10,8 @@ import kotlinx.coroutines.withContext
 
 class FavoriteRecipesRepositoryImpl(private val favoriteRecipesDao: FavoriteRecipesDao) :
     FavoriteRecipesRepository {
-    override fun getFavoriteRecipes(): List<RecipeEntity> =
-        favoriteRecipesDao.getFavoriteRecipes()
-
-    override fun getFavoriteRecipesFlow(): Flow<List<RecipeEntity>> =
-        favoriteRecipesDao.getFavoriteRecipesFlow().flowOn(Dispatchers.IO)
+    override fun getFavoriteRecipes(): Flow<List<RecipeEntity>> =
+        favoriteRecipesDao.getFavoriteRecipes().flowOn(Dispatchers.IO)
 
     override suspend fun removeRecipeFromFavorite(id: Int) = withContext(Dispatchers.IO) {
         favoriteRecipesDao.removeRecipeFromFavorite(id)

@@ -5,6 +5,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
+import dev.lucasvillaverde.recipeapp.base.domain.None
 import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.usecases.GetFavoriteRecipesUseCase
 import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.usecases.RemoveRecipeFromFavoriteUseCase
 import kotlinx.coroutines.launch
@@ -15,7 +16,7 @@ class FavoriteRecipesViewModel @Inject constructor(
     private val removeRecipeFromFavoriteUseCase: RemoveRecipeFromFavoriteUseCase,
     getFavoriteRecipesUseCase: GetFavoriteRecipesUseCase
 ) : ViewModel() {
-    val favoriteRecipes = getFavoriteRecipesUseCase.executeFlow().asLiveData()
+    val favoriteRecipes = getFavoriteRecipesUseCase.execute(None).asLiveData()
 
     fun removeFromFavorite(id: Int) {
         viewModelScope.launch {

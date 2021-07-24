@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,10 +12,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
+import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
 import dev.lucasvillaverde.recipeapp.base.presenter.MainActivity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentFavoriteRecipesBinding
 import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.presenter.adapter.FavoriteRecipesAdapter
 import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details.RecipeDetailsFragment
+import dev.lucasvillaverde.recipeapp.utils.AppConstants.MESSAGES.COMMON_ERROR_MESSAGE
 
 @AndroidEntryPoint
 class FavoriteRecipesFragment : Fragment() {
@@ -37,7 +40,14 @@ class FavoriteRecipesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         favoriteRecipesViewModel.favoriteRecipes.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+            when (it) {
+                is BaseResource.Success -> adapter.submitList(it.data!!)
+                is BaseResource.Error -> Toast.makeText(
+                    requireActivity(),
+                    COMMON_ERROR_MESSAGE,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
