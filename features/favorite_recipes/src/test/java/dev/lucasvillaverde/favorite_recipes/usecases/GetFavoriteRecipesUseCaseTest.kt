@@ -6,6 +6,7 @@ import dev.lucasvillaverde.common.base.model.BaseResource
 import dev.lucasvillaverde.common.core.local.model.RecipeEntity
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
@@ -15,7 +16,8 @@ import org.junit.Rule
 import org.junit.Test
 
 class GetFavoriteRecipesUseCaseTest {
-    private val fakeFavoriteRecipesRepository = mockk<dev.lucasvillaverde.favorite_recipes.domain.repositories.FavoriteRecipesRepository>()
+    private val fakeFavoriteRecipesRepository =
+        mockk<dev.lucasvillaverde.favorite_recipes.domain.repositories.FavoriteRecipesRepository>()
     private val getFavoriteRecipesUseCase =
         dev.lucasvillaverde.favorite_recipes.domain.usecases.GetFavoriteRecipesUseCase(
             fakeFavoriteRecipesRepository
@@ -54,7 +56,9 @@ class GetFavoriteRecipesUseCaseTest {
             assertTrue(favoriteRecipeResource is BaseResource.Success)
             assertEquals(
                 favoriteRecipeResource.data!!.first(),
-                dev.lucasvillaverde.favorite_recipes.domain.FavoriteRecipeMapper.mapFromEntity(fakeList.first())
+                dev.lucasvillaverde.favorite_recipes.domain.FavoriteRecipeMapper.mapFromEntity(
+                    fakeList.first()
+                )
             )
         }
     }
