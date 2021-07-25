@@ -56,5 +56,8 @@ dependencies {
     implementation(Dependencies.Storage.Implementation.dependencies)
     kapt(Dependencies.Storage.Kapt.dependencies)
 
+    androidTestImplementation(Dependencies.Testing.AndroidTestImplementation.dependencies)
+    kaptAndroidTest(Dependencies.Testing.KaptAndroidTest.dependencies)
+
     testImplementation(Dependencies.Testing.TestImplementation.dependencies)
 }
