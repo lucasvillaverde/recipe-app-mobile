@@ -16,8 +16,9 @@
 - [x] Room;
 - [x] Dependency Injection;
 - [x] RecyclerView;
+- [x] Multi-modularization
 - [ ] Endless RecyclerView.
-- [ ] *Multi-modularization*
+- [ ] Multi module navigation (back and forth)
 
 
 
