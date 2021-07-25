@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.feature_favorite_recipes.data.local
+package dev.lucasvillaverde.favorite_recipes.data.local
 
 import androidx.room.Dao
 import androidx.room.Query

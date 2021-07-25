@@ -2,8 +2,8 @@ package dev.lucasvillaverde.recipeapp.feature_favorite_recipes.usecases
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
-import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.repositories.FavoriteRecipesRepository
-import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.usecases.RemoveRecipeFromFavoriteUseCase
+import dev.lucasvillaverde.favorite_recipes.domain.repositories.FavoriteRecipesRepository
+import dev.lucasvillaverde.favorite_recipes.domain.usecases.RemoveRecipeFromFavoriteUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -13,9 +13,11 @@ import org.junit.Rule
 import org.junit.Test
 
 class RemoveRecipeFromFavoriteUseCaseTest {
-    private val fakeFavoriteRecipesRepository = mockk<FavoriteRecipesRepository>()
+    private val fakeFavoriteRecipesRepository = mockk<dev.lucasvillaverde.favorite_recipes.domain.repositories.FavoriteRecipesRepository>()
     private val removeRecipeFromFavoriteUseCase =
-        RemoveRecipeFromFavoriteUseCase(fakeFavoriteRecipesRepository)
+        dev.lucasvillaverde.favorite_recipes.domain.usecases.RemoveRecipeFromFavoriteUseCase(
+            fakeFavoriteRecipesRepository
+        )
 
     companion object {
         private const val DEFAULT_RECIPE_ID = 1
@@ -30,7 +32,7 @@ class RemoveRecipeFromFavoriteUseCaseTest {
 
         runBlocking {
             val removedRecipeFromFavoritesResource = removeRecipeFromFavoriteUseCase.execute(
-                RemoveRecipeFromFavoriteUseCase.Params(
+                dev.lucasvillaverde.favorite_recipes.domain.usecases.RemoveRecipeFromFavoriteUseCase.Params(
                     DEFAULT_RECIPE_ID
                 )
             )
@@ -46,7 +48,7 @@ class RemoveRecipeFromFavoriteUseCaseTest {
 
         runBlocking {
             val removedRecipeFromFavoritesResource = removeRecipeFromFavoriteUseCase.execute(
-                RemoveRecipeFromFavoriteUseCase.Params(
+                dev.lucasvillaverde.favorite_recipes.domain.usecases.RemoveRecipeFromFavoriteUseCase.Params(
                     DEFAULT_RECIPE_ID
                 )
             )

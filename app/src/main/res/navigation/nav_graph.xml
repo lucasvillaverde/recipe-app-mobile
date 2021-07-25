@@ -25,7 +25,7 @@
         tools:layout="@layout/fragment_recipe_details" />
     <fragment
         android:id="@+id/favoriteRecipesFragment"
-        android:name="dev.lucasvillaverde.recipeapp.feature_favorite_recipes.presenter.FavoriteRecipesFragment"
+        android:name="dev.lucasvillaverde.favorite_recipes.presenter.FavoriteRecipesFragment"
         android:label="fragment_favorite_recipes"
         tools:layout="@layout/fragment_favorite_recipes" >
         <action

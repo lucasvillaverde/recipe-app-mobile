@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.feature_favorite_recipes.presenter
+package dev.lucasvillaverde.favorite_recipes.presenter
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
 import dev.lucasvillaverde.recipeapp.base.presenter.MainActivity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentFavoriteRecipesBinding
-import dev.lucasvillaverde.recipeapp.feature_favorite_recipes.presenter.adapter.FavoriteRecipesAdapter
+import dev.lucasvillaverde.favorite_recipes.presenter.adapter.FavoriteRecipesAdapter
 import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details.RecipeDetailsFragment
 import dev.lucasvillaverde.recipeapp.utils.AppConstants.MESSAGES.COMMON_ERROR_MESSAGE
 

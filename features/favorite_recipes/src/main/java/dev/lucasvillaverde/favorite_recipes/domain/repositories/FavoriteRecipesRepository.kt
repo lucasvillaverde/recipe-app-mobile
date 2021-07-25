@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.feature_favorite_recipes.domain.repositories
+package dev.lucasvillaverde.favorite_recipes.domain.repositories
 
 import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
 import kotlinx.coroutines.flow.Flow
