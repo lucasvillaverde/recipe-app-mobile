@@ -5,9 +5,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
-import dev.lucasvillaverde.recipeapp.core.data.local.RecipeDatabase
+import dev.lucasvillaverde.common.core.local.RecipeDatabase
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.RecipeRepositoryImpl
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.RecipeDao
+import dev.lucasvillaverde.common.core.local.dao.RecipeDao
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.RecipeService
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.*
@@ -17,11 +17,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RecipeAppModule {
-    @Provides
-    fun provideRecipeDao(recipeDatabase: RecipeDatabase): RecipeDao {
-        return recipeDatabase.recipeDao
-    }
-
     @Provides
     fun provideRecipeService(retrofit: Retrofit): RecipeService {
         return retrofit.create(RecipeService::class.java)

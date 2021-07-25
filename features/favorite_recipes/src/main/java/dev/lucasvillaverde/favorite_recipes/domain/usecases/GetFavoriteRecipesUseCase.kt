@@ -1,13 +1,14 @@
 package dev.lucasvillaverde.favorite_recipes.domain.usecases
 
-import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
-import dev.lucasvillaverde.recipeapp.base.domain.BaseFlowableUseCase
-import dev.lucasvillaverde.recipeapp.base.domain.None
-import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
+import dev.lucasvillaverde.common.base.domain.BaseFlowableUseCase
+import dev.lucasvillaverde.common.base.domain.None
+import dev.lucasvillaverde.common.base.model.BaseResource
+import dev.lucasvillaverde.common.core.local.model.RecipeEntity
 import dev.lucasvillaverde.favorite_recipes.domain.FavoriteRecipeMapper
 import dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe
 import dev.lucasvillaverde.favorite_recipes.domain.repositories.FavoriteRecipesRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
 

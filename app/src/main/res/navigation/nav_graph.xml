@@ -27,11 +27,5 @@
         android:id="@+id/favoriteRecipesFragment"
         android:name="dev.lucasvillaverde.favorite_recipes.presenter.FavoriteRecipesFragment"
         android:label="fragment_favorite_recipes"
-        tools:layout="@layout/fragment_favorite_recipes" >
-        <action
-            android:id="@+id/action_favoriteRecipesFragment_to_recipeDetailsFragment"
-            app:destination="@id/recipeDetailsFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-    </fragment>
+        tools:layout="@layout/fragment_favorite_recipes" />
 </navigation>

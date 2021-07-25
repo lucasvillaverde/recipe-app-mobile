@@ -1,7 +1,7 @@
 package dev.lucasvillaverde.favorite_recipes.domain
 
-import dev.lucasvillaverde.recipeapp.base.domain.BaseEntityMapper
-import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
+import dev.lucasvillaverde.common.base.domain.BaseEntityMapper
+import dev.lucasvillaverde.common.core.local.model.RecipeEntity
 import dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe
 
 object FavoriteRecipeMapper : BaseEntityMapper<RecipeEntity, FavoriteRecipe> {

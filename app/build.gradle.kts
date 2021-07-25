@@ -52,14 +52,18 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(project(Modules.common))
+    implementation(project(Modules.Features.favorite_recipes))
+
     implementation(Dependencies.AndroidX.dependencies)
-    implementation(Dependencies.DependecyInjection.Implementation.dependencies)
     implementation(Dependencies.Kotlin.dependencies)
     implementation(Dependencies.Network.dependencies)
-    implementation(Dependencies.Storage.Implementation.dependencies)
     implementation(Dependencies.Others.dependencies)
 
+    implementation(Dependencies.DependecyInjection.Implementation.dependencies)
     kapt(Dependencies.DependecyInjection.Kapt.dependencies)
+
+    implementation(Dependencies.Storage.Implementation.dependencies)
     kapt(Dependencies.Storage.Kapt.dependencies)
 
     testImplementation(Dependencies.Testing.TestImplementation.dependencies)

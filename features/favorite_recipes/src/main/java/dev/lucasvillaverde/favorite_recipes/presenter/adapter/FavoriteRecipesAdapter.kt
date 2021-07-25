@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import dev.lucasvillaverde.recipeapp.databinding.ItemListFavoriteRecipeBinding
+import dev.lucasvillaverde.favorite_recipes.databinding.ItemListFavoriteRecipeBinding
 
 class FavoriteRecipesAdapter(
     private inline val onRecipeItemClick: (recipeId: Int) -> Unit,
@@ -14,11 +14,18 @@ class FavoriteRecipesAdapter(
 ) :
     RecyclerView.Adapter<FavoriteRecipesAdapter.FavoriteRecipeViewHolder>() {
 
-    private val diffCallback = object : DiffUtil.ItemCallback<dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe>() {
-        override fun areItemsTheSame(oldItem: dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe, newItem: dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe): Boolean =
+    private val diffCallback = object :
+        DiffUtil.ItemCallback<dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe>() {
+        override fun areItemsTheSame(
+            oldItem: dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe,
+            newItem: dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe
+        ): Boolean =
             oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe, newItem: dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe): Boolean =
+        override fun areContentsTheSame(
+            oldItem: dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe,
+            newItem: dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe
+        ): Boolean =
             oldItem.hashCode() == newItem.hashCode()
     }
 
@@ -33,7 +40,8 @@ class FavoriteRecipesAdapter(
 
     override fun getItemCount(): Int = differ.currentList.size
 
-    fun submitList(list: List<dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe>) = differ.submitList(list)
+    fun submitList(list: List<dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe>) =
+        differ.submitList(list)
 
     inner class FavoriteRecipeViewHolder(private val binding: ItemListFavoriteRecipeBinding) :
         RecyclerView.ViewHolder(binding.root) {

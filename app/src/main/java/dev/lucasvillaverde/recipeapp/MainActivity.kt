@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp.base.presenter
+package dev.lucasvillaverde.recipeapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

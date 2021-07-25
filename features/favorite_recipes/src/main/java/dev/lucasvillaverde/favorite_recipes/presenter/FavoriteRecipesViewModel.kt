@@ -1,12 +1,11 @@
 package dev.lucasvillaverde.favorite_recipes.presenter
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
-import dev.lucasvillaverde.recipeapp.base.domain.None
-import dev.lucasvillaverde.favorite_recipes.domain.usecases.GetFavoriteRecipesUseCase
-import dev.lucasvillaverde.favorite_recipes.domain.usecases.RemoveRecipeFromFavoriteUseCase
+import dev.lucasvillaverde.common.base.domain.None
+import dev.lucasvillaverde.common.base.model.BaseResource
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

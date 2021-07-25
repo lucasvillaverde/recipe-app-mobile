@@ -1,8 +1,8 @@
 package dev.lucasvillaverde.recipeapp.feature_recipes.usecases
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
-import dev.lucasvillaverde.recipeapp.base.domain.None
+import dev.lucasvillaverde.common.base.model.BaseResource
+import dev.lucasvillaverde.common.base.domain.None
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.FetchNewRecipeUseCase
 import io.mockk.coEvery

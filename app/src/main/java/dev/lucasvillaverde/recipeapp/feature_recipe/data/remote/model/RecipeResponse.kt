@@ -1,7 +1,7 @@
 package dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.model
 
 import com.google.gson.annotations.SerializedName
-import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
+import dev.lucasvillaverde.common.core.local.model.RecipeEntity
 
 data class RecipeResponse(
     @SerializedName("strMeal")

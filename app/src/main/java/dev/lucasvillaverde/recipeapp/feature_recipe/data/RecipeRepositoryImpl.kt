@@ -1,7 +1,7 @@
 package dev.lucasvillaverde.recipeapp.feature_recipe.data
 
-import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
-import dev.lucasvillaverde.recipeapp.feature_recipe.data.local.RecipeDao
+import dev.lucasvillaverde.common.core.local.model.RecipeEntity
+import dev.lucasvillaverde.common.core.local.dao.RecipeDao
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.model.toEntity
 import dev.lucasvillaverde.recipeapp.feature_recipe.data.remote.services.RecipeService
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.repositories.RecipeRepository

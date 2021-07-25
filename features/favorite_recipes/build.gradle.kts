@@ -1,6 +1,8 @@
 plugins {
     id("com.android.library")
+    id("dagger.hilt.android.plugin")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -27,6 +29,8 @@ android {
         }
     }
 
+    buildFeatures.viewBinding = true
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -40,14 +44,17 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    implementation(Dependencies.AndroidX.dependencies)
+    implementation(project(Modules.common))
 
+    implementation(Dependencies.AndroidX.dependencies)
     implementation(Dependencies.Kotlin.dependencies)
+    implementation(Dependencies.Others.dependencies)
 
     implementation(Dependencies.DependecyInjection.Implementation.dependencies)
     kapt(Dependencies.DependecyInjection.Kapt.dependencies)
 
-    implementation(Dependencies.Others.dependencies)
+    implementation(Dependencies.Storage.Implementation.dependencies)
+    kapt(Dependencies.Storage.Kapt.dependencies)
 
     testImplementation(Dependencies.Testing.TestImplementation.dependencies)
 }

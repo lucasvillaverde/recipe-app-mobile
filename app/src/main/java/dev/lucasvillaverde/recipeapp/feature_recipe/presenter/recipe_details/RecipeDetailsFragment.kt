@@ -10,7 +10,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.recipeapp.R
-import dev.lucasvillaverde.recipeapp.base.presenter.MainActivity
+import dev.lucasvillaverde.recipeapp.MainActivity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentRecipeDetailsBinding
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details.adapter.RecipeDetailsPageAdapter

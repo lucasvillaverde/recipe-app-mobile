@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
-import dev.lucasvillaverde.recipeapp.base.domain.None
-import dev.lucasvillaverde.recipeapp.base.presenter.model.BasePageState
+import dev.lucasvillaverde.common.base.model.BaseResource
+import dev.lucasvillaverde.common.base.domain.None
+import dev.lucasvillaverde.common.base.model.BasePageState
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.DeleteRecipesUseCase
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.usecases.FetchNewRecipeUseCase

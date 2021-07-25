@@ -1,7 +1,7 @@
 package dev.lucasvillaverde.recipeapp.feature_recipe.domain
 
-import dev.lucasvillaverde.recipeapp.base.domain.BaseEntityMapper
-import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
+import dev.lucasvillaverde.common.base.domain.BaseEntityMapper
+import dev.lucasvillaverde.common.core.local.model.RecipeEntity
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
 
 object RecipeMapper : BaseEntityMapper<RecipeEntity, RecipeModel> {

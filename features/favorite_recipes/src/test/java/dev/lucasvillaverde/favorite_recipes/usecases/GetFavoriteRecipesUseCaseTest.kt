@@ -1,12 +1,9 @@
-package dev.lucasvillaverde.recipeapp.feature_favorite_recipes.usecases
+package dev.lucasvillaverde.favorite_recipes.usecases
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import dev.lucasvillaverde.recipeapp.base.data.model.BaseResource
-import dev.lucasvillaverde.recipeapp.base.domain.None
-import dev.lucasvillaverde.recipeapp.core.data.local.model.RecipeEntity
-import dev.lucasvillaverde.favorite_recipes.domain.FavoriteRecipeMapper
-import dev.lucasvillaverde.favorite_recipes.domain.repositories.FavoriteRecipesRepository
-import dev.lucasvillaverde.favorite_recipes.domain.usecases.GetFavoriteRecipesUseCase
+import dev.lucasvillaverde.common.base.domain.None
+import dev.lucasvillaverde.common.base.model.BaseResource
+import dev.lucasvillaverde.common.core.local.model.RecipeEntity
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
