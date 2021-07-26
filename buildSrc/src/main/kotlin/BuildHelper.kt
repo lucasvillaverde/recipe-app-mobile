@@ -24,6 +24,13 @@ fun DependencyHandler.androidTestImplementation(list: List<String>) {
     }
 }
 
+fun DependencyHandler.androidTestUtil(list: List<String>) {
+    list.forEach { dependency ->
+        add("androidTestUtil", dependency)
+    }
+}
+
+
 fun DependencyHandler.kaptAndroidTest(list: List<String>) {
     list.forEach { dependency ->
         add("kaptAndroidTest", dependency)

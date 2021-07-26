@@ -65,8 +65,11 @@ dependencies {
     implementation(Dependencies.DependecyInjection.Implementation.dependencies)
     kapt(Dependencies.DependecyInjection.Kapt.dependencies)
 
-    implementation(Dependencies.Others.barista)
+    androidTestImplementation(Dependencies.Testing.AndroidTestImplementation.barista) {
+        exclude("org.jetbrains.kotlin", "org.jetbrains.kotlin")
+    }
     androidTestImplementation(Dependencies.Testing.AndroidTestImplementation.dependencies)
+    androidTestUtil(Dependencies.Testing.AndroidTestUtil.dependencies)
     kaptAndroidTest(Dependencies.Testing.KaptAndroidTest.dependencies)
 }
 

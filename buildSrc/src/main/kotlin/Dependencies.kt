@@ -115,15 +115,11 @@ object Dependencies {
         // Material
         const val materialDesign = "com.google.android.material:material:1.4.0"
 
-        // Barista
-        const val barista = "com.github.SchibstedSpain:Barista:3.10.0"
-
         val dependencies = arrayListOf(
             recyclerView,
             picasso,
             picassoTransformation,
-            materialDesign,
-            barista
+            materialDesign
         )
     }
 
@@ -135,9 +131,12 @@ object Dependencies {
             const val cucumber = "io.cucumber:cucumber-android:4.8.3"
 
             // Espresso
-            const val espressoCore = "androidx.test.espresso:espresso-core:3.1.1"
-            const val testRules = "androidx.test:rules:1.1.1"
-            const val testRunner = "androidx.test:runner:1.1.1"
+            const val espressoCore = "androidx.test.espresso:espresso-core:3.4.0"
+            const val testRules = "androidx.test:rules:1.4.0"
+            const val testRunner = "androidx.test:runner:1.4.0"
+
+            // Barista
+            const val barista = "com.github.SchibstedSpain:Barista:3.7.0"
 
             // Hilt
             const val hiltTesting = "com.google.dagger:hilt-android-testing:2.38"
@@ -149,6 +148,14 @@ object Dependencies {
                 testRules,
                 testRunner,
                 hiltTesting
+            )
+        }
+
+        object AndroidTestUtil {
+            val orchestrator = "androidx.test:orchestrator:1.4.0"
+
+            val dependencies = arrayListOf(
+                orchestrator
             )
         }
 
