@@ -31,23 +31,9 @@ class FavoriteRecipesFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.show()
         binding = FragmentFavoriteRecipesBinding.inflate(inflater)
         setupUI()
+        setupFavoriteRecipesObserver()
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        favoriteRecipesViewModel.favoriteRecipes.observe(viewLifecycleOwner) {
-            when (it) {
-                is BaseResource.Success -> adapter.submitList(it.data!!)
-                is BaseResource.Error -> Toast.makeText(
-                    requireActivity(),
-                    COMMON_ERROR_MESSAGE,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
     }
 
     private fun setupUI() {
@@ -59,6 +45,19 @@ class FavoriteRecipesFragment : Fragment() {
         )
         binding.rvFavoriteRecipes.adapter = adapter
         binding.rvFavoriteRecipes.layoutManager = GridLayoutManager(requireContext(), 2)
+    }
+
+    private fun setupFavoriteRecipesObserver() {
+        favoriteRecipesViewModel.favoriteRecipes.observe(viewLifecycleOwner) {
+            when (it) {
+                is BaseResource.Success -> adapter.submitList(it.data!!)
+                is BaseResource.Error -> Toast.makeText(
+                    requireActivity(),
+                    COMMON_ERROR_MESSAGE,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     private fun removeRecipeFromFavorite(id: Int) {
