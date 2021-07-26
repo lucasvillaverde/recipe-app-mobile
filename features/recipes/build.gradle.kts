@@ -29,6 +29,8 @@ android {
         }
     }
 
+    buildFeatures.viewBinding = true
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -40,8 +42,13 @@ android {
 }
 
 dependencies {
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
+    implementation(project(Modules.common))
+
     implementation(Dependencies.AndroidX.dependencies)
     implementation(Dependencies.Kotlin.dependencies)
+    implementation(Dependencies.Others.dependencies)
 
     implementation(Dependencies.DependecyInjection.Implementation.dependencies)
     kapt(Dependencies.DependecyInjection.Kapt.dependencies)
@@ -49,5 +56,8 @@ dependencies {
     implementation(Dependencies.Storage.Implementation.dependencies)
     kapt(Dependencies.Storage.Kapt.dependencies)
 
-    api(Dependencies.Network.dependencies)
+    androidTestImplementation(Dependencies.Testing.AndroidTestImplementation.dependencies)
+    kaptAndroidTest(Dependencies.Testing.KaptAndroidTest.dependencies)
+
+    testImplementation(Dependencies.Testing.TestImplementation.dependencies)
 }

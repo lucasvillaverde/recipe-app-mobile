@@ -57,21 +57,13 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(Modules.common))
     implementation(project(Modules.Features.favorite_recipes))
+    implementation(project(Modules.Features.recipes))
 
     implementation(Dependencies.AndroidX.dependencies)
     implementation(Dependencies.Kotlin.dependencies)
-    implementation(Dependencies.Network.dependencies)
-    implementation(Dependencies.Others.dependencies)
 
     implementation(Dependencies.DependecyInjection.Implementation.dependencies)
     kapt(Dependencies.DependecyInjection.Kapt.dependencies)
-
-    implementation(Dependencies.Storage.Implementation.dependencies)
-    kapt(Dependencies.Storage.Kapt.dependencies)
-
-    testImplementation(Dependencies.Testing.TestImplementation.dependencies)
-    androidTestImplementation(Dependencies.Testing.AndroidTestImplementation.dependencies)
-    kaptAndroidTest(Dependencies.Testing.KaptAndroidTest.dependencies)
 }
 
 kapt {

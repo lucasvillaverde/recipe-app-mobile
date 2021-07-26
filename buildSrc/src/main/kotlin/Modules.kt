@@ -4,9 +4,11 @@ object Modules {
 
     object Features {
         val favorite_recipes = ":features:favorite_recipes"
+        val recipes = ":features:recipes"
 
         val allFeatures = arrayListOf(
-            favorite_recipes
+            favorite_recipes,
+            recipes
         )
     }
 }

@@ -17,22 +17,21 @@ import javax.inject.Singleton
 object StorageModule {
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext appContext: Context): RecipeDatabase {
-        return Room
+    fun provideDatabase(@ApplicationContext appContext: Context): RecipeDatabase =
+        Room
             .databaseBuilder(
                 appContext.applicationContext,
                 RecipeDatabase::class.java,
                 "meals"
             )
             .build()
-    }
+
 
     @Provides
     fun provideFavoriteRecipeDao(recipeDatabase: RecipeDatabase): FavoriteRecipesDao =
         recipeDatabase.favoriteRecipesDao
 
     @Provides
-    fun provideRecipeDao(recipeDatabase: RecipeDatabase): RecipeDao {
-        return recipeDatabase.recipeDao
-    }
+    fun provideRecipeDao(recipeDatabase: RecipeDatabase): RecipeDao = recipeDatabase.recipeDao
+
 }
