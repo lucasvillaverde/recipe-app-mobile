@@ -22,10 +22,18 @@
         android:id="@+id/recipeDetailsFragment"
         android:name="dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details.RecipeDetailsFragment"
         android:label="fragment_recipe_details"
-        tools:layout="@layout/fragment_recipe_details" />
+        tools:layout="@layout/fragment_recipe_details" >
+        <argument
+            android:name="RECIPE_ID"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteRecipesFragment"
         android:name="dev.lucasvillaverde.favorite_recipes.presenter.FavoriteRecipesFragment"
         android:label="fragment_favorite_recipes"
-        tools:layout="@layout/fragment_favorite_recipes" />
+        tools:layout="@layout/fragment_favorite_recipes" >
+        <action
+            android:id="@+id/action_favoriteRecipesFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
+    </fragment>
 </navigation>

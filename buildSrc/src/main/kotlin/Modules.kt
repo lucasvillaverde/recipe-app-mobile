@@ -4,5 +4,9 @@ object Modules {
 
     object Features {
         val favorite_recipes = ":features:favorite_recipes"
+
+        val allFeatures = arrayListOf(
+            favorite_recipes
+        )
     }
 }

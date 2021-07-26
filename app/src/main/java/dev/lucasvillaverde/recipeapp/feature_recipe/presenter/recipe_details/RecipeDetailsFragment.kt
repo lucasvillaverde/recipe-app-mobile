@@ -33,7 +33,7 @@ class RecipeDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recipeId = requireArguments().getInt(MEAL_ID)
+        val recipeId = requireArguments().getInt(RECIPE_ID)
         recipeDetailsViewModel.getRecipe(recipeId)
 
         recipeDetailsAdapter = RecipeDetailsPageAdapter(this, recipeId)
@@ -82,6 +82,6 @@ class RecipeDetailsFragment : Fragment() {
     }
 
     companion object {
-        const val MEAL_ID = "meal_id"
+        const val RECIPE_ID = "recipe_id"
     }
 }

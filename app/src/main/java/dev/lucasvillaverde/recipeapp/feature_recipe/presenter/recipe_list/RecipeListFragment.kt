@@ -16,7 +16,7 @@ import dev.lucasvillaverde.recipeapp.R
 import dev.lucasvillaverde.recipeapp.MainActivity
 import dev.lucasvillaverde.recipeapp.databinding.FragmentRecipeListBinding
 import dev.lucasvillaverde.recipeapp.feature_recipe.domain.model.RecipeModel
-import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details.RecipeDetailsFragment.Companion.MEAL_ID
+import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_details.RecipeDetailsFragment.Companion.RECIPE_ID
 import dev.lucasvillaverde.recipeapp.feature_recipe.presenter.recipe_list.adapter.RecipeAdapter
 import dev.lucasvillaverde.common.utils.DeviceUtils
 
@@ -58,7 +58,7 @@ class RecipeListFragment : Fragment() {
         recipeAdapter.onItemClick = {
             findNavController().navigate(
                 R.id.action_recipeListFragment_to_recipeDetailsFragment,
-                bundleOf(MEAL_ID to it.id)
+                bundleOf(RECIPE_ID to it.id)
             )
         }
     }
