@@ -64,6 +64,10 @@ dependencies {
 
     implementation(Dependencies.DependecyInjection.Implementation.dependencies)
     kapt(Dependencies.DependecyInjection.Kapt.dependencies)
+
+    implementation(Dependencies.Others.barista)
+    androidTestImplementation(Dependencies.Testing.AndroidTestImplementation.dependencies)
+    kaptAndroidTest(Dependencies.Testing.KaptAndroidTest.dependencies)
 }
 
 kapt {
