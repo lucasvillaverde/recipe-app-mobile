@@ -8,18 +8,12 @@
 - [x] Clean Architecture
 - [x] Coroutines;
 - [x] Coroutines Flow;
-- [x] Repository pattern;
-- [x] Observer;
 - [x] MVVM;
-- [x] Basics of MVI;
-- [x] LiveData;
+- [x] Basics of MVI + PageState with LiveData;
 - [x] Room;
 - [x] Dependency Injection;
-- [x] RecyclerView;
 - [x] Multi-modularization
+- [x] Multi module navigation (back and forth)
 - [ ] Endless RecyclerView.
-- [ ] Multi module navigation (back and forth)
-
-
 
 Data provided by <a href="https://www.themealdb.com/api.php">**TheMealDB**</a>
