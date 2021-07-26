@@ -10,13 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import dev.lucasvillaverde.common.base.presenter.NavDirection
+import dev.lucasvillaverde.common.base.presenter.Navigator
 import dev.lucasvillaverde.common.utils.DeviceUtils
 import dev.lucasvillaverde.recipes.R
 import dev.lucasvillaverde.recipes.databinding.FragmentRecipeListBinding
-import dev.lucasvillaverde.recipes.presenter.recipe_details.RecipeDetailsFragment.Companion.RECIPE_ID
 import dev.lucasvillaverde.recipes.presenter.recipe_list.adapter.RecipeAdapter
 
 @AndroidEntryPoint
@@ -55,10 +55,11 @@ class RecipeListFragment : Fragment() {
         }
 
         recipeAdapter.onItemClick = {
-/*            findNavController().navigate(
-                R.id.action_recipeListFragment_to_recipeDetailsFragment,
-                bundleOf(RECIPE_ID to it.id)
-            )*/
+            (requireActivity() as Navigator).navigateToDirection(
+                NavDirection.RecipeListToRecipeDetails(
+                    bundleOf(Pair(NavDirection.RecipeListToRecipeDetails.recipeIdArgName, it.id))
+                )
+            )
         }
     }
 
@@ -102,7 +103,8 @@ class RecipeListFragment : Fragment() {
         }
 
         binding.fabFavoriteRecipes.setOnClickListener {
-/*            findNavController().navigate(R.id.action_recipeListFragment_to_favoriteRecipesFragment)*/
+            (requireActivity() as Navigator)
+                .navigateToDirection(NavDirection.RecipeListToFavoriteRecipes())
         }
     }
 
