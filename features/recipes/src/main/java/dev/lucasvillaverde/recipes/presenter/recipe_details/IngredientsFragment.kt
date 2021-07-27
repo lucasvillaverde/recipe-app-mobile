@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import dev.lucasvillaverde.recipes.R
 import dev.lucasvillaverde.recipes.databinding.FragmentIngredientsBinding
 
-class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
+class IngredientsFragment : Fragment() {
     private lateinit var binding: FragmentIngredientsBinding
     private var recipeId: Int? = null
     private val recipeDetailsViewModel: RecipeDetailsViewModel by viewModels(

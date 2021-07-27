@@ -10,12 +10,13 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import dev.lucasvillaverde.common.base.presenter.BaseFragment
 import dev.lucasvillaverde.recipes.R
 import dev.lucasvillaverde.recipes.databinding.FragmentRecipeDetailsBinding
 import dev.lucasvillaverde.recipes.presenter.recipe_details.adapter.RecipeDetailsPageAdapter
 
 @AndroidEntryPoint
-class RecipeDetailsFragment : Fragment() {
+class RecipeDetailsFragment : BaseFragment() {
     private lateinit var binding: FragmentRecipeDetailsBinding
     private lateinit var recipeDetailsAdapter: RecipeDetailsPageAdapter
     private val recipeDetailsViewModel: RecipeDetailsViewModel by viewModels()
@@ -25,7 +26,7 @@ class RecipeDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentRecipeDetailsBinding.inflate(layoutInflater, container, false)
-        (activity as AppCompatActivity).supportActionBar?.show()
+        actionBar?.show()
 
         return binding.root
     }
@@ -65,8 +66,8 @@ class RecipeDetailsFragment : Fragment() {
         binding.imgMeal.visibility = View.VISIBLE
 
         // Actionbar
-        (activity as AppCompatActivity).supportActionBar?.title = recipe.name
-        (activity as AppCompatActivity).supportActionBar?.subtitle = recipe.category
+        actionBar?.title = recipe.name
+        actionBar?.subtitle = recipe.category
     }
 
     private fun setTabLayout() {

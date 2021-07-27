@@ -6,21 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import dev.lucasvillaverde.common.base.presenter.BaseFragment
 import dev.lucasvillaverde.common.base.presenter.NavDirection
-import dev.lucasvillaverde.common.base.presenter.Navigator
 import dev.lucasvillaverde.common.utils.DeviceUtils
 import dev.lucasvillaverde.recipes.R
 import dev.lucasvillaverde.recipes.databinding.FragmentRecipeListBinding
 import dev.lucasvillaverde.recipes.presenter.recipe_list.adapter.RecipeAdapter
 
 @AndroidEntryPoint
-class RecipeListFragment : Fragment() {
+class RecipeListFragment : BaseFragment() {
     lateinit var binding: FragmentRecipeListBinding
 
     private val recipeListViewModel: RecipeListViewModel by viewModels()
@@ -30,7 +28,7 @@ class RecipeListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        (activity as AppCompatActivity).supportActionBar?.hide()
+        actionBar?.hide()
         binding = FragmentRecipeListBinding.inflate(layoutInflater, container, false)
 
         return binding.root
@@ -55,7 +53,7 @@ class RecipeListFragment : Fragment() {
         }
 
         recipeAdapter.onItemClick = {
-            (requireActivity() as Navigator).navigateToDirection(
+            navigator.navigateToDirection(
                 NavDirection.RecipeListToRecipeDetails(
                     bundleOf(Pair(NavDirection.RecipeListToRecipeDetails.recipeIdArgName, it.id))
                 )
@@ -103,7 +101,7 @@ class RecipeListFragment : Fragment() {
         }
 
         binding.fabFavoriteRecipes.setOnClickListener {
-            (requireActivity() as Navigator)
+            navigator
                 .navigateToDirection(NavDirection.RecipeListToFavoriteRecipes())
         }
     }
