@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.common.base.presenter.BaseFragment
 import dev.lucasvillaverde.common.base.presenter.NavDirection
-import dev.lucasvillaverde.common.utils.DeviceUtils
 import dev.lucasvillaverde.recipes.R
 import dev.lucasvillaverde.recipes.databinding.FragmentRecipeListBinding
 import dev.lucasvillaverde.recipes.presenter.recipe_list.adapter.RecipeAdapter
@@ -43,6 +42,13 @@ class RecipeListFragment : BaseFragment() {
         setupOnClickListeners()
         setupObserver()
         setupSearchView()
+        setupSwipeRefreshLayout()
+    }
+
+    private fun setupSwipeRefreshLayout() {
+        binding.srlRecipes.setOnRefreshListener {
+            recipeListViewModel.fetchRecipeList()
+        }
     }
 
     private fun setupMealRecyclerView() {
@@ -53,28 +59,6 @@ class RecipeListFragment : BaseFragment() {
             adapter = recipeAdapter
             visibility = View.GONE
         }
-
-        binding.recipeRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                val lastVisibleItem =
-                    (binding.recipeRecyclerView.layoutManager as GridLayoutManager)
-                        .findLastCompletelyVisibleItemPosition()
-
-                val currentList = recipeAdapter.getCurrentList()
-
-                if (lastVisibleItem == (currentList.size - 1)
-                    && recipeListViewModel.pageState.value!!.isLoading.not()
-                ) {
-                    recipeAdapter.submitList(currentList.toMutableList().apply {
-                        add(RecipeListItem.Loader)
-                    })
-                    recipeListViewModel.getNewRecipes(DEFAULT_RECIPE_FETCHING_COUNT)
-                }
-            }
-        })
-
         recipeAdapter.onItemClick = {
             navigator.navigateToDirection(
                 NavDirection.RecipeListToRecipeDetails(
@@ -87,6 +71,36 @@ class RecipeListFragment : BaseFragment() {
                 )
             )
         }
+
+        setupEndlessRecyclerView()
+    }
+
+    private fun setupEndlessRecyclerView() {
+        binding.recipeRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val lastVisibleItem =
+                    (binding.recipeRecyclerView.layoutManager as GridLayoutManager)
+                        .findLastCompletelyVisibleItemPosition()
+
+                val currentList = recipeAdapter.getCurrentList()
+
+                when {
+                    currentList.isNullOrEmpty() -> return
+                    currentList.isNotEmpty() -> {
+                        if (lastVisibleItem == (currentList.size - 1)
+                            && recipeListViewModel.pageState.value!!.isLoading.not()
+                        ) {
+                            recipeAdapter.submitList(currentList.toMutableList().apply {
+                                add(RecipeListItem.Loader)
+                            })
+                            recipeListViewModel.getNewRecipes(DEFAULT_RECIPE_FETCHING_COUNT)
+                        }
+                    }
+                }
+            }
+        })
     }
 
     private fun setupSearchView() {
@@ -118,18 +132,7 @@ class RecipeListFragment : BaseFragment() {
     }
 
     private fun setupOnClickListeners() {
-        binding.btnGetMeal.setOnClickListener {
-            if (DeviceUtils.hasInternet(requireContext().applicationContext))
-                recipeListViewModel.getNewRecipes(1)
-            else
-                Toast.makeText(
-                    requireActivity(),
-                    getString(R.string.no_internet_error),
-                    Toast.LENGTH_LONG
-                ).show()
-        }
-
-        binding.btnDeleteMeals.setOnClickListener {
+        binding.fabDeleteRecipes.setOnClickListener {
             recipeListViewModel.deleteMeals()
         }
 
@@ -141,7 +144,7 @@ class RecipeListFragment : BaseFragment() {
 
     private fun setupObserver() {
         recipeListViewModel.pageState.observe(viewLifecycleOwner) {
-            // setPageLoading(it.isLoading)
+            setPageLoading(it.isLoading, recipeAdapter.getCurrentList().isNullOrEmpty())
 
             it.data?.let { data ->
                 populateRecyclerView(data)
@@ -167,33 +170,23 @@ class RecipeListFragment : BaseFragment() {
             listRecipe.isNotEmpty() -> {
                 binding.recipeRecyclerView.visibility = View.VISIBLE
                 binding.imgEmptyState.visibility = View.GONE
-                binding.tvEmptyState.text = getString(R.string.check_some_meal)
+                binding.tvEmptyState.visibility = View.GONE
+                binding.srlRecipes.isEnabled = false
             }
             else -> {
                 binding.recipeRecyclerView.visibility = View.GONE
                 binding.imgEmptyState.visibility = View.VISIBLE
-                binding.tvEmptyState.text = getString(R.string.hit_btn_get_some_meals)
+                binding.tvEmptyState.visibility = View.VISIBLE
+                binding.srlRecipes.isEnabled = true
             }
         }
     }
 
-    private fun setPageLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.btnGetMeal.isClickable = false
-            binding.btnDeleteMeals.isClickable = false
-            binding.imgEmptyState.visibility = View.GONE
-            binding.tvEmptyState.visibility = View.GONE
-            binding.loader.visibility = View.VISIBLE
-            binding.llMainList.alpha = 0.5F
+    private fun setPageLoading(isLoading: Boolean, isOnEmptyState: Boolean) {
+        binding.fabDeleteRecipes.isClickable = !isLoading
+        binding.fabFavoriteRecipes.isClickable = !isLoading
+        binding.srlRecipes.isRefreshing = isOnEmptyState && isLoading
 
-            return
-        }
-
-        binding.loader.visibility = View.GONE
-        binding.btnGetMeal.isClickable = true
-        binding.btnDeleteMeals.isClickable = true
-        binding.tvEmptyState.visibility = View.VISIBLE
-        binding.llMainList.alpha = 1F
     }
 
     companion object {

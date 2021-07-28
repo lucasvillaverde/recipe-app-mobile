@@ -22,7 +22,7 @@ class GetNewMealFeatureSteps {
     @Given("I start the application")
     fun iStartTheApplication() {
         assertDisplayed(R.id.layoutMain)
-        clickOn(R.id.btnDeleteMeals)
+        clickOn(R.id.`@+id/fab_delete_recipes`)
     }
 
     @When("I click on add meal button")

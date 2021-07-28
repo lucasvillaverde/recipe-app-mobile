@@ -51,7 +51,7 @@ class RecipeListViewModel @Inject constructor(
                 is Action.GetNewRecipeSuccess -> BasePageState(
                     isLoading = false,
                     isError = false,
-                    data = null
+                    data = action.updatedRecipeList
                 )
                 is Action.DeleteAllRecipesSuccess -> BasePageState(
                     isLoading = false,
@@ -74,8 +74,9 @@ class RecipeListViewModel @Inject constructor(
             when (val newRecipeResource =
                 fetchNewRecipeUseCase.execute(FetchNewRecipeUseCase.Params(count))) {
                 is BaseResource.Success -> {
-                    onReduceState(Action.GetNewRecipeSuccess)
-                    fetchRecipeList()
+                    onReduceState(Action.GetNewRecipeSuccess(newRecipeResource.data!!.map {
+                        RecipeListItem.Recipe(it)
+                    }))
                 }
                 is BaseResource.Error -> onReduceState(
                     Action.LoadRecipeListFailure(newRecipeResource.errorMessage)
@@ -89,8 +90,7 @@ class RecipeListViewModel @Inject constructor(
             onReduceState(Action.LoadingData)
             when (val newRecipeResource = deleteRecipesUseCase.execute(None)) {
                 is BaseResource.Success -> {
-                    onReduceState(Action.GetNewRecipeSuccess)
-                    fetchRecipeList()
+                    onReduceState(Action.DeleteAllRecipesSuccess)
                 }
                 is BaseResource.Error -> onReduceState(
                     Action.DeleteAllRecipesFailure(newRecipeResource.errorMessage)
@@ -99,13 +99,13 @@ class RecipeListViewModel @Inject constructor(
         }
     }
 
-    private fun fetchRecipeList() {
+    fun fetchRecipeList() {
         viewModelScope.launch {
             onReduceState(Action.LoadingData)
             when (val recipeListResource = getRecipeListUseCase.execute(None)) {
                 is BaseResource.Success -> {
-                    if (recipeListResource.data!!.size < 8) {
-                        getNewRecipes(8 - recipeListResource.data!!.size)
+                    if (recipeListResource.data!!.size < MINIMUM_RECIPE_ITEMS) {
+                        getNewRecipes(MINIMUM_RECIPE_ITEMS - recipeListResource.data!!.size)
 
                         return@launch
                     }
@@ -126,9 +126,13 @@ class RecipeListViewModel @Inject constructor(
     internal sealed class Action {
         class LoadRecipeListSuccess(val recipeList: List<RecipeListItem.Recipe>) : Action()
         class LoadRecipeListFailure(val errorMessage: String) : Action()
-        object GetNewRecipeSuccess : Action()
+        class GetNewRecipeSuccess(val updatedRecipeList: List<RecipeListItem.Recipe>) : Action()
         object DeleteAllRecipesSuccess : Action()
         class DeleteAllRecipesFailure(val errorMessage: String) : Action()
         object LoadingData : Action()
+    }
+
+    companion object {
+        private const val MINIMUM_RECIPE_ITEMS = 8
     }
 }
