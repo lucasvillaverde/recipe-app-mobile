@@ -8,17 +8,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.lucasvillaverde.common.base.domain.None
 import dev.lucasvillaverde.common.base.model.BasePageState
 import dev.lucasvillaverde.common.base.model.BaseResource
+import dev.lucasvillaverde.recipes.domain.usecases.DeleteRecipesUseCase
+import dev.lucasvillaverde.recipes.domain.usecases.FetchNewRecipeUseCase
+import dev.lucasvillaverde.recipes.domain.usecases.GetRecipeListUseCase
+import dev.lucasvillaverde.recipes.presenter.recipe_list.adapter.RecipeListItem
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RecipeListViewModel @Inject constructor(
-    private val fetchNewRecipeUseCase: dev.lucasvillaverde.recipes.domain.usecases.FetchNewRecipeUseCase,
-    private val deleteRecipesUseCase: dev.lucasvillaverde.recipes.domain.usecases.DeleteRecipesUseCase,
-    private val getRecipeListUseCase: dev.lucasvillaverde.recipes.domain.usecases.GetRecipeListUseCase
+    private val fetchNewRecipeUseCase: FetchNewRecipeUseCase,
+    private val deleteRecipesUseCase: DeleteRecipesUseCase,
+    private val getRecipeListUseCase: GetRecipeListUseCase
 ) : ViewModel() {
-    private val _pageState: MutableLiveData<BasePageState<List<dev.lucasvillaverde.recipes.domain.model.RecipeModel>>> = MutableLiveData()
-    val pageState: LiveData<BasePageState<List<dev.lucasvillaverde.recipes.domain.model.RecipeModel>>> = _pageState
+    private val _pageState: MutableLiveData<BasePageState<List<RecipeListItem.Recipe>>> =
+        MutableLiveData()
+    val pageState: LiveData<BasePageState<List<RecipeListItem.Recipe>>> = _pageState
 
     init {
         fetchRecipeList()
@@ -63,10 +68,11 @@ class RecipeListViewModel @Inject constructor(
         )
     }
 
-    fun getNewRecipe() {
+    fun getNewRecipes(count: Int) {
         viewModelScope.launch {
             onReduceState(Action.LoadingData)
-            when (val newRecipeResource = fetchNewRecipeUseCase.execute(None)) {
+            when (val newRecipeResource =
+                fetchNewRecipeUseCase.execute(FetchNewRecipeUseCase.Params(count))) {
                 is BaseResource.Success -> {
                     onReduceState(Action.GetNewRecipeSuccess)
                     fetchRecipeList()
@@ -97,9 +103,19 @@ class RecipeListViewModel @Inject constructor(
         viewModelScope.launch {
             onReduceState(Action.LoadingData)
             when (val recipeListResource = getRecipeListUseCase.execute(None)) {
-                is BaseResource.Success -> onReduceState(
-                    Action.LoadRecipeListSuccess(recipeListResource.data!!)
-                )
+                is BaseResource.Success -> {
+                    if (recipeListResource.data!!.size < 8) {
+                        getNewRecipes(8 - recipeListResource.data!!.size)
+
+                        return@launch
+                    }
+
+                    onReduceState(
+                        Action.LoadRecipeListSuccess(recipeListResource.data!!.map {
+                            RecipeListItem.Recipe(it)
+                        })
+                    )
+                }
                 is BaseResource.Error -> onReduceState(
                     Action.LoadRecipeListFailure(recipeListResource.errorMessage)
                 )
@@ -108,7 +124,7 @@ class RecipeListViewModel @Inject constructor(
     }
 
     internal sealed class Action {
-        class LoadRecipeListSuccess(val recipeList: List<dev.lucasvillaverde.recipes.domain.model.RecipeModel>) : Action()
+        class LoadRecipeListSuccess(val recipeList: List<RecipeListItem.Recipe>) : Action()
         class LoadRecipeListFailure(val errorMessage: String) : Action()
         object GetNewRecipeSuccess : Action()
         object DeleteAllRecipesSuccess : Action()

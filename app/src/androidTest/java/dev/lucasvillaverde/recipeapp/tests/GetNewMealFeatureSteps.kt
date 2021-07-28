@@ -35,6 +35,6 @@ class GetNewMealFeatureSteps {
     fun iExpectToSeeANewMealRecipeInTheList() {
         // Write code here that turns the phrase above into concrete actions    throw new cucumber.api.PendingException();
         Thread.sleep(2000)
-        assertListItemCount(R.id.mealRecyclerView, 1)
+        assertListItemCount(R.id.`@+id/recipe_recycler_view`, 1)
     }
 }

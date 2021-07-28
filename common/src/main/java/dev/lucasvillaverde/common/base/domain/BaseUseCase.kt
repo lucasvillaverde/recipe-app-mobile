@@ -6,4 +6,4 @@ abstract class BaseUseCase<Resp, Param> {
     abstract suspend fun execute(params: Param): BaseResource<Resp>
 }
 
-object Noneba
+object None

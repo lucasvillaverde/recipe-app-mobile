@@ -5,7 +5,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
-class BaseFragment : Fragment() {
+open class BaseFragment : Fragment() {
 
     lateinit var navigator: Navigator
     var actionBar: ActionBar? = null

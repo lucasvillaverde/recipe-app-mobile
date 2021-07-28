@@ -8,7 +8,7 @@ import dev.lucasvillaverde.common.core.local.model.RecipeEntity
 
 @Dao
 interface RecipeDao {
-    @Query("SELECT * FROM recipes ORDER BY name ASC")
+    @Query("SELECT * FROM recipes")
     fun getRecipes(): List<RecipeEntity>
 
     @Query("SELECT * FROM recipes WHERE id = :id")
