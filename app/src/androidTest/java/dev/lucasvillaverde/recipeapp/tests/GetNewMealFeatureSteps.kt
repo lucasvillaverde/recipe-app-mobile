@@ -1,8 +1,12 @@
 package dev.lucasvillaverde.recipeapp.tests
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.schibsted.spain.barista.assertion.BaristaAssertions.assertAny
 import com.schibsted.spain.barista.assertion.BaristaListAssertions.assertListItemCount
+import com.schibsted.spain.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import dev.lucasvillaverde.recipeapp.R
@@ -22,19 +26,21 @@ class GetNewMealFeatureSteps {
     @Given("I start the application")
     fun iStartTheApplication() {
         assertDisplayed(R.id.layoutMain)
-        clickOn(R.id.`@+id/fab_delete_recipes`)
+        assertDisplayed(R.id.imgEmptyState)
+        assertDisplayed(R.id.tvEmptyState)
     }
 
-    @When("I click on add meal button")
-    fun iClickOnAddMealButton() {
-        // Write code here that turns the phrase above into concrete actions    throw new cucumber.api.PendingException();
-        clickOn(R.id.btnGetMeal)
+    @When("Recipes are being fetched")
+    fun theRecipesAreBeingFetched() {
+        assertAny<SwipeRefreshLayout>(withId(R.id.srlRecipes)) {
+            it.isRefreshing
+        }
     }
 
-    @Then("I expect to see a new meal recipe in the list")
-    fun iExpectToSeeANewMealRecipeInTheList() {
+    @Then("I expect to see a new list of recipes")
+    fun iExpectToSeeANewListOfRecipes() {
         // Write code here that turns the phrase above into concrete actions    throw new cucumber.api.PendingException();
-        Thread.sleep(2000)
-        assertListItemCount(R.id.`@+id/recipe_recycler_view`, 1)
+        Thread.sleep(5000)
+        assertRecyclerViewItemCount(R.id.recipe_recycler_view, 8)
     }
 }

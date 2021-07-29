@@ -11,7 +11,7 @@ class FetchNewRecipeUseCase(private val recipeRepository: RecipeRepository) :
     BaseUseCase<List<RecipeModel>, FetchNewRecipeUseCase.Params>() {
     override suspend fun execute(params: Params): BaseResource<List<RecipeModel>> =
         try {
-            for (i in 0..params.count) {
+            for (i in 1..params.count) {
                 recipeRepository.fetchNewRecipe()
             }
 
