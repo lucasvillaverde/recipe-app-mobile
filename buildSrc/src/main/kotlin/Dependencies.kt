@@ -74,7 +74,7 @@ object Dependencies {
     object DependecyInjection {
         object Implementation {
             // Dagger - Hilt
-            const val hilt = "com.google.dagger:hilt-android:2.38"
+            const val hilt = "com.google.dagger:hilt-android:2.37"
 
             val dependencies = arrayListOf(
                 hilt
@@ -82,7 +82,7 @@ object Dependencies {
         }
 
         object Kapt {
-            const val hiltCompiler = "com.google.dagger:hilt-compiler:2.38"
+            const val hiltCompiler = "com.google.dagger:hilt-compiler:2.37"
 
             val dependencies = arrayListOf(
                 hiltCompiler
@@ -139,7 +139,7 @@ object Dependencies {
             const val barista = "com.github.SchibstedSpain:Barista:3.7.0"
 
             // Hilt
-            const val hiltTesting = "com.google.dagger:hilt-android-testing:2.38"
+            const val hiltTesting = "com.google.dagger:hilt-android-testing:2.37"
 
             val dependencies = arrayListOf(
                 junit,
@@ -160,7 +160,7 @@ object Dependencies {
         }
 
         object KaptAndroidTest {
-            const val hilt = "com.google.dagger:hilt-android-compiler:2.38"
+            const val hilt = "com.google.dagger:hilt-android-compiler:2.37"
 
             val dependencies = arrayListOf(
                 hilt
