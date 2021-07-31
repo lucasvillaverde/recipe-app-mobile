@@ -1,39 +1,42 @@
 package dev.lucasvillaverde.favorite_recipes.presenter.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe
 
-@ExperimentalFoundationApi
 @Composable
 fun FavoriteRecipeList(
     favoriteRecipes: List<FavoriteRecipe>,
     onFavoriteRecipeClick: (id: Int) -> Unit
 ) {
-    LazyVerticalGrid(
-        cells = GridCells.Fixed(2),
+    LazyColumn(
         modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxHeight()
-            .padding(vertical = 12.dp, horizontal = 8.dp)
+            .padding(horizontal = 8.dp)
     ) {
         items(favoriteRecipes) { recipe ->
-            FavoriteRecipeListItem(recipe, onFavoriteRecipeClick)
+            Spacer(Modifier.height(12.dp))
+            FavoriteRecipeListItem(
+                favoriteRecipe = recipe,
+                onFavoriteRecipeClick = onFavoriteRecipeClick
+            )
+            Spacer(Modifier.height(12.dp))
+
+            if (recipe.hashCode() != favoriteRecipes.last().hashCode()) {
+                Divider(color = Color(0xFFEBEBEB))
+            }
         }
     }
 }
 
-@ExperimentalFoundationApi
 @Preview
 @Composable
 fun FavoriteRecipeListPreview() {
