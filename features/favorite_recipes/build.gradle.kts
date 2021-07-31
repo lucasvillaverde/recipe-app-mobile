@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(30)
-    buildToolsVersion("30.0.3")
+    compileSdk = 30
+    buildToolsVersion = "30.0.3"
 
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(30)
+        minSdk = 21
+        targetSdk = 30
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -28,6 +28,7 @@ android {
     }
 
     buildFeatures.viewBinding = true
+    buildFeatures.compose = true
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -36,6 +37,10 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.0.0"
     }
 }
 
@@ -47,6 +52,7 @@ dependencies {
     implementation(Dependencies.AndroidX.dependencies)
     implementation(Dependencies.Kotlin.dependencies)
     implementation(Dependencies.Others.dependencies)
+    implementation(Dependencies.JetpackCompose.Implementation.dependencies)
 
     implementation(Dependencies.DependecyInjection.Implementation.dependencies)
     kapt(Dependencies.DependecyInjection.Kapt.dependencies)
@@ -54,6 +60,7 @@ dependencies {
     implementation(Dependencies.Storage.Implementation.dependencies)
     kapt(Dependencies.Storage.Kapt.dependencies)
 
+    androidTestImplementation(Dependencies.JetpackCompose.AndroidTestImplementation.dependencies)
     androidTestImplementation(Dependencies.Testing.AndroidTestImplementation.dependencies)
     kaptAndroidTest(Dependencies.Testing.KaptAndroidTest.dependencies)
 

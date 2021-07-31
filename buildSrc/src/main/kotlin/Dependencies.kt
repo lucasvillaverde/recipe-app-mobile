@@ -186,4 +186,48 @@ object Dependencies {
             )
         }
     }
+
+    object JetpackCompose {
+        object Implementation {
+            // Integration with activities
+            val activityCompose = "androidx.activity:activity-compose:1.3.0"
+
+            // Compose Material Design
+            val composeMaterial = "androidx.compose.material:material:1.0.0"
+
+            // Animations
+            val composeAnimation = "androidx.compose.animation:animation:1.0.0"
+
+            // Tooling support (Previews, etc.)
+            val composeUi = "androidx.compose.ui:ui-tooling:1.0.0"
+
+            // LiveData
+            val livedata = "androidx.compose.runtime:runtime-livedata:1.0.0"
+
+            // Integration with ViewModels
+            val lifecycleCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
+
+            // Coil
+            val coil = "io.coil-kt:coil-compose:1.3.1"
+
+            val dependencies = listOf(
+                activityCompose,
+                composeMaterial,
+                composeAnimation,
+                composeUi,
+                lifecycleCompose,
+                livedata,
+                coil
+            )
+        }
+
+        object AndroidTestImplementation {
+            // UI Tests
+            val composeUiTest = "androidx.compose.ui:ui-test-junit4:1.0.0"
+
+            val dependencies = listOf(
+                composeUiTest
+            )
+        }
+    }
 }
