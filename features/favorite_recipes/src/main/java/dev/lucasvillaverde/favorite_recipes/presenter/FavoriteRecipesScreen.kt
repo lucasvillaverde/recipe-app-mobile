@@ -26,7 +26,7 @@ fun FavoriteRecipeScreen(
                     favoriteRecipes = it.data!!,
                     onFavoriteRecipeClick
                 )
-                else -> ""
+                else -> TODO("NOT IMPLEMENTED YET")
             }
         }
     }

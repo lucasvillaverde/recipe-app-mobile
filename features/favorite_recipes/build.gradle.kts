@@ -49,9 +49,8 @@ dependencies {
 
     implementation(project(Modules.common))
 
-    implementation(Dependencies.AndroidX.dependencies)
+    implementation(Dependencies.AndroidX.androidXCore)
     implementation(Dependencies.Kotlin.dependencies)
-    implementation(Dependencies.Others.dependencies)
     implementation(Dependencies.JetpackCompose.Implementation.dependencies)
 
     implementation(Dependencies.DependecyInjection.Implementation.dependencies)
