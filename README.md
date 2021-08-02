@@ -12,8 +12,9 @@
 - [x] Basics of MVI + PageState with LiveData;
 - [x] Room;
 - [x] Dependency Injection;
-- [x] Multi-modularization
-- [x] Multi module navigation (back and forth)
-- [ ] Endless RecyclerView.
+- [x] Multi-modularization;
+- [x] Multi module navigation (back and forth);
+- [x] Endless RecyclerView;
+- [ ] Start using Jetpack Compose
 
 Data provided by <a href="https://www.themealdb.com/api.php">**TheMealDB**</a>
