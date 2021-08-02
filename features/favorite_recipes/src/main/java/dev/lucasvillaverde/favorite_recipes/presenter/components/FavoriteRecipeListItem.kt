@@ -10,19 +10,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import dev.lucasvillaverde.favorite_recipes.R
 import dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe
 
 @Composable
 fun FavoriteRecipeListItem(
     favoriteRecipe: FavoriteRecipe,
     onFavoriteRecipeClick: (id: Int) -> Unit,
-    onRemoveFavoriteRecipeClick: (id: Int) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -55,17 +52,6 @@ fun FavoriteRecipeListItem(
                 textAlign = TextAlign.Center
             )
         }
-        Column {
-            Image(
-                modifier = Modifier
-                    .size(24.dp)
-                    .clickable {
-                        onRemoveFavoriteRecipeClick(favoriteRecipe.id)
-                    },
-                painter = painterResource(id = R.drawable.ic_baseline_cancel_24),
-                contentDescription = "Remove this recipe from favorites"
-            )
-        }
     }
 }
 
@@ -79,7 +65,6 @@ fun FavoriteRecipeListItemPreview() {
             category = "Testing",
             photoUrl = ""
         ),
-        onFavoriteRecipeClick = {},
-        onRemoveFavoriteRecipeClick = {}
+        onFavoriteRecipeClick = {}
     )
 }

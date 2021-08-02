@@ -1,5 +1,6 @@
 package dev.lucasvillaverde.favorite_recipes.presenter
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.lucasvillaverde.common.base.model.BaseResource
 import dev.lucasvillaverde.favorite_recipes.presenter.components.FavoriteRecipeList
 
+@ExperimentalMaterialApi
 @Composable
 fun FavoriteRecipeScreen(
     onFavoriteRecipeClick: (id: Int) -> Unit,
