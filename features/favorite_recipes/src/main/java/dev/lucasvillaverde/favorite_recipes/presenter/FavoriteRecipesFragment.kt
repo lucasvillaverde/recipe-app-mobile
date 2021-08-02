@@ -24,7 +24,9 @@ class FavoriteRecipesFragment : BaseFragment() {
 
         return ComposeView(requireContext()).apply {
             setContent {
-                FavoriteRecipeScreen(onFavoriteRecipeClick = { openRecipeDetails(it) })
+                FavoriteRecipeScreen(
+                    onFavoriteRecipeClick = { openRecipeDetails(it) }
+                )
             }
         }
     }

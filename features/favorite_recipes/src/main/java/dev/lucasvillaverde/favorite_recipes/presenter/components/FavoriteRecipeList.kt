@@ -1,8 +1,9 @@
 package dev.lucasvillaverde.favorite_recipes.presenter.components
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
@@ -16,17 +17,21 @@ import dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe
 @Composable
 fun FavoriteRecipeList(
     favoriteRecipes: List<FavoriteRecipe>,
-    onFavoriteRecipeClick: (id: Int) -> Unit
+    onFavoriteRecipeClick: (id: Int) -> Unit,
+    onRemoveFavoriteRecipeClick: (id: Int) -> Unit
 ) {
     LazyColumn(
-        modifier = Modifier
-            .padding(horizontal = 8.dp)
+        contentPadding = PaddingValues(vertical = 12.dp, horizontal = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        items(favoriteRecipes) { recipe ->
-            Spacer(Modifier.height(12.dp))
+        items(
+            key = { recipe -> recipe.id },
+            items = favoriteRecipes
+        ) { recipe ->
             FavoriteRecipeListItem(
                 favoriteRecipe = recipe,
-                onFavoriteRecipeClick = onFavoriteRecipeClick
+                onFavoriteRecipeClick = onFavoriteRecipeClick,
+                onRemoveFavoriteRecipeClick = onRemoveFavoriteRecipeClick
             )
             Spacer(Modifier.height(12.dp))
 
@@ -61,6 +66,7 @@ fun FavoriteRecipeListPreview() {
                 photoUrl = ""
             )
         ),
-        onFavoriteRecipeClick = {}
+        onFavoriteRecipeClick = {},
+        onRemoveFavoriteRecipeClick = {}
     )
 }

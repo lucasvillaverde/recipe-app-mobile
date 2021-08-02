@@ -24,7 +24,10 @@ fun FavoriteRecipeScreen(
             when (it) {
                 is BaseResource.Success -> FavoriteRecipeList(
                     favoriteRecipes = it.data!!,
-                    onFavoriteRecipeClick
+                    onFavoriteRecipeClick = onFavoriteRecipeClick,
+                    onRemoveFavoriteRecipeClick = { recipeId ->
+                        favoriteRecipesViewModel.removeFromFavorite(id = recipeId)
+                    }
                 )
                 else -> TODO("NOT IMPLEMENTED YET")
             }
