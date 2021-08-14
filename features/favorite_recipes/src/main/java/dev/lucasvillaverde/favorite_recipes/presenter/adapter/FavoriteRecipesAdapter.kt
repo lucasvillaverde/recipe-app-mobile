@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import dev.lucasvillaverde.favorite_recipes.databinding.ItemListFavoriteRecipeBinding
+import dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe
 
 class FavoriteRecipesAdapter(
     private inline val onRecipeItemClick: (recipeId: Int) -> Unit,
@@ -15,16 +16,16 @@ class FavoriteRecipesAdapter(
     RecyclerView.Adapter<FavoriteRecipesAdapter.FavoriteRecipeViewHolder>() {
 
     private val diffCallback = object :
-        DiffUtil.ItemCallback<dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe>() {
+        DiffUtil.ItemCallback<FavoriteRecipe>() {
         override fun areItemsTheSame(
-            oldItem: dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe,
-            newItem: dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe
+            oldItem: FavoriteRecipe,
+            newItem: FavoriteRecipe
         ): Boolean =
             oldItem.id == newItem.id
 
         override fun areContentsTheSame(
-            oldItem: dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe,
-            newItem: dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe
+            oldItem: FavoriteRecipe,
+            newItem: FavoriteRecipe
         ): Boolean =
             oldItem.hashCode() == newItem.hashCode()
     }
@@ -40,12 +41,12 @@ class FavoriteRecipesAdapter(
 
     override fun getItemCount(): Int = differ.currentList.size
 
-    fun submitList(list: List<dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe>) =
+    fun submitList(list: List<FavoriteRecipe>) =
         differ.submitList(list)
 
     inner class FavoriteRecipeViewHolder(private val binding: ItemListFavoriteRecipeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe) {
+        fun bind(item: FavoriteRecipe) {
             binding.root.setOnClickListener {
                 onRecipeItemClick(differ.currentList[bindingAdapterPosition].id)
             }
