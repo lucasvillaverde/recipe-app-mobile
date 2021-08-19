@@ -8,8 +8,6 @@ import dev.lucasvillaverde.common.base.domain.None
 import dev.lucasvillaverde.common.base.model.BaseResource
 import dev.lucasvillaverde.favorite_recipes.domain.usecases.GetFavoriteRecipesUseCase
 import dev.lucasvillaverde.favorite_recipes.domain.usecases.RemoveRecipeFromFavoriteUseCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,9 +21,7 @@ class FavoriteRecipesViewModel @Inject constructor(
     fun removeFromFavorite(id: Int) {
         viewModelScope.launch {
             when (removeRecipeFromFavoriteUseCase.execute(
-                RemoveRecipeFromFavoriteUseCase.Params(
-                    id
-                )
+                RemoveRecipeFromFavoriteUseCase.Params(id)
             )) {
                 is BaseResource.Success -> true
                 is BaseResource.Error -> false

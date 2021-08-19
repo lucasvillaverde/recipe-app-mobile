@@ -1,7 +1,7 @@
 package dev.lucasvillaverde.favorite_recipes.data
 
-import dev.lucasvillaverde.common.core.local.model.RecipeEntity
 import dev.lucasvillaverde.common.core.local.dao.FavoriteRecipesDao
+import dev.lucasvillaverde.common.core.local.model.RecipeEntity
 import dev.lucasvillaverde.favorite_recipes.domain.repositories.FavoriteRecipesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

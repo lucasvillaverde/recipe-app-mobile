@@ -4,6 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import dev.lucasvillaverde.common.base.domain.None
 import dev.lucasvillaverde.common.base.model.BaseResource
 import dev.lucasvillaverde.common.core.local.model.RecipeEntity
+import dev.lucasvillaverde.favorite_recipes.domain.repositories.FavoriteRecipesRepository
+import dev.lucasvillaverde.favorite_recipes.domain.usecases.GetFavoriteRecipesUseCase
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
@@ -17,9 +19,9 @@ import org.junit.Test
 
 class GetFavoriteRecipesUseCaseTest {
     private val fakeFavoriteRecipesRepository =
-        mockk<dev.lucasvillaverde.favorite_recipes.domain.repositories.FavoriteRecipesRepository>()
+        mockk<FavoriteRecipesRepository>()
     private val getFavoriteRecipesUseCase =
-        dev.lucasvillaverde.favorite_recipes.domain.usecases.GetFavoriteRecipesUseCase(
+        GetFavoriteRecipesUseCase(
             fakeFavoriteRecipesRepository
         )
 
