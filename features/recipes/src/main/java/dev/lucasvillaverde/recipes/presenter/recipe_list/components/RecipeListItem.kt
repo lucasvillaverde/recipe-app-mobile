@@ -4,28 +4,31 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import dev.lucasvillaverde.recipes.R
 import dev.lucasvillaverde.recipes.domain.model.RecipeModel
 
+@ExperimentalCoilApi
 @Composable
 fun RecipeListItem(
     recipe: RecipeModel,
     onRecipeClick: (recipeId: Int) -> Unit,
     onFavoriteClick: (recipeId: Int) -> Unit
 ) {
+    val imagePainter = rememberImagePainter(recipe.thumb)
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -34,13 +37,18 @@ fun RecipeListItem(
             },
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            modifier = Modifier
-                .size(80.dp)
-                .clip(CircleShape),
-            painter = rememberImagePainter(recipe.thumb),
-            contentDescription = recipe.name
-        )
+        when (imagePainter.state) {
+            is ImagePainter.State.Loading -> CircularProgressIndicator(
+                modifier = Modifier.size(80.dp)
+            )
+            else -> Image(
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape),
+                painter = imagePainter,
+                contentDescription = recipe.name
+            )
+        }
         Column(
             modifier = Modifier
                 .weight(1.0f)
@@ -53,13 +61,15 @@ fun RecipeListItem(
             )
             Text(
                 text = recipe.category,
-                style = MaterialTheme.typography.caption
+                style = MaterialTheme.typography.subtitle1,
+                color = Color.Gray
             )
         }
         IconButton(
             onClick = { onFavoriteClick(recipe.id) },
         ) {
             Icon(
+                tint = Color.Red,
                 painter = painterResource(
                     if (recipe.isFavorite) R.drawable.ic_baseline_favorite_24
                     else R.drawable.ic_baseline_favorite_border_24
@@ -70,7 +80,7 @@ fun RecipeListItem(
     }
 }
 
-
+@coil.annotation.ExperimentalCoilApi
 @Preview
 @Composable
 fun RecipeListItemPreview() {

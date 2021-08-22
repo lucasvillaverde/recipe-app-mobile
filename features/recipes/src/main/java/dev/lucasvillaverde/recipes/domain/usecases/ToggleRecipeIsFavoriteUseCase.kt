@@ -5,8 +5,8 @@ import dev.lucasvillaverde.common.base.model.BaseResource
 import dev.lucasvillaverde.common.utils.AppConstants.MESSAGES.COMMON_ERROR_MESSAGE
 import dev.lucasvillaverde.recipes.domain.repositories.RecipeRepository
 
-class ToggleRecipeIsFavorite(private val recipeRepository: RecipeRepository) :
-    BaseUseCase<Nothing, ToggleRecipeIsFavorite.Params>() {
+class ToggleRecipeIsFavoriteUseCase(private val recipeRepository: RecipeRepository) :
+    BaseUseCase<Nothing, ToggleRecipeIsFavoriteUseCase.Params>() {
     override suspend fun execute(params: Params): BaseResource<Nothing> = try {
         recipeRepository.toggleRecipeIsFavorite(params.id)
 

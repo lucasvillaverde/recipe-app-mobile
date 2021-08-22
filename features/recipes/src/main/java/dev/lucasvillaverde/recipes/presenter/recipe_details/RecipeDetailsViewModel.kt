@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipeDetailsViewModel @Inject constructor(
     private val getRecipeUseCase: dev.lucasvillaverde.recipes.domain.usecases.GetRecipeUseCase,
-    private val toggleFavoriteRecipeUseCase: dev.lucasvillaverde.recipes.domain.usecases.ToggleRecipeIsFavorite
+    private val toggleFavoriteRecipeUseCaseUseCase: dev.lucasvillaverde.recipes.domain.usecases.ToggleRecipeIsFavoriteUseCase
 ) : ViewModel() {
     private val _pageState = MutableLiveData<BasePageState<dev.lucasvillaverde.recipes.domain.model.RecipeModel>>()
     val pageState: LiveData<BasePageState<dev.lucasvillaverde.recipes.domain.model.RecipeModel>> = _pageState
@@ -58,8 +58,8 @@ class RecipeDetailsViewModel @Inject constructor(
     fun toggleRecipeIsFavorite(id: Int) {
         viewModelScope.launch {
             onReduceState(Action.LoadingData)
-            when (toggleFavoriteRecipeUseCase.execute(
-                dev.lucasvillaverde.recipes.domain.usecases.ToggleRecipeIsFavorite.Params(id)
+            when (toggleFavoriteRecipeUseCaseUseCase.execute(
+                dev.lucasvillaverde.recipes.domain.usecases.ToggleRecipeIsFavoriteUseCase.Params(id)
             )) {
                 is BaseResource.Success -> getRecipe(id)
                 is BaseResource.Error -> TODO()

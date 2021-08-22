@@ -12,6 +12,7 @@ import dev.lucasvillaverde.recipes.domain.model.RecipeModel
 import dev.lucasvillaverde.recipes.domain.usecases.DeleteRecipesUseCase
 import dev.lucasvillaverde.recipes.domain.usecases.FetchNewRecipeUseCase
 import dev.lucasvillaverde.recipes.domain.usecases.GetRecipeListUseCase
+import dev.lucasvillaverde.recipes.domain.usecases.ToggleRecipeIsFavoriteUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,10 +20,18 @@ import javax.inject.Inject
 class RecipeListViewModel @Inject constructor(
     private val fetchNewRecipeUseCase: FetchNewRecipeUseCase,
     private val deleteRecipesUseCase: DeleteRecipesUseCase,
-    private val getRecipeListUseCase: GetRecipeListUseCase
+    private val getRecipeListUseCase: GetRecipeListUseCase,
+    private val toggleRecipeIsFavoriteUseCase: ToggleRecipeIsFavoriteUseCase
 ) : ViewModel() {
     private val _pageState: MutableLiveData<BasePageState<List<RecipeModel>>> =
-        MutableLiveData()
+        MutableLiveData(
+            BasePageState(
+                isLoading = false,
+                isError = false,
+                data = listOf(),
+                errorMessage = null
+            )
+        )
     val pageState: LiveData<BasePageState<List<RecipeModel>>> = _pageState
 
     init {
@@ -32,40 +41,72 @@ class RecipeListViewModel @Inject constructor(
     private fun onReduceState(action: Action) {
         _pageState.postValue(
             when (action) {
-                is Action.LoadingData -> BasePageState(
+                is Action.LoadingData -> _pageState.value?.copy(
                     isLoading = true,
                     isError = false,
-                    data = null
+                    errorMessage = null
                 )
-                is Action.LoadRecipeListSuccess -> BasePageState(
+                is Action.LoadRecipeListSuccess -> _pageState.value?.copy(
+                    isLoading = false,
+                    isError = false,
+                    data = action.recipeList,
+                    errorMessage = null
+                )
+                is Action.LoadRecipeListFailure -> _pageState.value?.copy(
+                    isLoading = false,
+                    isError = true,
+                    errorMessage = action.errorMessage
+                )
+                is Action.FavoriteRecipeSuccess -> _pageState.value?.copy(
                     isLoading = false,
                     isError = false,
                     data = action.recipeList
                 )
-                is Action.LoadRecipeListFailure -> BasePageState(
+                is Action.FavoriteRecipeFailure -> _pageState.value?.copy(
                     isLoading = false,
                     isError = true,
-                    errorMessage = action.errorMessage,
-                    data = null
+                    errorMessage = action.errorMessage
                 )
-                is Action.GetNewRecipeSuccess -> BasePageState(
+                is Action.GetNewRecipeSuccess -> _pageState.value?.copy(
                     isLoading = false,
                     isError = false,
-                    data = action.updatedRecipeList
+                    data = action.updatedRecipeList,
+                    errorMessage = null
                 )
-                is Action.DeleteAllRecipesSuccess -> BasePageState(
+                is Action.DeleteAllRecipesSuccess -> _pageState.value?.copy(
                     isLoading = false,
                     isError = false,
-                    data = listOf()
+                    data = listOf(),
+                    errorMessage = null
                 )
-                is Action.DeleteAllRecipesFailure -> BasePageState(
+                is Action.DeleteAllRecipesFailure -> _pageState.value?.copy(
                     isLoading = false,
-                    isError = false,
-                    errorMessage = action.errorMessage,
-                    data = null
+                    isError = true,
+                    errorMessage = action.errorMessage
                 )
             }
         )
+    }
+
+    fun favoriteRecipe(recipeId: Int) {
+        viewModelScope.launch {
+            when (val favoriteRecipeResource = toggleRecipeIsFavoriteUseCase.execute(
+                ToggleRecipeIsFavoriteUseCase.Params(recipeId)
+            )) {
+                is BaseResource.Success -> {
+                    val recipeList = _pageState.value?.data?.map { recipe ->
+                        if (recipe.id == recipeId)
+                            recipe.copy(isFavorite = !recipe.isFavorite)
+                        else
+                            recipe
+                    } ?: listOf()
+                    onReduceState(Action.FavoriteRecipeSuccess(recipeList))
+                }
+                is BaseResource.Error -> onReduceState(
+                    Action.FavoriteRecipeFailure(favoriteRecipeResource.errorMessage)
+                )
+            }
+        }
     }
 
     fun getNewRecipes(count: Int) {
@@ -126,6 +167,8 @@ class RecipeListViewModel @Inject constructor(
     internal sealed class Action {
         class LoadRecipeListSuccess(val recipeList: List<RecipeModel>) : Action()
         class LoadRecipeListFailure(val errorMessage: String) : Action()
+        class FavoriteRecipeSuccess(val recipeList: List<RecipeModel>) : Action()
+        class FavoriteRecipeFailure(val errorMessage: String) : Action()
         class GetNewRecipeSuccess(val updatedRecipeList: List<RecipeModel>) : Action()
         object DeleteAllRecipesSuccess : Action()
         class DeleteAllRecipesFailure(val errorMessage: String) : Action()

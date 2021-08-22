@@ -10,10 +10,10 @@ import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
-class ToggleRecipeIsFavoriteTest {
+class ToggleRecipeIsFavoriteUseCaseTest {
     private val fakeRecipeRepository = mockk<dev.lucasvillaverde.recipes.domain.repositories.RecipeRepository>()
     private val markRecipeAsFavoriteUseCase =
-        dev.lucasvillaverde.recipes.domain.usecases.ToggleRecipeIsFavorite(fakeRecipeRepository)
+        dev.lucasvillaverde.recipes.domain.usecases.ToggleRecipeIsFavoriteUseCase(fakeRecipeRepository)
 
     companion object {
         const val DEFAULT_RECIPE_ID = 1
@@ -28,7 +28,7 @@ class ToggleRecipeIsFavoriteTest {
 
         runBlocking {
             val markRecipeAsFavoriteResource = markRecipeAsFavoriteUseCase.execute(
-                dev.lucasvillaverde.recipes.domain.usecases.ToggleRecipeIsFavorite.Params(
+                dev.lucasvillaverde.recipes.domain.usecases.ToggleRecipeIsFavoriteUseCase.Params(
                     DEFAULT_RECIPE_ID
                 )
             )
@@ -44,7 +44,7 @@ class ToggleRecipeIsFavoriteTest {
 
         runBlocking {
             val markRecipeAsFavoriteResource = markRecipeAsFavoriteUseCase.execute(
-                dev.lucasvillaverde.recipes.domain.usecases.ToggleRecipeIsFavorite.Params(
+                dev.lucasvillaverde.recipes.domain.usecases.ToggleRecipeIsFavoriteUseCase.Params(
                     DEFAULT_RECIPE_ID
                 )
             )
