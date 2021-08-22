@@ -6,24 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.common.base.presenter.BaseFragment
 import dev.lucasvillaverde.common.base.presenter.NavDirection
 import dev.lucasvillaverde.recipes.R
 import dev.lucasvillaverde.recipes.databinding.FragmentRecipeListBinding
-import dev.lucasvillaverde.recipes.presenter.recipe_list.adapter.RecipeAdapter
-import dev.lucasvillaverde.recipes.presenter.recipe_list.adapter.RecipeListItem
+import dev.lucasvillaverde.recipes.presenter.recipe_list.components.RecipeListScreen
 
 @AndroidEntryPoint
 class RecipeListFragment : BaseFragment() {
     lateinit var binding: FragmentRecipeListBinding
 
     private val recipeListViewModel: RecipeListViewModel by viewModels()
-    private lateinit var recipeAdapter: RecipeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +36,7 @@ class RecipeListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupMealRecyclerView()
+        setupRecipeListComposable()
         setupOnClickListeners()
         setupObserver()
         setupSearchView()
@@ -51,56 +49,36 @@ class RecipeListFragment : BaseFragment() {
         }
     }
 
-    private fun setupMealRecyclerView() {
-        recipeAdapter = RecipeAdapter()
+    private fun setupRecipeListComposable() {
+        binding.cvRecipeList.apply {
+            setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnLifecycleDestroyed(viewLifecycleOwner)
+            )
 
-        binding.recipeRecyclerView.apply {
-            layoutManager = GridLayoutManager(context, 2)
-            adapter = recipeAdapter
-            visibility = View.GONE
+            setContent {
+                MaterialTheme {
+                    RecipeListScreen(
+                        onRecipeClick = { recipeId ->
+                            navigateToRecipeDetails(recipeId)
+                        }
+                    )
+                }
+            }
         }
-        recipeAdapter.onItemClick = {
-            navigator.navigateToDirection(
-                NavDirection.RecipeListToRecipeDetails(
-                    bundleOf(
-                        Pair(
-                            NavDirection.RecipeListToRecipeDetails.recipeIdArgName,
-                            it.data!!.id
-                        )
+
+    }
+
+    private fun navigateToRecipeDetails(recipeId: Int) {
+        navigator.navigateToDirection(
+            NavDirection.RecipeListToRecipeDetails(
+                bundleOf(
+                    Pair(
+                        NavDirection.RecipeListToRecipeDetails.recipeIdArgName,
+                        recipeId
                     )
                 )
             )
-        }
-
-        setupEndlessRecyclerView()
-    }
-
-    private fun setupEndlessRecyclerView() {
-        binding.recipeRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                val lastVisibleItem =
-                    (binding.recipeRecyclerView.layoutManager as GridLayoutManager)
-                        .findLastCompletelyVisibleItemPosition()
-
-                val currentList = recipeAdapter.getCurrentList()
-
-                when {
-                    currentList.isNullOrEmpty() -> return
-                    currentList.isNotEmpty() -> {
-                        if (lastVisibleItem == (currentList.size - 1)
-                            && recipeListViewModel.pageState.value!!.isLoading.not()
-                        ) {
-                            recipeAdapter.submitList(currentList.toMutableList().apply {
-                                add(RecipeListItem.Loader)
-                            })
-                            recipeListViewModel.getNewRecipes(DEFAULT_RECIPE_FETCHING_COUNT)
-                        }
-                    }
-                }
-            }
-        })
+        )
     }
 
     private fun setupSearchView() {
@@ -116,16 +94,6 @@ class RecipeListFragment : BaseFragment() {
             override fun onQueryTextSubmit(p0: String?): Boolean = true
 
             override fun onQueryTextChange(text: String?): Boolean {
-                recipeListViewModel.pageState.value?.data?.let { list ->
-                    if (text.isNullOrEmpty()) recipeAdapter.submitList(list)
-                    else recipeAdapter.submitList(list.filter {
-                        it.data!!.name.contains(
-                            text,
-                            true
-                        )
-                    })
-                }
-
                 return true
             }
         })
@@ -144,12 +112,7 @@ class RecipeListFragment : BaseFragment() {
 
     private fun setupObserver() {
         recipeListViewModel.pageState.observe(viewLifecycleOwner) {
-            setPageLoading(it.isLoading, recipeAdapter.getCurrentList().isNullOrEmpty())
-
-            it.data?.let { data ->
-                populateRecyclerView(data)
-                updateUI(data)
-            }
+            setPageLoading(it.isLoading, it.data.isNullOrEmpty())
 
             if (it.isError) {
                 Toast.makeText(
@@ -157,27 +120,6 @@ class RecipeListFragment : BaseFragment() {
                     getString(R.string.network_error),
                     Toast.LENGTH_LONG
                 ).show()
-            }
-        }
-    }
-
-    private fun populateRecyclerView(recipeList: List<RecipeListItem.Recipe>) {
-        recipeAdapter.submitList(recipeList)
-    }
-
-    private fun updateUI(listRecipe: List<RecipeListItem.Recipe>) {
-        when {
-            listRecipe.isNotEmpty() -> {
-                binding.recipeRecyclerView.visibility = View.VISIBLE
-                binding.imgEmptyState.visibility = View.GONE
-                binding.tvEmptyState.visibility = View.GONE
-                binding.srlRecipes.isEnabled = false
-            }
-            else -> {
-                binding.recipeRecyclerView.visibility = View.GONE
-                binding.imgEmptyState.visibility = View.VISIBLE
-                binding.tvEmptyState.visibility = View.VISIBLE
-                binding.srlRecipes.isEnabled = true
             }
         }
     }

@@ -28,10 +28,15 @@ android {
     }
 
     buildFeatures.viewBinding = true
+    buildFeatures.compose = true
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.0.0"
     }
 
     kotlinOptions {
@@ -46,6 +51,8 @@ dependencies {
 
     implementation(Dependencies.AndroidX.dependencies)
     implementation(Dependencies.Kotlin.dependencies)
+    implementation(Dependencies.JetpackCompose.Implementation.dependencies)
+    // Remove when all views are build with Jetpack Compose
     implementation(Dependencies.Others.dependencies)
 
     implementation(Dependencies.DependecyInjection.Implementation.dependencies)

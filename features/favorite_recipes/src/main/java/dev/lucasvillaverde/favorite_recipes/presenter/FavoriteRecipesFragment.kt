@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.os.bundleOf
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,6 +15,7 @@ import dev.lucasvillaverde.common.base.presenter.NavDirection
 @AndroidEntryPoint
 class FavoriteRecipesFragment : BaseFragment() {
 
+    @ExperimentalMaterialApi
     @ExperimentalFoundationApi
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

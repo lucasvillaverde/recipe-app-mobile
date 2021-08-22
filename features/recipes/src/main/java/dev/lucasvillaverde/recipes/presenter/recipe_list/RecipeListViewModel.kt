@@ -8,10 +8,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.lucasvillaverde.common.base.domain.None
 import dev.lucasvillaverde.common.base.model.BasePageState
 import dev.lucasvillaverde.common.base.model.BaseResource
+import dev.lucasvillaverde.recipes.domain.model.RecipeModel
 import dev.lucasvillaverde.recipes.domain.usecases.DeleteRecipesUseCase
 import dev.lucasvillaverde.recipes.domain.usecases.FetchNewRecipeUseCase
 import dev.lucasvillaverde.recipes.domain.usecases.GetRecipeListUseCase
-import dev.lucasvillaverde.recipes.presenter.recipe_list.adapter.RecipeListItem
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,9 +21,9 @@ class RecipeListViewModel @Inject constructor(
     private val deleteRecipesUseCase: DeleteRecipesUseCase,
     private val getRecipeListUseCase: GetRecipeListUseCase
 ) : ViewModel() {
-    private val _pageState: MutableLiveData<BasePageState<List<RecipeListItem.Recipe>>> =
+    private val _pageState: MutableLiveData<BasePageState<List<RecipeModel>>> =
         MutableLiveData()
-    val pageState: LiveData<BasePageState<List<RecipeListItem.Recipe>>> = _pageState
+    val pageState: LiveData<BasePageState<List<RecipeModel>>> = _pageState
 
     init {
         fetchRecipeList()
@@ -75,7 +75,7 @@ class RecipeListViewModel @Inject constructor(
                 fetchNewRecipeUseCase.execute(FetchNewRecipeUseCase.Params(count))) {
                 is BaseResource.Success -> {
                     onReduceState(Action.GetNewRecipeSuccess(newRecipeResource.data!!.map {
-                        RecipeListItem.Recipe(it)
+                        it
                     }))
                 }
                 is BaseResource.Error -> onReduceState(
@@ -112,7 +112,7 @@ class RecipeListViewModel @Inject constructor(
 
                     onReduceState(
                         Action.LoadRecipeListSuccess(recipeListResource.data!!.map {
-                            RecipeListItem.Recipe(it)
+                            it
                         })
                     )
                 }
@@ -124,9 +124,9 @@ class RecipeListViewModel @Inject constructor(
     }
 
     internal sealed class Action {
-        class LoadRecipeListSuccess(val recipeList: List<RecipeListItem.Recipe>) : Action()
+        class LoadRecipeListSuccess(val recipeList: List<RecipeModel>) : Action()
         class LoadRecipeListFailure(val errorMessage: String) : Action()
-        class GetNewRecipeSuccess(val updatedRecipeList: List<RecipeListItem.Recipe>) : Action()
+        class GetNewRecipeSuccess(val updatedRecipeList: List<RecipeModel>) : Action()
         object DeleteAllRecipesSuccess : Action()
         class DeleteAllRecipesFailure(val errorMessage: String) : Action()
         object LoadingData : Action()

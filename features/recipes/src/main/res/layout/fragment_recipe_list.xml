@@ -24,45 +24,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/svRecipes">
 
-        <LinearLayout
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/cvRecipeList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            tools:visibility="visible">
+            android:layout_height="match_parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recipe_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never"
-                android:padding="4dp"
-                android:scrollbars="none"
-                app:fastScrollEnabled="true"
-                app:fastScrollHorizontalThumbDrawable="@drawable/thumb_scroll_drawable"
-                app:fastScrollHorizontalTrackDrawable="@drawable/line_scroll_drawable"
-                app:fastScrollVerticalThumbDrawable="@drawable/thumb_scroll_drawable"
-                app:fastScrollVerticalTrackDrawable="@drawable/line_scroll_drawable"
-                tools:listitem="@layout/item_list_recipe"
-                tools:visibility="visible" />
-
-            <ImageView
-                android:id="@+id/imgEmptyState"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:contentDescription="List Image"
-                android:src="@drawable/ic_find_your_meal"
-                tools:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tvEmptyState"
-                style="@style/TextAppearance.AppCompat.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/empty_state_swipe_down"
-                android:textAlignment="center"
-                tools:visibility="gone" />
-        </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
@@ -83,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/colorPrimary"
+            android:minHeight="48dp"
             android:src="@drawable/ic_baseline_delete_forever_24"
             app:borderWidth="0dp" />
 
@@ -96,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/colorPrimary"
+            android:minHeight="48dp"
             android:src="@drawable/ic_baseline_favorite_24"
             app:borderWidth="0dp" />
 
