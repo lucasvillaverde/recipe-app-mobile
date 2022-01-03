@@ -7,7 +7,7 @@ import dev.lucasvillaverde.common.core.local.dao.FavoriteRecipesDao
 import dev.lucasvillaverde.common.core.local.dao.RecipeDao
 import dev.lucasvillaverde.common.core.local.model.RecipeEntity
 
-@Database(entities = [RecipeEntity::class], version = 1)
+@Database(entities = [RecipeEntity::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class RecipeDatabase : RoomDatabase() {
     abstract val recipeDao: RecipeDao

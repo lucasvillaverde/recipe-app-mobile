@@ -1,6 +1,5 @@
 package dev.lucasvillaverde.recipes.presenter.recipe_list.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -15,8 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
-import coil.compose.ImagePainter
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImage
 import dev.lucasvillaverde.recipes.R
 import dev.lucasvillaverde.recipes.domain.model.RecipeModel
 
@@ -27,8 +25,6 @@ fun RecipeListItem(
     onRecipeClick: (recipeId: Int) -> Unit,
     onFavoriteClick: (recipeId: Int) -> Unit
 ) {
-    val imagePainter = rememberImagePainter(recipe.thumb)
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -37,18 +33,19 @@ fun RecipeListItem(
             },
         verticalAlignment = Alignment.CenterVertically
     ) {
-        when (imagePainter.state) {
-            is ImagePainter.State.Loading -> CircularProgressIndicator(
-                modifier = Modifier.size(80.dp)
-            )
-            else -> Image(
-                modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape),
-                painter = imagePainter,
-                contentDescription = recipe.name
-            )
-        }
+        AsyncImage(
+            modifier = Modifier
+                .size(80.dp)
+                .clip(CircleShape),
+            model = recipe.thumb,
+            contentDescription = recipe.name,
+            loading = {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(80.dp)
+                )
+            }
+        )
+
         Column(
             modifier = Modifier
                 .weight(1.0f)

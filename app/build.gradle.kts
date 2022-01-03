@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion(30)
+    compileSdk = 31
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -20,8 +20,8 @@ android {
     defaultConfig {
         applicationId = "dev.lucasvillaverde.recipeapp"
         testApplicationId = "dev.lucasvillaverde.recipeapp.runner"
-        minSdkVersion(21)
-        targetSdkVersion(30)
+        minSdk = Dependencies.Application.minSdk
+        targetSdk = Dependencies.Application.targetSdk
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "dev.lucasvillaverde.recipeapp.runner.CucumberTestRunner"

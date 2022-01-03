@@ -1,10 +1,8 @@
 package dev.lucasvillaverde.recipes.usecases
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import dev.lucasvillaverde.common.base.model.BaseResource
 import dev.lucasvillaverde.common.base.domain.None
-import dev.lucasvillaverde.recipes.domain.repositories.RecipeRepository
-import dev.lucasvillaverde.recipes.domain.usecases.DeleteRecipesUseCase
+import dev.lucasvillaverde.common.base.model.BaseResource
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking

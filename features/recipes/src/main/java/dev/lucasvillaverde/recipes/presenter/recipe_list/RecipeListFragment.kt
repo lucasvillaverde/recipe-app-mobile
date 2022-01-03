@@ -40,13 +40,6 @@ class RecipeListFragment : BaseFragment() {
         setupOnClickListeners()
         setupObserver()
         setupSearchView()
-        setupSwipeRefreshLayout()
-    }
-
-    private fun setupSwipeRefreshLayout() {
-        binding.srlRecipes.setOnRefreshListener {
-            recipeListViewModel.fetchRecipeList()
-        }
     }
 
     private fun setupRecipeListComposable() {
@@ -112,7 +105,7 @@ class RecipeListFragment : BaseFragment() {
 
     private fun setupObserver() {
         recipeListViewModel.pageState.observe(viewLifecycleOwner) {
-            setPageLoading(it.isLoading, it.data.isNullOrEmpty())
+            setPageLoading(it.isLoading)
 
             if (it.isError) {
                 Toast.makeText(
@@ -124,14 +117,8 @@ class RecipeListFragment : BaseFragment() {
         }
     }
 
-    private fun setPageLoading(isLoading: Boolean, isOnEmptyState: Boolean) {
+    private fun setPageLoading(isLoading: Boolean) {
         binding.fabDeleteRecipes.isClickable = !isLoading
         binding.fabFavoriteRecipes.isClickable = !isLoading
-        binding.srlRecipes.isRefreshing = isOnEmptyState && isLoading
-
-    }
-
-    companion object {
-        private const val DEFAULT_RECIPE_FETCHING_COUNT = 2
     }
 }

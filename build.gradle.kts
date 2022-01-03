@@ -1,4 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id("com.github.ben-manes.versions") version "0.40.0"
+}
 
 buildscript {
     val kotlin_version by extra("1.5.21")
@@ -8,8 +11,8 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.0.4")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.37")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:2.40.5")
     }
 }
 

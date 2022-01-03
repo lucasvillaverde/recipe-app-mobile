@@ -34,10 +34,6 @@ class RecipeListViewModel @Inject constructor(
         )
     val pageState: LiveData<BasePageState<List<RecipeModel>>> = _pageState
 
-    init {
-        fetchRecipeList()
-    }
-
     private fun onReduceState(action: Action) {
         _pageState.postValue(
             when (action) {
@@ -90,9 +86,14 @@ class RecipeListViewModel @Inject constructor(
 
     fun favoriteRecipe(recipeId: Int) {
         viewModelScope.launch {
-            when (val favoriteRecipeResource = toggleRecipeIsFavoriteUseCase.execute(
-                ToggleRecipeIsFavoriteUseCase.Params(recipeId)
-            )) {
+            when (
+                val favoriteRecipeResource =
+                    toggleRecipeIsFavoriteUseCase.execute(
+                        ToggleRecipeIsFavoriteUseCase.Params(
+                            recipeId
+                        )
+                    )
+            ) {
                 is BaseResource.Success -> {
                     val recipeList = _pageState.value?.data?.map { recipe ->
                         if (recipe.id == recipeId)
@@ -141,8 +142,8 @@ class RecipeListViewModel @Inject constructor(
     }
 
     fun fetchRecipeList() {
+        onReduceState(Action.LoadingData)
         viewModelScope.launch {
-            onReduceState(Action.LoadingData)
             when (val recipeListResource = getRecipeListUseCase.execute(None)) {
                 is BaseResource.Success -> {
                     if (recipeListResource.data!!.size < MINIMUM_RECIPE_ITEMS) {

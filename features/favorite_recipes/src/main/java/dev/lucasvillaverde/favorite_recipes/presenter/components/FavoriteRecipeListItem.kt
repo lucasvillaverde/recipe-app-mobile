@@ -13,7 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe
 
 @Composable
@@ -32,7 +32,7 @@ fun FavoriteRecipeListItem(
             modifier = Modifier
                 .size(50.dp)
                 .clip(CircleShape),
-            painter = rememberImagePainter(data = favoriteRecipe.photoUrl),
+            painter = rememberAsyncImagePainter(model = favoriteRecipe.photoUrl),
             contentDescription = "A ${favoriteRecipe.name} recipe photo"
         )
         Column(
