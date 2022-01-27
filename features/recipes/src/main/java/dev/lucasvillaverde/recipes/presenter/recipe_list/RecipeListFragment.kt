@@ -39,7 +39,6 @@ class RecipeListFragment : BaseFragment() {
         setupRecipeListComposable()
         setupOnClickListeners()
         setupObserver()
-        setupSearchView()
     }
 
     private fun setupRecipeListComposable() {
@@ -72,24 +71,6 @@ class RecipeListFragment : BaseFragment() {
                 )
             )
         )
-    }
-
-    private fun setupSearchView() {
-        binding.svRecipes.setOnClickListener {
-            binding.svRecipes.isIconified = false
-        }
-
-        binding.svRecipes.setOnQueryTextFocusChangeListener { _, isFocused ->
-            binding.svRecipes.isIconified = !isFocused
-        }
-
-        binding.svRecipes.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean = true
-
-            override fun onQueryTextChange(text: String?): Boolean {
-                return true
-            }
-        })
     }
 
     private fun setupOnClickListeners() {

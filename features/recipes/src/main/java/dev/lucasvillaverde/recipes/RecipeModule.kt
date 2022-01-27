@@ -51,4 +51,8 @@ object RecipeUseCaseModule {
     @Provides
     fun provideMarkRecipeAsFavoriteUseCase(recipeRepository: RecipeRepository): ToggleRecipeIsFavoriteUseCase =
         ToggleRecipeIsFavoriteUseCase(recipeRepository)
+
+    @Provides
+    fun provideFilterRecipeUseCase(recipeRepository: RecipeRepository): FilterRecipesUseCase =
+        FilterRecipesUseCase(recipeRepository)
 }

@@ -6,11 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,12 +20,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.lucasvillaverde.recipes.R
 
-@ExperimentalComposeUiApi
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchBar(
-    searchText: String,
-    onSearchTextChanged: (text: String) -> Unit
+    onSearchAction: (text: String) -> Unit
 ) {
+    var queryText by remember { mutableStateOf("") }
     val keyboard = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
@@ -59,15 +55,18 @@ fun SearchBar(
                     cursorColor = MaterialTheme.colors.secondaryVariant
                 ),
                 maxLines = 1,
-                value = searchText,
+                value = queryText,
                 placeholder = { Text("Search your favorite meal!") },
-                onValueChange = onSearchTextChanged,
+                onValueChange = {
+                    queryText = it
+                    onSearchAction.invoke(queryText)
+                },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Search
                 ),
                 keyboardActions = KeyboardActions(
                     onSearch = {
-                        //implementar func
+                        onSearchAction.invoke(queryText)
                         keyboard?.hide()
                         focusManager.clearFocus()
                     }
@@ -82,12 +81,7 @@ fun SearchBar(
 @Preview
 @Composable
 fun SearchBarPreview() {
-    var searchText by rememberSaveable { mutableStateOf("") }
-
     SearchBar(
-        searchText = searchText,
-        onSearchTextChanged = {
-            searchText = it
-        }
+        onSearchAction = {}
     )
 }

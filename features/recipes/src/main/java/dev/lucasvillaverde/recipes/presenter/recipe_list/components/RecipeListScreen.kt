@@ -1,9 +1,6 @@
 package dev.lucasvillaverde.recipes.presenter.recipe_list.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,10 +20,6 @@ fun RecipeListScreen(
     onRecipeClick: (recipeId: Int) -> Unit,
     recipeListViewModel: RecipeListViewModel = viewModel()
 ) {
-    LaunchedEffect(key1 = "recipeListPageState", block = {
-        recipeListViewModel.fetchRecipeList()
-    })
-
     val recipeListPageState by recipeListViewModel.pageState.observeAsState(
         BasePageState(
             isLoading = false,
@@ -35,30 +28,41 @@ fun RecipeListScreen(
         )
     )
 
-    when {
-        recipeListPageState.isLoading -> Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxHeight()
-        ) {
-            CircularProgressIndicator(
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        SearchBar(
+            onSearchAction = { queryText ->
+                recipeListViewModel.filterRecipeList(queryText)
+            }
+        )
+
+        when {
+            recipeListPageState.isLoading -> Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .size(24.dp)
-            )
-        }
-        recipeListPageState.data.isNullOrEmpty() -> RecipeEmptyList()
-        else -> SwipeRefresh(
-            state = rememberSwipeRefreshState(recipeListPageState.isLoading),
-            onRefresh = { recipeListViewModel.fetchRecipeList() }
-        ) {
-            RecipeList(
-                recipeListPageState.data!!,
-                onRecipeClick = onRecipeClick,
-                onFavoriteClick = { recipeId ->
-                    recipeListViewModel.favoriteRecipe(recipeId)
-                }
-            )
+                    .fillMaxSize()
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(24.dp)
+                )
+            }
+            recipeListPageState.data.isNullOrEmpty() -> RecipeEmptyList()
+            else -> SwipeRefresh(
+                modifier = Modifier.fillMaxSize(),
+                state = rememberSwipeRefreshState(recipeListPageState.isLoading),
+                onRefresh = { recipeListViewModel.fetchRecipeList() }
+            ) {
+                RecipeList(
+                    recipeListPageState.data!!,
+                    onRecipeClick = onRecipeClick,
+                    onFavoriteClick = { recipeId ->
+                        recipeListViewModel.favoriteRecipe(recipeId)
+                    }
+                )
+            }
         }
     }
 }

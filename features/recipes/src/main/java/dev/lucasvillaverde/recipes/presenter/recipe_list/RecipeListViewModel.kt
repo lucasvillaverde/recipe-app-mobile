@@ -9,10 +9,7 @@ import dev.lucasvillaverde.common.base.domain.None
 import dev.lucasvillaverde.common.base.model.BasePageState
 import dev.lucasvillaverde.common.base.model.BaseResource
 import dev.lucasvillaverde.recipes.domain.model.RecipeModel
-import dev.lucasvillaverde.recipes.domain.usecases.DeleteRecipesUseCase
-import dev.lucasvillaverde.recipes.domain.usecases.FetchNewRecipeUseCase
-import dev.lucasvillaverde.recipes.domain.usecases.GetRecipeListUseCase
-import dev.lucasvillaverde.recipes.domain.usecases.ToggleRecipeIsFavoriteUseCase
+import dev.lucasvillaverde.recipes.domain.usecases.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +18,8 @@ class RecipeListViewModel @Inject constructor(
     private val fetchNewRecipeUseCase: FetchNewRecipeUseCase,
     private val deleteRecipesUseCase: DeleteRecipesUseCase,
     private val getRecipeListUseCase: GetRecipeListUseCase,
-    private val toggleRecipeIsFavoriteUseCase: ToggleRecipeIsFavoriteUseCase
+    private val toggleRecipeIsFavoriteUseCase: ToggleRecipeIsFavoriteUseCase,
+    private val filterRecipesUseCase: FilterRecipesUseCase
 ) : ViewModel() {
     private val _pageState: MutableLiveData<BasePageState<List<RecipeModel>>> =
         MutableLiveData(
@@ -33,6 +31,10 @@ class RecipeListViewModel @Inject constructor(
             )
         )
     val pageState: LiveData<BasePageState<List<RecipeModel>>> = _pageState
+
+    init {
+        fetchRecipeList()
+    }
 
     private fun onReduceState(action: Action) {
         _pageState.postValue(
@@ -68,6 +70,17 @@ class RecipeListViewModel @Inject constructor(
                     isError = false,
                     data = action.updatedRecipeList,
                     errorMessage = null
+                )
+                is Action.FilterRecipeListSuccess -> _pageState.value?.copy(
+                    isLoading = false,
+                    isError = false,
+                    data = action.updatedRecipeList,
+                    errorMessage = null
+                )
+                is Action.FilterRecipeListFailure -> _pageState.value?.copy(
+                    isLoading = false,
+                    isError = true,
+                    errorMessage = action.errorMessage
                 )
                 is Action.DeleteAllRecipesSuccess -> _pageState.value?.copy(
                     isLoading = false,
@@ -165,12 +178,38 @@ class RecipeListViewModel @Inject constructor(
         }
     }
 
+    fun filterRecipeList(recipeName: String) {
+        onReduceState(Action.LoadingData)
+        viewModelScope.launch {
+            if (recipeName.isBlank()) {
+                fetchRecipeList()
+
+                return@launch
+            }
+
+            when (val filteredRecipes =
+                filterRecipesUseCase.execute(FilterRecipesUseCase.Params(recipeName))) {
+                is BaseResource.Success ->
+                    onReduceState(
+                        Action.FilterRecipeListSuccess(filteredRecipes.data!!.map {
+                            it
+                        })
+                    )
+                is BaseResource.Error -> onReduceState(
+                    Action.FilterRecipeListFailure(filteredRecipes.errorMessage)
+                )
+            }
+        }
+    }
+
     internal sealed class Action {
         class LoadRecipeListSuccess(val recipeList: List<RecipeModel>) : Action()
         class LoadRecipeListFailure(val errorMessage: String) : Action()
         class FavoriteRecipeSuccess(val recipeList: List<RecipeModel>) : Action()
         class FavoriteRecipeFailure(val errorMessage: String) : Action()
         class GetNewRecipeSuccess(val updatedRecipeList: List<RecipeModel>) : Action()
+        class FilterRecipeListSuccess(val updatedRecipeList: List<RecipeModel>) : Action()
+        class FilterRecipeListFailure(val errorMessage: String) : Action()
         object DeleteAllRecipesSuccess : Action()
         class DeleteAllRecipesFailure(val errorMessage: String) : Action()
         object LoadingData : Action()

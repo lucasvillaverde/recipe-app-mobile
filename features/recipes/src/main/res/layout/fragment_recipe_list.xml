@@ -9,14 +9,6 @@
     android:orientation="vertical"
     tools:context="dev.lucasvillaverde.recipes.presenter.recipe_list.RecipeListFragment">
 
-    <SearchView
-        android:id="@+id/svRecipes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:iconifiedByDefault="false"
-        android:queryHint="Search your favorite meal!" />
-
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/cvRecipeList"
         android:layout_width="match_parent"

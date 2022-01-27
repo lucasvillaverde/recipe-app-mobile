@@ -20,6 +20,11 @@ class RecipeRepositoryImpl(
         recipeDao.getRecipes()
     }
 
+    override suspend fun getRecipesByName(recipeName: String): List<RecipeEntity> =
+        withContext(Dispatchers.IO) {
+            recipeDao.getRecipesByName(recipeName)
+        }
+
     override suspend fun toggleRecipeIsFavorite(id: Int) = withContext(Dispatchers.IO) {
         recipeDao.toggleRecipeIsFavorite(id)
     }

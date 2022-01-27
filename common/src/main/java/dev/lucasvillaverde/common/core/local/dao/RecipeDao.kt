@@ -11,6 +11,9 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes")
     fun getRecipes(): List<RecipeEntity>
 
+    @Query("SELECT * FROM recipes WHERE name LIKE '%' || :name || '%'")
+    fun getRecipesByName(name: String): List<RecipeEntity>
+
     @Query("SELECT * FROM recipes WHERE id = :id")
     fun getRecipeById(id: Int): RecipeEntity
 
