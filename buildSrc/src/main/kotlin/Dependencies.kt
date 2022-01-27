@@ -21,8 +21,8 @@ object Dependencies {
     object Storage {
         object Implementation {
             // Room components
-            const val roomRunTime = "androidx.room:room-runtime:2.4.0"
-            const val room = "androidx.room:room-ktx:2.4.0"
+            const val roomRunTime = "androidx.room:room-runtime:2.4.1"
+            const val room = "androidx.room:room-ktx:2.4.1"
 
             val dependencies = arrayListOf(
                 roomRunTime,
@@ -31,7 +31,7 @@ object Dependencies {
         }
 
         object Kapt {
-            const val roomCompiler = "androidx.room:room-compiler:2.4.0"
+            const val roomCompiler = "androidx.room:room-compiler:2.4.1"
 
             val dependencies = arrayListOf(
                 roomCompiler
@@ -41,23 +41,23 @@ object Dependencies {
 
     object Kotlin {
         // Kotlin components
-        const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.0"
+        const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.10"
 
-        const val androidCoreKtx = "androidx.core:core-ktx:1.8.0-alpha02"
-        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.4.0"
+        const val androidCoreKtx = "androidx.core:core-ktx:1.8.0-alpha03"
+        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.5.0-alpha01"
 
         // Nav component - Kotlin
         const val navigationFragmentKtx =
-            "androidx.navigation:navigation-fragment-ktx:2.4.0-rc01"
-        const val navigationUiKtx = "androidx.navigation:navigation-ui-ktx:2.4.0-rc01"
+            "androidx.navigation:navigation-fragment-ktx:2.5.0-alpha01"
+        const val navigationUiKtx = "androidx.navigation:navigation-ui-ktx:2.5.0-alpha01"
 
         // Kotlin + coroutines
         const val lifecycleRunTimeKtx =
-            "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
+            "androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha01"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
         const val coroutinesAndroid =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
-        const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
+        const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:2.5.0-alpha01"
 
         val dependencies = arrayListOf(
             kotlinStdLib,
@@ -92,9 +92,9 @@ object Dependencies {
     }
 
     object AndroidX {
-        const val appCompat = "androidx.appcompat:appcompat:1.4.0"
-        const val androidXCore = "androidx.core:core-ktx:1.6.0"
-        const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.2"
+        const val appCompat = "androidx.appcompat:appcompat:1.4.1"
+        const val androidXCore = "androidx.core:core-ktx:1.6.10"
+        const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.3"
         const val androidXLegacy = "androidx.legacy:legacy-support-v4:1.0.0"
 
         val dependencies = arrayListOf(
@@ -126,18 +126,18 @@ object Dependencies {
 
     object Testing {
         object AndroidTestImplementation {
-            const val junit = "androidx.test.ext:junit:1.1.3"
+            const val junit = "androidx.test.ext:junit:1.1.4-alpha03"
 
             // Cucumber
-            const val cucumber = "io.cucumber:cucumber-android:4.8.3"
+            const val cucumber = "io.cucumber:cucumber-android:4.9.0"
 
             // Espresso
-            const val espressoCore = "androidx.test.espresso:espresso-core:3.4.0"
-            const val testRules = "androidx.test:rules:1.4.0"
-            const val testRunner = "androidx.test:runner:1.4.0"
+            const val espressoCore = "androidx.test.espresso:espresso-core:3.5.0-alpha03"
+            const val testRules = "androidx.test:rules:1.4.1-alpha03"
+            const val testRunner = "androidx.test:runner:1.4.1-alpha03"
 
             // Barista
-            const val barista = "com.github.SchibstedSpain:Barista:3.7.0"
+            const val barista = "com.github.SchibstedSpain:Barista:3.10.0"
 
             // Hilt
             const val hiltTesting = "com.google.dagger:hilt-android-testing:2.40.5"
@@ -172,7 +172,7 @@ object Dependencies {
             const val coreTesting = "androidx.arch.core:core-testing:2.1.0"
 
             // Roboletric
-            const val roboletric = "androidx.test:core:1.4.0"
+            const val roboletric = "androidx.test:core:1.4.1-alpha03"
 
             // Mockk
             const val mockk = "io.mockk:mockk:1.12.2"
@@ -191,27 +191,27 @@ object Dependencies {
     object JetpackCompose {
         object Implementation {
             // Integration with activities
-            val activityCompose = "androidx.activity:activity-compose:1.4.0"
+            val activityCompose = "androidx.activity:activity-compose:1.5.0-alpha01"
 
             // Compose Material Design
-            val composeMaterial = "androidx.compose.material:material:1.1.0-rc01"
+            val composeMaterial = "androidx.compose.material:material:1.2.0-alpha02"
 
             // Animations
-            val composeAnimation = "androidx.compose.animation:animation:1.1.0-rc01"
+            val composeAnimation = "androidx.compose.animation:animation:1.2.0-alpha02"
 
             // Tooling support (Previews, etc.)
-            val composeUi = "androidx.compose.ui:ui-tooling:1.1.0-rc01"
+            val composeUi = "androidx.compose.ui:ui-tooling:1.2.0-alpha02"
 
             // LiveData
-            val livedata = "androidx.compose.runtime:runtime-livedata:1.1.0-rc01"
+            val livedata = "androidx.compose.runtime:runtime-livedata:1.2.0-alpha02"
 
             // Integration with ViewModels
-            val lifecycleCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"
+            val lifecycleCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-alpha01"
 
             // Coil
             val coil = "io.coil-kt:coil-compose:2.0.0-alpha06"
 
-            val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:0.22.0-rc"
+            val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:0.24.0-alpha"
 
             val dependencies = listOf(
                 activityCompose,
@@ -227,7 +227,7 @@ object Dependencies {
 
         object AndroidTestImplementation {
             // UI Tests
-            val composeUiTest = "androidx.compose.ui:ui-test-junit4:1.0.0"
+            val composeUiTest = "androidx.compose.ui:ui-test-junit4:1.2.0-alpha02"
 
             val dependencies = listOf(
                 composeUiTest
