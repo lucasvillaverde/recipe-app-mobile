@@ -9,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -26,6 +27,7 @@ fun SearchBar(
     onSearchAction: (text: String) -> Unit
 ) {
     var queryText by remember { mutableStateOf("") }
+    var isFieldFocused by remember { mutableStateOf(false) }
     val keyboard = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
@@ -39,7 +41,10 @@ fun SearchBar(
             TextField(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
+                    .padding(horizontal = 8.dp)
+                    .onFocusChanged {
+                        isFieldFocused = it.isFocused
+                    },
                 leadingIcon = {
                     Icon(
                         tint = MaterialTheme.colors.secondary,
@@ -56,7 +61,13 @@ fun SearchBar(
                 ),
                 maxLines = 1,
                 value = queryText,
-                placeholder = { Text("Search your favorite meal!") },
+                placeholder = {
+                    if (isFieldFocused) {
+                        return@TextField
+                    }
+
+                    Text("Search your favorite meal!")
+                },
                 onValueChange = {
                     queryText = it
                     onSearchAction.invoke(queryText)
