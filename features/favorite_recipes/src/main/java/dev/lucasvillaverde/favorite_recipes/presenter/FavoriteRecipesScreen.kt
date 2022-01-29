@@ -9,19 +9,18 @@ import dev.lucasvillaverde.common.base.model.BaseResource
 @Composable
 fun FavoriteRecipeScreen(
     onFavoriteRecipeClick: (id: Int) -> Unit,
+    onBackPressed: () -> Unit,
     favoriteRecipesViewModel: FavoriteRecipesViewModel = viewModel()
 ) {
     val favoriteRecipeResource by favoriteRecipesViewModel.favoriteRecipes.observeAsState(
         BaseResource.Success(
-            listOf()
+            emptyList()
         )
     )
-
-    favoriteRecipeResource.data?.let {
-        FavoriteRecipeContent(
-            favoriteRecipeState = favoriteRecipeResource,
-            onFavoriteRecipeClick = onFavoriteRecipeClick,
-            onRemoveFavoriteRecipe = { favoriteRecipesViewModel.removeFromFavorite(it) }
-        )
-    }
+    FavoriteRecipeContent(
+        favoriteRecipeState = favoriteRecipeResource,
+        onFavoriteRecipeClick = onFavoriteRecipeClick,
+        onRemoveFavoriteRecipe = { favoriteRecipesViewModel.removeFromFavorite(it) },
+        onBackPressed = onBackPressed
+    )
 }

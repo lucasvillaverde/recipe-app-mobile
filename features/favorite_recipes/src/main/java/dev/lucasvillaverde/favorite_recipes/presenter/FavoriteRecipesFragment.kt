@@ -24,7 +24,8 @@ class FavoriteRecipesFragment : BaseFragment() {
         setContent {
             RecipeAppTheme {
                 FavoriteRecipeScreen(
-                    onFavoriteRecipeClick = { openRecipeDetails(it) }
+                    onFavoriteRecipeClick = { openRecipeDetails(it) },
+                    onBackPressed = { requireActivity().onBackPressed() }
                 )
             }
         }
