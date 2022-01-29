@@ -40,6 +40,10 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.2.0-alpha02"
+    }
 }
 
 dependencies {
@@ -50,6 +54,7 @@ dependencies {
     implementation(Dependencies.AndroidX.dependencies)
     implementation(Dependencies.Kotlin.dependencies)
     implementation(Dependencies.JetpackCompose.Implementation.dependencies)
+
     // Remove when all views are build with Jetpack Compose
     implementation(Dependencies.Others.dependencies)
 

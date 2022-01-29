@@ -140,7 +140,7 @@ class RecipeListViewModel @Inject constructor(
         }
     }
 
-    fun deleteMeals() {
+    fun deleteRecipes() {
         viewModelScope.launch {
             onReduceState(Action.LoadingData)
             when (val newRecipeResource = deleteRecipesUseCase.execute(None)) {

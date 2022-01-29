@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
-import android.widget.Toast
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.os.bundleOf
@@ -13,15 +11,13 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.common.base.presenter.BaseFragment
 import dev.lucasvillaverde.common.base.presenter.NavDirection
-import dev.lucasvillaverde.recipes.R
+import dev.lucasvillaverde.common.theme.RecipeAppTheme
 import dev.lucasvillaverde.recipes.databinding.FragmentRecipeListBinding
 import dev.lucasvillaverde.recipes.presenter.recipe_list.components.RecipeListScreen
 
 @AndroidEntryPoint
 class RecipeListFragment : BaseFragment() {
     lateinit var binding: FragmentRecipeListBinding
-
-    private val recipeListViewModel: RecipeListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,10 +31,7 @@ class RecipeListFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupRecipeListComposable()
-        setupOnClickListeners()
-        setupObserver()
     }
 
     private fun setupRecipeListComposable() {
@@ -48,10 +41,13 @@ class RecipeListFragment : BaseFragment() {
             )
 
             setContent {
-                MaterialTheme {
+                RecipeAppTheme {
                     RecipeListScreen(
                         onRecipeClick = { recipeId ->
                             navigateToRecipeDetails(recipeId)
+                        },
+                        onFavoriteScreenButtonClick = {
+                            navigateToFavoriteScreen()
                         }
                     )
                 }
@@ -73,33 +69,9 @@ class RecipeListFragment : BaseFragment() {
         )
     }
 
-    private fun setupOnClickListeners() {
-        binding.fabDeleteRecipes.setOnClickListener {
-            recipeListViewModel.deleteMeals()
-        }
-
-        binding.fabFavoriteRecipes.setOnClickListener {
-            navigator
-                .navigateToDirection(NavDirection.RecipeListToFavoriteRecipes())
-        }
-    }
-
-    private fun setupObserver() {
-        recipeListViewModel.pageState.observe(viewLifecycleOwner) {
-            setPageLoading(it.isLoading)
-
-            if (it.isError) {
-                Toast.makeText(
-                    requireActivity(),
-                    getString(R.string.network_error),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
-    }
-
-    private fun setPageLoading(isLoading: Boolean) {
-        binding.fabDeleteRecipes.isClickable = !isLoading
-        binding.fabFavoriteRecipes.isClickable = !isLoading
+    private fun navigateToFavoriteScreen() {
+        navigator.navigateToDirection(
+            NavDirection.RecipeListToFavoriteRecipes()
+        )
     }
 }

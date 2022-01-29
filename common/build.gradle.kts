@@ -33,11 +33,18 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.2.0-alpha02"
+    }
+
+    buildFeatures.compose = true
 }
 
 dependencies {
     implementation(Dependencies.AndroidX.dependencies)
     implementation(Dependencies.Kotlin.dependencies)
+    implementation(Dependencies.JetpackCompose.Implementation.dependencies)
 
     implementation(Dependencies.DependecyInjection.Implementation.dependencies)
     kapt(Dependencies.DependecyInjection.Kapt.dependencies)

@@ -19,6 +19,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.lucasvillaverde.common.theme.RecipeAppTheme
 import dev.lucasvillaverde.recipes.R
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -47,7 +48,6 @@ fun SearchBar(
                     },
                 leadingIcon = {
                     Icon(
-                        tint = MaterialTheme.colors.secondary,
                         painter = painterResource(id = R.drawable.ic_baseline_search_24),
                         contentDescription = "Search Icon"
                     )
@@ -92,7 +92,9 @@ fun SearchBar(
 @Preview
 @Composable
 fun SearchBarPreview() {
-    SearchBar(
-        onSearchAction = {}
-    )
+    RecipeAppTheme {
+        SearchBar(
+            onSearchAction = {}
+        )
+    }
 }
