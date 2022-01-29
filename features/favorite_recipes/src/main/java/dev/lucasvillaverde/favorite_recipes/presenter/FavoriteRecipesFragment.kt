@@ -11,11 +11,11 @@ import androidx.core.os.bundleOf
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.common.base.presenter.BaseFragment
 import dev.lucasvillaverde.common.base.presenter.NavDirection
+import dev.lucasvillaverde.common.theme.RecipeAppTheme
 
 @AndroidEntryPoint
 @ExperimentalMaterialApi
 class FavoriteRecipesFragment : BaseFragment() {
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,9 +26,11 @@ class FavoriteRecipesFragment : BaseFragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                FavoriteRecipeScreen(
-                    onFavoriteRecipeClick = { openRecipeDetails(it) }
-                )
+                RecipeAppTheme {
+                    FavoriteRecipeScreen(
+                        onFavoriteRecipeClick = { openRecipeDetails(it) }
+                    )
+                }
             }
         }
     }

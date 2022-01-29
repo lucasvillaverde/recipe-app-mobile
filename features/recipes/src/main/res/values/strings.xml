@@ -1,5 +1,5 @@
 <resources>
-    <string name="empty_state_swipe_down">Swipe down to get some recipes! </string>
+    <string name="empty_state_swipe_down">Click add to get more recipes!</string>
     <string name="ingredients_fragment_measures">Measures</string>
     <string name="ingredients_fragment_ingredients">Ingredients</string>
     <string name="no_internet_error">Oops! Seems you are not connected. Please verify your internet connection and try again.</string>

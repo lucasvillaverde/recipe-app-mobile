@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.os.bundleOf
-import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.common.base.presenter.BaseFragment
 import dev.lucasvillaverde.common.base.presenter.NavDirection
@@ -35,7 +33,7 @@ class RecipeListFragment : BaseFragment() {
     }
 
     private fun setupRecipeListComposable() {
-        binding.cvRecipeList.apply {
+        binding.cvRoot.apply {
             setViewCompositionStrategy(
                 ViewCompositionStrategy.DisposeOnLifecycleDestroyed(viewLifecycleOwner)
             )
