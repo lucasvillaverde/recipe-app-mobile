@@ -37,53 +37,7 @@ class RecipeDetailsFragment : BaseFragment() {
                 }
             }
         }
-
-/*        recipeDetailsViewModel.getRecipe(recipeId)
-
-        recipeDetailsAdapter = RecipeDetailsPageAdapter(this, recipeId)
-        binding.viewPager.adapter = recipeDetailsAdapter
-
-        binding.ivFavoriteButton.setOnClickListener {
-            recipeDetailsViewModel.toggleRecipeIsFavorite(recipeId)
-        }
-
-        recipeDetailsViewModel.pageState.observe(viewLifecycleOwner, {
-            it.data?.let { data ->
-                setTabLayout()
-                updateUI(data)
-            }
-        })*/
     }
-
-/*    private fun updateUI(recipe: dev.lucasvillaverde.recipes.domain.model.RecipeModel) {
-        binding.mealDetailsCard.visibility = View.VISIBLE
-        binding.ivFavoriteButton.setImageResource(
-            when (recipe.isFavorite) {
-                true -> R.drawable.ic_baseline_favorite_24
-                false -> R.drawable.ic_baseline_favorite_border_24
-            }
-        )
-
-        Picasso.get()
-            .load(recipe.thumb)
-            .into(binding.imgMeal)
-        binding.imgMeal.visibility = View.VISIBLE
-
-        // Actionbar
-        actionBar?.title = recipe.name
-        actionBar?.subtitle = recipe.category
-    }
-
-    private fun setTabLayout() {
-        TabLayoutMediator(
-            binding.tabLayout, binding.viewPager
-        ) { tab, position ->
-            when (position) {
-                0 -> tab.text = "Instructions"
-                1 -> tab.text = "Ingredients"
-            }
-        }.attach()
-    }*/
 
     companion object {
         const val RECIPE_ID = "recipe_id"
