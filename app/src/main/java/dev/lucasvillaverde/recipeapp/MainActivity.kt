@@ -17,9 +17,7 @@ class MainActivity : AppCompatActivity(), Navigator {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setNavController()
-        setupOnNavigationDestinationChanged()
 
         setContentView(binding.root)
     }
@@ -28,13 +26,6 @@ class MainActivity : AppCompatActivity(), Navigator {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.navController
-    }
-
-    private fun setupOnNavigationDestinationChanged() {
-        navController.addOnDestinationChangedListener { _, _, _ ->
-            supportActionBar?.title = ""
-            supportActionBar?.subtitle = ""
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

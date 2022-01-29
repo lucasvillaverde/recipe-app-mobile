@@ -5,9 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,13 +14,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import dev.lucasvillaverde.common.theme.RecipeAppTheme
+import dev.lucasvillaverde.common.theme.components.RecipeAppBar
 import dev.lucasvillaverde.recipes.R
 import dev.lucasvillaverde.recipes.domain.model.RecipeModel
 
 @Composable
 fun RecipeDetailsContent(
     recipeModel: RecipeModel,
-    onFavoriteRecipe: (Int) -> Unit
+    onFavoriteRecipe: (Int) -> Unit,
+    onBackPressed: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -34,7 +33,7 @@ fun RecipeDetailsContent(
     ) {
         Box(
             modifier = Modifier
-                .height(160.dp)
+                .height(170.dp)
                 .fillMaxWidth(),
         ) {
             AsyncImage(
@@ -47,6 +46,13 @@ fun RecipeDetailsContent(
                         modifier = Modifier.size(80.dp)
                     )
                 }
+            )
+            RecipeAppBar(
+                modifier = Modifier
+                    .align(Alignment.TopCenter),
+                screenName = "Recipe Details",
+                onBackButtonClicked = onBackPressed,
+                isTransparentStyle = true
             )
             Column(
                 modifier = Modifier
@@ -99,7 +105,8 @@ fun RecipeDetailsContentPreview() {
                 ingredientsMeasures = mapOf(),
                 isFavorite = false
             ),
-            onFavoriteRecipe = {}
+            onFavoriteRecipe = {},
+            onBackPressed = {}
         )
     }
 }

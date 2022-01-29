@@ -20,7 +20,6 @@ class RecipeDetailsFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentRecipeDetailsBinding.inflate(layoutInflater, container, false)
-        actionBar?.show()
 
         return binding.root
     }
@@ -33,7 +32,10 @@ class RecipeDetailsFragment : BaseFragment() {
 
             setContent {
                 RecipeAppTheme {
-                    RecipeDetailsScreen(recipeId = recipeId)
+                    RecipeDetailsScreen(
+                        recipeId = recipeId,
+                        onBackPressed = { requireActivity().onBackPressed() }
+                    )
                 }
             }
         }

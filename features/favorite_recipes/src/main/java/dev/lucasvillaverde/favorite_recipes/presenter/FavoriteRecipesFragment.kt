@@ -19,24 +19,15 @@ class FavoriteRecipesFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        actionBar?.show()
-        setupUI()
-
-        return ComposeView(requireContext()).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                RecipeAppTheme {
-                    FavoriteRecipeScreen(
-                        onFavoriteRecipeClick = { openRecipeDetails(it) }
-                    )
-                }
+    ): View = ComposeView(requireContext()).apply {
+        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        setContent {
+            RecipeAppTheme {
+                FavoriteRecipeScreen(
+                    onFavoriteRecipeClick = { openRecipeDetails(it) }
+                )
             }
         }
-    }
-
-    private fun setupUI() {
-        actionBar?.title = "Favorite Recipes"
     }
 
     private fun openRecipeDetails(id: Int) {

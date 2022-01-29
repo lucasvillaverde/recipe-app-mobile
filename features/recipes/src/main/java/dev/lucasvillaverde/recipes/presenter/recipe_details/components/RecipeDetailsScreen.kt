@@ -1,6 +1,5 @@
 package dev.lucasvillaverde.recipes.presenter.recipe_details.components
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,6 +11,7 @@ import dev.lucasvillaverde.recipes.presenter.recipe_details.RecipeDetailsViewMod
 @Composable
 fun RecipeDetailsScreen(
     recipeId: Int,
+    onBackPressed: () -> Unit,
     recipeDetailsViewModel: RecipeDetailsViewModel = viewModel()
 ) {
     LaunchedEffect(key1 = "recipe_loading", block = {
@@ -27,7 +27,8 @@ fun RecipeDetailsScreen(
             recipeModel = it,
             onFavoriteRecipe = { recipeId ->
                 recipeDetailsViewModel.toggleRecipeIsFavorite(recipeId)
-            }
+            },
+            onBackPressed = onBackPressed
         )
     }
 }

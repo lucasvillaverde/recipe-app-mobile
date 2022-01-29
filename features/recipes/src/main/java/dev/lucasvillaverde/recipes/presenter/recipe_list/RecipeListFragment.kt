@@ -21,7 +21,6 @@ class RecipeListFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        actionBar?.hide()
         binding = FragmentRecipeListBinding.inflate(layoutInflater, container, false)
 
         return binding.root

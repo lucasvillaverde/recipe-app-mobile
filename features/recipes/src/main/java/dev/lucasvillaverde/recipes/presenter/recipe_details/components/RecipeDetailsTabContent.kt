@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.lucasvillaverde.common.theme.RecipeAppTheme
 
 @Composable
 fun RecipeDetailsTabContent(
@@ -57,15 +58,15 @@ fun RecipeDetailsTabContent(
                         text = "Measures"
                     )
                 }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth(),
                 ) {
                     var index = 0
                     items(recipeIngredientsMeasures.toList()) { pair ->
+                        if (index == 0)
+                            Spacer(modifier = Modifier.height(8.dp))
+
                         Row(
                             modifier = Modifier
                                 .background(
@@ -97,12 +98,14 @@ fun RecipeDetailsTabContent(
 @Preview
 @Composable
 fun RecipeDetailsTabContentPreview() {
-    RecipeDetailsTabContent(
-        tabType = TabType.INGREDIENTS,
-        recipeInstructions = "Test Instructions",
-        recipeIngredientsMeasures = mapOf(
-            "Salt" to "100g",
-            "Sugar" to "130g"
-        ),
-    )
+    RecipeAppTheme {
+        RecipeDetailsTabContent(
+            tabType = TabType.INGREDIENTS,
+            recipeInstructions = "Test Instructions",
+            recipeIngredientsMeasures = mapOf(
+                "Salt" to "100g",
+                "Sugar" to "130g"
+            ),
+        )
+    }
 }
