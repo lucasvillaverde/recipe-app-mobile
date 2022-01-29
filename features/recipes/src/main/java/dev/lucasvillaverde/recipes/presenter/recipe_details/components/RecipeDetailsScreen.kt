@@ -1,5 +1,6 @@
 package dev.lucasvillaverde.recipes.presenter.recipe_details.components
 
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue

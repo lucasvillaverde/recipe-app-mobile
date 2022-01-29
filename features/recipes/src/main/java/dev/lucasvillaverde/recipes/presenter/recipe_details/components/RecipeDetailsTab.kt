@@ -13,11 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.lucasvillaverde.common.theme.RecipeAppTheme
-import dev.lucasvillaverde.recipes.domain.model.RecipeModel
 
 @Composable
 fun RecipeDetailsTab(
-    recipeModel: RecipeModel
+    recipeInstructions: String,
+    recipeIngredientsMeasures: Map<String?, String?>
 ) {
     var selectedIndex by remember { mutableStateOf(0) }
     val tabs = listOf(
@@ -48,7 +48,8 @@ fun RecipeDetailsTab(
 
         RecipeDetailsTabContent(
             tabType = tabs[selectedIndex],
-            recipeModel = recipeModel
+            recipeInstructions = recipeInstructions,
+            recipeIngredientsMeasures = recipeIngredientsMeasures
         )
     }
 }
@@ -58,17 +59,10 @@ fun RecipeDetailsTab(
 fun RecipeDetailsTabPreview() {
     RecipeAppTheme {
         RecipeDetailsTab(
-            recipeModel = RecipeModel(
-                id = 0,
-                tags = null,
-                youtubeLink = null,
-                name = "Test Recipe",
-                category = "Dessert",
-                region = "Test Region",
-                instructions = "Test Instructions",
-                thumb = null,
-                ingredientsMeasures = mapOf(),
-                isFavorite = false
+            recipeInstructions = "Test Instructions",
+            recipeIngredientsMeasures = mapOf(
+                "Salt" to "100g",
+                "Sugar" to "130g"
             ),
         )
     }

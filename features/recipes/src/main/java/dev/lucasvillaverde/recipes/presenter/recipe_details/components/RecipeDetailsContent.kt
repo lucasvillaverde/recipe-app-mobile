@@ -1,12 +1,13 @@
 package dev.lucasvillaverde.recipes.presenter.recipe_details.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,40 +32,53 @@ fun RecipeDetailsContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        AsyncImage(
+        Box(
             modifier = Modifier
-                .height(140.dp),
-            model = recipeModel.thumb,
-            contentScale = ContentScale.Crop,
-            contentDescription = "Meal Image",
-            loading = {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(80.dp)
-                )
-            }
-        )
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            horizontalArrangement = Arrangement.Center
+                .height(160.dp)
+                .fillMaxWidth(),
         ) {
-            Icon(
-                modifier = Modifier.clickable {
-                    onFavoriteRecipe(recipeModel.id)
-                },
-                painter = painterResource(
-                    id =
-                    if (recipeModel.isFavorite) R.drawable.ic_baseline_favorite_24
-                    else R.drawable.ic_baseline_favorite_border_24
-                ),
-                tint = Color.Red,
-                contentDescription = "Favorite Recipe"
+            AsyncImage(
+                modifier = Modifier.fillMaxSize(),
+                model = recipeModel.thumb ?: R.drawable.ic_find_your_meal,
+                contentScale = ContentScale.Crop,
+                contentDescription = "Meal Image",
+                loading = {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(80.dp)
+                    )
+                }
             )
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+            ) {
+                Button(
+                    modifier = Modifier.size(40.dp),
+                    elevation = ButtonDefaults.elevation(0.dp),
+                    contentPadding = PaddingValues(4.dp),
+                    shape = CircleShape,
+                    colors = ButtonDefaults.buttonColors(Color.LightGray.copy(alpha = 0.7F)),
+                    onClick = { onFavoriteRecipe(recipeModel.id) }
+                ) {
+                    Icon(
+                        painter = painterResource(
+                            id = if (recipeModel.isFavorite) R.drawable.ic_baseline_favorite_24
+                            else R.drawable.ic_baseline_favorite_border_24
+                        ),
+                        tint = Color.Red,
+                        contentDescription = "Favorite Recipe"
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(4.dp))
+            }
+
         }
 
-        RecipeDetailsTab(recipeModel = recipeModel)
+        RecipeDetailsTab(
+            recipeInstructions = recipeModel.instructions!!,
+            recipeIngredientsMeasures = recipeModel.ingredientsMeasures
+        )
     }
 }
 

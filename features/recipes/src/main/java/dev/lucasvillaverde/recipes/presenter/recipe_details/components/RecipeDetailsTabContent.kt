@@ -2,46 +2,57 @@ package dev.lucasvillaverde.recipes.presenter.recipe_details.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.lucasvillaverde.recipes.domain.model.RecipeModel
 
 @Composable
 fun RecipeDetailsTabContent(
     tabType: TabType,
-    recipeModel: RecipeModel
+    recipeInstructions: String,
+    recipeIngredientsMeasures: Map<String?, String?>
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colors.background)
     ) {
         when (tabType) {
             TabType.INSTRUCTIONS -> {
-                Text(
-                    modifier = Modifier.padding(8.dp),
-                    text = recipeModel.instructions ?: "No instructions."
-                )
+                LazyColumn {
+                    item {
+                        Text(
+                            modifier = Modifier.padding(8.dp),
+                            text = recipeInstructions
+                        )
+                    }
+                }
             }
             TabType.INGREDIENTS -> {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(MaterialTheme.colors.secondary)
-                        .padding(8.dp),
+                        .background(MaterialTheme.colors.secondary),
                     horizontalArrangement = Arrangement.Start
                 ) {
                     Text(
-                        modifier = Modifier.weight(1F),
+                        modifier = Modifier
+                            .weight(1F)
+                            .padding(8.dp),
                         fontWeight = FontWeight.Bold,
                         text = "Ingredients"
                     )
                     Text(
-                        modifier = Modifier.weight(1F),
+                        modifier = Modifier
+                            .weight(1F)
+                            .padding(8.dp),
                         fontWeight = FontWeight.Bold,
                         text = "Measures"
                     )
@@ -49,28 +60,33 @@ fun RecipeDetailsTabContent(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Row(
+                LazyColumn(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    horizontalArrangement = Arrangement.Start
+                        .fillMaxWidth(),
                 ) {
-                    Column(
-                        modifier = Modifier.weight(1F)
-                    ) {
-                        recipeModel.ingredientsMeasures.keys.forEach {
-                            it?.let { ingredient -> Text(ingredient) }
+                    var index = 0
+                    items(recipeIngredientsMeasures.toList()) { pair ->
+                        Row(
+                            modifier = Modifier
+                                .background(
+                                    if (index % 2 == 0) Color.LightGray.copy(alpha = 0.3F)
+                                    else Color.White
+                                )
+                                .fillMaxWidth()
+                                .padding(6.dp),
+                            horizontalArrangement = Arrangement.Start
+                        ) {
+                            Text(
+                                modifier = Modifier.weight(1F),
+                                text = pair.first!!
+                            )
+                            Text(
+                                modifier = Modifier.weight(1F),
+                                text = pair.second!!
+                            )
                         }
-                    }
 
-                    Spacer(modifier = Modifier.height(4.dp))
-
-                    Column(
-                        modifier = Modifier.weight(1F)
-                    ) {
-                        recipeModel.ingredientsMeasures.values.forEach {
-                            it?.let { measure -> Text(measure) }
-                        }
+                        index += 1
                     }
                 }
             }
@@ -83,20 +99,10 @@ fun RecipeDetailsTabContent(
 fun RecipeDetailsTabContentPreview() {
     RecipeDetailsTabContent(
         tabType = TabType.INGREDIENTS,
-        recipeModel = RecipeModel(
-            id = 0,
-            tags = null,
-            youtubeLink = null,
-            name = "Test Recipe",
-            category = "Dessert",
-            region = "Test Region",
-            instructions = "Test Instructions",
-            thumb = null,
-            ingredientsMeasures = mapOf(
-                "Salt" to "100g",
-                "Sugar" to "130g"
-            ),
-            isFavorite = false
+        recipeInstructions = "Test Instructions",
+        recipeIngredientsMeasures = mapOf(
+            "Salt" to "100g",
+            "Sugar" to "130g"
         ),
     )
 }
