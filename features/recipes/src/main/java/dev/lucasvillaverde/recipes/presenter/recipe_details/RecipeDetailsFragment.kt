@@ -4,20 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import com.google.android.material.tabs.TabLayoutMediator
-import com.squareup.picasso.Picasso
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.common.base.presenter.BaseFragment
-import dev.lucasvillaverde.recipes.R
+import dev.lucasvillaverde.common.theme.RecipeAppTheme
 import dev.lucasvillaverde.recipes.databinding.FragmentRecipeDetailsBinding
-import dev.lucasvillaverde.recipes.presenter.recipe_details.adapter.RecipeDetailsPageAdapter
+import dev.lucasvillaverde.recipes.presenter.recipe_details.components.RecipeDetailsScreen
 
 @AndroidEntryPoint
 class RecipeDetailsFragment : BaseFragment() {
     private lateinit var binding: FragmentRecipeDetailsBinding
-    private lateinit var recipeDetailsAdapter: RecipeDetailsPageAdapter
-    private val recipeDetailsViewModel: RecipeDetailsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +28,17 @@ class RecipeDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recipeId = requireArguments().getInt(RECIPE_ID)
-        recipeDetailsViewModel.getRecipe(recipeId)
+        binding.cvRecipeDetailsRoot.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+
+            setContent {
+                RecipeAppTheme {
+                    RecipeDetailsScreen(recipeId = recipeId)
+                }
+            }
+        }
+
+/*        recipeDetailsViewModel.getRecipe(recipeId)
 
         recipeDetailsAdapter = RecipeDetailsPageAdapter(this, recipeId)
         binding.viewPager.adapter = recipeDetailsAdapter
@@ -46,10 +52,10 @@ class RecipeDetailsFragment : BaseFragment() {
                 setTabLayout()
                 updateUI(data)
             }
-        })
+        })*/
     }
 
-    private fun updateUI(recipe: dev.lucasvillaverde.recipes.domain.model.RecipeModel) {
+/*    private fun updateUI(recipe: dev.lucasvillaverde.recipes.domain.model.RecipeModel) {
         binding.mealDetailsCard.visibility = View.VISIBLE
         binding.ivFavoriteButton.setImageResource(
             when (recipe.isFavorite) {
@@ -77,7 +83,7 @@ class RecipeDetailsFragment : BaseFragment() {
                 1 -> tab.text = "Ingredients"
             }
         }.attach()
-    }
+    }*/
 
     companion object {
         const val RECIPE_ID = "recipe_id"
