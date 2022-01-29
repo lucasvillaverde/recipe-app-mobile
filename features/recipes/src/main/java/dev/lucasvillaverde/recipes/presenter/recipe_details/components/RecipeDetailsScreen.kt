@@ -22,6 +22,11 @@ fun RecipeDetailsScreen(
     )
 
     recipeDetailsState.data?.let {
-        RecipeDetailsContent(recipeModel = it)
+        RecipeDetailsContent(
+            recipeModel = it,
+            onFavoriteRecipe = { recipeId ->
+                recipeDetailsViewModel.toggleRecipeIsFavorite(recipeId)
+            }
+        )
     }
 }
