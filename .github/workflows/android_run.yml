@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+      - feature/jetpack-compose-refactoring
     paths-ignore:
       - '**.md'
   pull_request:
