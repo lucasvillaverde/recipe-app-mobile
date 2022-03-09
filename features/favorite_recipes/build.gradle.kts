@@ -38,7 +38,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-alpha02"
+        kotlinCompilerExtensionVersion = Dependencies.JetpackCompose.jetpackComposeVersion
     }
 }
 
@@ -56,9 +56,7 @@ dependencies {
 
     implementation(Dependencies.Storage.Implementation.dependencies)
     kapt(Dependencies.Storage.Kapt.dependencies)
-
-    androidTestImplementation(Dependencies.JetpackCompose.AndroidTestImplementation.dependencies)
-    androidTestImplementation(Dependencies.Testing.AndroidTestImplementation.dependencies)
+    
     kaptAndroidTest(Dependencies.Testing.KaptAndroidTest.dependencies)
 
     testImplementation(Dependencies.Testing.TestImplementation.dependencies)

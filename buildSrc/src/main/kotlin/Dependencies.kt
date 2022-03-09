@@ -128,9 +128,6 @@ object Dependencies {
         object AndroidTestImplementation {
             const val junit = "androidx.test.ext:junit:1.1.4-alpha03"
 
-            // Cucumber
-            const val cucumber = "io.cucumber:cucumber-android:4.9.0"
-
             // Espresso
             const val espressoCore = "androidx.test.espresso:espresso-core:3.5.0-alpha03"
             const val testRules = "androidx.test:rules:1.4.1-alpha03"
@@ -144,7 +141,6 @@ object Dependencies {
 
             val dependencies = arrayListOf(
                 junit,
-                cucumber,
                 espressoCore,
                 testRules,
                 testRunner,
@@ -189,21 +185,23 @@ object Dependencies {
     }
 
     object JetpackCompose {
+        const val jetpackComposeVersion = "1.2.0-alpha02"
+        
         object Implementation {
             // Integration with activities
             val activityCompose = "androidx.activity:activity-compose:1.5.0-alpha01"
 
             // Compose Material Design
-            val composeMaterial = "androidx.compose.material:material:1.2.0-alpha02"
+            val composeMaterial = "androidx.compose.material:material:$jetpackComposeVersion"
 
             // Animations
-            val composeAnimation = "androidx.compose.animation:animation:1.2.0-alpha02"
+            val composeAnimation = "androidx.compose.animation:animation:$jetpackComposeVersion"
 
             // Tooling support (Previews, etc.)
-            val composeUi = "androidx.compose.ui:ui-tooling:1.2.0-alpha02"
+            val composeUi = "androidx.compose.ui:ui-tooling:$jetpackComposeVersion"
 
             // LiveData
-            val livedata = "androidx.compose.runtime:runtime-livedata:1.2.0-alpha02"
+            val livedata = "androidx.compose.runtime:runtime-livedata:$jetpackComposeVersion"
 
             // Integration with ViewModels
             val lifecycleCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-alpha01"
@@ -227,7 +225,15 @@ object Dependencies {
 
         object AndroidTestImplementation {
             // UI Tests
-            val composeUiTest = "androidx.compose.ui:ui-test-junit4:1.2.0-alpha02"
+            val composeUiTest = "androidx.compose.ui:ui-test-junit4:$jetpackComposeVersion"
+
+            val dependencies = listOf(
+                composeUiTest
+            )
+        }
+
+        object DebugImplementation {
+            val composeUiTest = "androidx.compose.ui:ui-test-manifest:$jetpackComposeVersion"
 
             val dependencies = listOf(
                 composeUiTest

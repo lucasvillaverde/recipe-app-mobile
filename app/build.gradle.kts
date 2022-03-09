@@ -19,12 +19,11 @@ android {
 
     defaultConfig {
         applicationId = "dev.lucasvillaverde.recipeapp"
-        testApplicationId = "dev.lucasvillaverde.recipeapp.runner"
         minSdk = Dependencies.Application.minSdk
         targetSdk = Dependencies.Application.targetSdk
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "dev.lucasvillaverde.recipeapp.runner.CucumberTestRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
     }
 
@@ -43,9 +42,10 @@ android {
     }
 
     buildFeatures.viewBinding = true
+    buildFeatures.compose = true
 
-    sourceSets {
-        getByName("androidTest").assets.srcDirs("src/androidTest/assets")
+    composeOptions {
+        kotlinCompilerExtensionVersion = Dependencies.JetpackCompose.jetpackComposeVersion
     }
 
     testOptions {
@@ -60,6 +60,7 @@ dependencies {
     implementation(project(Modules.Features.recipes))
 
     implementation(Dependencies.AndroidX.dependencies)
+    implementation(Dependencies.JetpackCompose.Implementation.dependencies)
     implementation(Dependencies.Kotlin.dependencies)
 
     implementation(Dependencies.DependecyInjection.Implementation.dependencies)
@@ -68,8 +69,10 @@ dependencies {
     androidTestImplementation(Dependencies.Testing.AndroidTestImplementation.barista) {
         exclude("org.jetbrains.kotlin", "org.jetbrains.kotlin")
     }
+    androidTestImplementation(Dependencies.JetpackCompose.AndroidTestImplementation.dependencies)
     androidTestImplementation(Dependencies.Testing.AndroidTestImplementation.dependencies)
     androidTestUtil(Dependencies.Testing.AndroidTestUtil.dependencies)
+    debugImplementation(Dependencies.JetpackCompose.DebugImplementation.dependencies)
     kaptAndroidTest(Dependencies.Testing.KaptAndroidTest.dependencies)
 }
 

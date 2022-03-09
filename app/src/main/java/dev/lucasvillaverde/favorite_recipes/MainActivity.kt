@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp
+package dev.lucasvillaverde.favorite_recipes
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dev.lucasvillaverde.common.base.presenter.NavDirection
 import dev.lucasvillaverde.common.base.presenter.Navigator
-import dev.lucasvillaverde.recipeapp.databinding.ActivityMainBinding
+import dev.lucasvillaverde.favorite_recipes.databinding.ActivityMainBinding
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), Navigator {

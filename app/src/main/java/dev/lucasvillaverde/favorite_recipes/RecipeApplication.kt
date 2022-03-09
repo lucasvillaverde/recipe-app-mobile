@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.recipeapp
+package dev.lucasvillaverde.favorite_recipes
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

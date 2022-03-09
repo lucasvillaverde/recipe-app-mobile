@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dev.lucasvillaverde.recipeapp">
+    package="dev.lucasvillaverde.favorite_recipes">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".RecipeApplication"
+        android:name="dev.lucasvillaverde.favorite_recipes.RecipeApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="dev.lucasvillaverde.favorite_recipes.MainActivity"
             android:windowSoftInputMode="adjustPan"
             android:exported="true">
             <intent-filter>
