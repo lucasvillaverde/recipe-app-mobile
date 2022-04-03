@@ -76,9 +76,11 @@ object Dependencies {
         object Implementation {
             // Dagger - Hilt
             const val hilt = "com.google.dagger:hilt-android:2.40.5"
+            const val composeNavigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
 
             val dependencies = arrayListOf(
-                hilt
+                hilt,
+                composeNavigation
             )
         }
 
@@ -186,7 +188,8 @@ object Dependencies {
 
     object JetpackCompose {
         const val jetpackComposeVersion = "1.2.0-alpha02"
-        
+        const val jetpackComposeNavigationVersion = "2.4.1"
+
         object Implementation {
             // Integration with activities
             val activityCompose = "androidx.activity:activity-compose:1.5.0-alpha01"
@@ -205,6 +208,8 @@ object Dependencies {
 
             // Integration with ViewModels
             val lifecycleCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-alpha01"
+
+            val navigation = "androidx.navigation:navigation-compose:$jetpackComposeNavigationVersion"
 
             // Coil
             val coil = "io.coil-kt:coil-compose:2.0.0-alpha06"

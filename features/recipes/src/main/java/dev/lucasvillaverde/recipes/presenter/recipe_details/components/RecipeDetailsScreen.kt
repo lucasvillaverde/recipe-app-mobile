@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.lucasvillaverde.common.base.model.BasePageState
 import dev.lucasvillaverde.recipes.presenter.recipe_details.RecipeDetailsViewModel
 
@@ -12,7 +11,7 @@ import dev.lucasvillaverde.recipes.presenter.recipe_details.RecipeDetailsViewMod
 fun RecipeDetailsScreen(
     recipeId: Int,
     onBackPressed: () -> Unit,
-    recipeDetailsViewModel: RecipeDetailsViewModel = viewModel()
+    recipeDetailsViewModel: RecipeDetailsViewModel
 ) {
     LaunchedEffect(key1 = "recipe_loading", block = {
         recipeDetailsViewModel.getRecipe(recipeId)

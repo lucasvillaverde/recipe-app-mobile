@@ -3,7 +3,6 @@ package dev.lucasvillaverde.recipes.presenter.recipe_list.components
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.lucasvillaverde.common.base.model.BasePageState
 import dev.lucasvillaverde.recipes.presenter.recipe_list.RecipeListViewModel
 
@@ -11,7 +10,7 @@ import dev.lucasvillaverde.recipes.presenter.recipe_list.RecipeListViewModel
 fun RecipeListScreen(
     onRecipeClick: (recipeId: Int) -> Unit,
     onFavoriteScreenButtonClick: () -> Unit,
-    recipeListViewModel: RecipeListViewModel = viewModel()
+    recipeListViewModel: RecipeListViewModel
 ) {
     val recipeListPageState by recipeListViewModel.pageState.observeAsState(
         BasePageState(

@@ -1,50 +1,67 @@
 package dev.lucasvillaverde.favorite_recipes
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
-import dev.lucasvillaverde.common.base.presenter.NavDirection
-import dev.lucasvillaverde.common.base.presenter.Navigator
-import dev.lucasvillaverde.favorite_recipes.databinding.ActivityMainBinding
+import dev.lucasvillaverde.common.base.presenter.NavScreenName
+import dev.lucasvillaverde.favorite_recipes.presenter.FavoriteRecipeScreen
+import dev.lucasvillaverde.favorite_recipes.presenter.FavoriteRecipesViewModel
+import dev.lucasvillaverde.recipes.presenter.recipe_details.RecipeDetailsViewModel
+import dev.lucasvillaverde.recipes.presenter.recipe_details.components.RecipeDetailsScreen
+import dev.lucasvillaverde.recipes.presenter.recipe_list.RecipeListViewModel
+import dev.lucasvillaverde.recipes.presenter.recipe_list.components.RecipeListScreen
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), Navigator {
-    override lateinit var navController: NavController
-    private lateinit var binding: ActivityMainBinding
-
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setNavController()
-
-        setContentView(binding.root)
-    }
-
-    private fun setNavController() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
-        navController = navHostFragment.navController
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-
-    override fun navigateToDirection(navDirection: NavDirection) {
-        when (navDirection) {
-            is NavDirection.RecipeListToFavoriteRecipes -> navController.navigate(
-                R.id.action_recipeListFragment_to_favoriteRecipesFragment
-            )
-            is NavDirection.RecipeListToRecipeDetails -> navController.navigate(
-                R.id.action_recipeListFragment_to_recipeDetailsFragment,
-                navDirection.bundle
-            )
-            is NavDirection.FavoriteRecipesToRecipeDetails -> navController.navigate(
-                R.id.action_favoriteRecipesFragment_to_recipeDetailsFragment,
-                navDirection.bundle
-            )
+        setContent {
+            val navController = rememberNavController()
+            NavHost(
+                navController = navController,
+                startDestination = NavScreenName.RECIPE_LIST.value
+            ) {
+                composable(route = NavScreenName.RECIPE_LIST.value) {
+                    val recipeListViewModel = hiltViewModel<RecipeListViewModel>()
+                    RecipeListScreen(
+                        onRecipeClick = { recipeId ->
+                            navController.navigate("${NavScreenName.RECIPE_DETAILS}/$recipeId")
+                        },
+                        onFavoriteScreenButtonClick = {
+                            navController.navigate(NavScreenName.FAVORITE_RECIPES.value)
+                        },
+                        recipeListViewModel = recipeListViewModel
+                    )
+                }
+                composable(
+                    route = "${NavScreenName.RECIPE_DETAILS.value}/{recipeId}",
+                    arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
+                ) { backStackEntry ->
+                    val recipeId = backStackEntry.arguments?.getInt("recipeId")
+                    val recipeDetailsViewModel = hiltViewModel<RecipeDetailsViewModel>()
+                    RecipeDetailsScreen(
+                        recipeId = recipeId!!,
+                        onBackPressed = { navController.popBackStack() },
+                        recipeDetailsViewModel = recipeDetailsViewModel
+                    )
+                }
+                composable(route = NavScreenName.FAVORITE_RECIPES.value) {
+                    val favoriteRecipesViewModel = hiltViewModel<FavoriteRecipesViewModel>()
+                    FavoriteRecipeScreen(
+                        onFavoriteRecipeClick = { recipeId ->
+                            navController.navigate("${NavScreenName.RECIPE_DETAILS.value}/$recipeId")
+                        },
+                        favoriteRecipesViewModel = favoriteRecipesViewModel
+                    )
+                }
+            }
         }
     }
 }

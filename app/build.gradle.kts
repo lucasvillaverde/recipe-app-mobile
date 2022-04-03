@@ -61,6 +61,7 @@ dependencies {
 
     implementation(Dependencies.AndroidX.dependencies)
     implementation(Dependencies.JetpackCompose.Implementation.dependencies)
+    implementation(Dependencies.JetpackCompose.Implementation.navigation)
     implementation(Dependencies.Kotlin.dependencies)
 
     implementation(Dependencies.DependecyInjection.Implementation.dependencies)
