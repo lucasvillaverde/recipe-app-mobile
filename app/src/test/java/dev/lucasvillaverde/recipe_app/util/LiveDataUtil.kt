@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.favorite_recipes.util
+package dev.lucasvillaverde.recipe_app.util
 /*
  * Copyright (C) 2019 The Android Open Source Project
  *

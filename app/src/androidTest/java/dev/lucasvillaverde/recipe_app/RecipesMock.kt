@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.favorite_recipes
+package dev.lucasvillaverde.recipe_app
 
 import dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe
 

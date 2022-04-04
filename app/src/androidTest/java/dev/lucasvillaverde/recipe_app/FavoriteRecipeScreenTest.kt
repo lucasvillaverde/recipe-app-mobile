@@ -1,4 +1,4 @@
-package dev.lucasvillaverde.favorite_recipes
+package dev.lucasvillaverde.recipe_app
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule

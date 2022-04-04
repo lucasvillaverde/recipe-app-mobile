@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import dev.lucasvillaverde.common.base.domain.None
 import dev.lucasvillaverde.common.base.model.BaseResource
 import dev.lucasvillaverde.common.core.local.model.RecipeEntity
+import dev.lucasvillaverde.favorite_recipes.domain.FavoriteRecipeMapper
 import dev.lucasvillaverde.favorite_recipes.domain.repositories.FavoriteRecipesRepository
 import dev.lucasvillaverde.favorite_recipes.domain.usecases.GetFavoriteRecipesUseCase
 import io.mockk.every
@@ -58,7 +59,7 @@ class GetFavoriteRecipesUseCaseTest {
             assertTrue(favoriteRecipeResource is BaseResource.Success)
             assertEquals(
                 favoriteRecipeResource.data!!.first(),
-                dev.lucasvillaverde.favorite_recipes.domain.FavoriteRecipeMapper.mapFromEntity(
+                FavoriteRecipeMapper.mapFromEntity(
                     fakeList.first()
                 )
             )
