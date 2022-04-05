@@ -18,7 +18,8 @@ class FavoriteRecipeScreenTest {
             FavoriteRecipeContent(
                 favoriteRecipeState = BaseResource.Success(recipeMockList),
                 onFavoriteRecipeClick = {},
-                onRemoveFavoriteRecipe = {}
+                onRemoveFavoriteRecipe = {},
+                onBackButtonClicked = {}
             )
         }
 

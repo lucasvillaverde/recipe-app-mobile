@@ -59,9 +59,12 @@ class MainActivity : ComponentActivity() {
                         val favoriteRecipesViewModel = hiltViewModel<FavoriteRecipesViewModel>()
                         FavoriteRecipeScreen(
                             onFavoriteRecipeClick = { recipeId ->
-                                navController.navigate("${NavScreenName.RECIPE_DETAILS.value}/$recipeId")
+                                navController.navigate(
+                                    "${NavScreenName.RECIPE_DETAILS.value}/$recipeId"
+                                )
                             },
-                            favoriteRecipesViewModel = favoriteRecipesViewModel
+                            favoriteRecipesViewModel = favoriteRecipesViewModel,
+                            onBackButtonClicked = { navController.popBackStack() }
                         )
                     }
                 }

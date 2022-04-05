@@ -1,6 +1,8 @@
 package dev.lucasvillaverde.favorite_recipes.presenter
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -8,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dev.lucasvillaverde.common.base.model.BaseResource
+import dev.lucasvillaverde.common.theme.components.RecipeAppBar
 import dev.lucasvillaverde.favorite_recipes.domain.model.FavoriteRecipe
 import dev.lucasvillaverde.favorite_recipes.presenter.components.FavoriteRecipeList
 
@@ -16,18 +19,28 @@ import dev.lucasvillaverde.favorite_recipes.presenter.components.FavoriteRecipeL
 fun FavoriteRecipeContent(
     favoriteRecipeState: BaseResource<List<FavoriteRecipe>>,
     onFavoriteRecipeClick: (Int) -> Unit,
-    onRemoveFavoriteRecipe: (Int) -> Unit
+    onRemoveFavoriteRecipe: (Int) -> Unit,
+    onBackButtonClicked: () -> Unit
 
 ) {
-    when (favoriteRecipeState) {
-        is BaseResource.Success -> FavoriteRecipeList(
-            favoriteRecipes = favoriteRecipeState.data!!,
-            onFavoriteRecipeClick = onFavoriteRecipeClick,
-            onRemoveFavoriteRecipeClick = { recipeId ->
-                onRemoveFavoriteRecipe.invoke(recipeId)
-            }
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        RecipeAppBar(
+            screenName = "Favorite Recipes",
+            onBackButtonClicked = onBackButtonClicked,
+            isTransparentStyle = false
         )
-        else -> TODO("NOT IMPLEMENTED YET")
+        when (favoriteRecipeState) {
+            is BaseResource.Success -> FavoriteRecipeList(
+                favoriteRecipes = favoriteRecipeState.data!!,
+                onFavoriteRecipeClick = onFavoriteRecipeClick,
+                onRemoveFavoriteRecipeClick = { recipeId ->
+                    onRemoveFavoriteRecipe.invoke(recipeId)
+                }
+            )
+            else -> TODO("NOT IMPLEMENTED YET")
+        }
     }
 }
 
@@ -61,7 +74,8 @@ fun FavoriteRecipeContentPreview() {
                 )
             ),
             onFavoriteRecipeClick = {},
-            onRemoveFavoriteRecipe = {}
+            onRemoveFavoriteRecipe = {},
+            onBackButtonClicked = {}
         )
     }
 }
